@@ -3,3 +3,11 @@ dist
 .env
 .env.local
 *.log
+
+# Backend
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.env
+backend/venv/
+*.pyc
+.pytest_cache/
