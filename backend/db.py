@@ -1,49 +1,61 @@
-"""Database connection module.
-
-Keeps MongoDB connection logic separate from API routes.
-Provides a ``get_db()`` helper that returns the database handle, and
-an ``init_db(app)`` function called once at startup.
-"""
+"""MongoDB connection module for the FastAPI application."""
 
 from pymongo import MongoClient
-from pymongo.errors import ConnectionFailure
+from pymongo.errors import PyMongoError
 
 _client = None
 _db = None
 
 
-def init_db(app):
-    """Initialise the MongoDB client using app configuration.
-
-    Called once from the application factory.  Stores the client and db handle
-    in module-level variables so route modules can import ``get_db()``.
-    """
+def init_db(mongo_uri: str, db_name: str):
+    """Initialize the MongoDB connection."""
     global _client, _db
-    mongo_uri = app.config["MONGO_URI"]
-    db_name = app.config["MONGO_DB_NAME"]
 
-    _client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+    if not mongo_uri:
+        raise ValueError("MONGO_URI is not configured.")
+
+    if not db_name:
+        raise ValueError("MONGO_DB_NAME is not configured.")
+
+    close_client()
+
+    _client = MongoClient(
+        mongo_uri,
+        serverSelectionTimeoutMS=5000,
+    )
     _db = _client[db_name]
 
-    # Verify connectivity at startup so mis-configuration is caught early.
     try:
         _client.admin.command("ping")
-        print(f"  * Connected to MongoDB: {db_name}")
-    except ConnectionFailure as exc:
-        print(f"  ! MongoDB connection failed: {exc}")
-        print("    The server will start, but database operations will fail.")
-        print(f"    Check that MONGO_URI ({mongo_uri}) is correct and the server is running.")
+        print(f"Connected to MongoDB: {db_name}")
+
+    except PyMongoError:
+        close_client()
+        print("MongoDB connection failed.")
+        raise
 
 
 def get_db():
-    """Return the database handle.  Raises RuntimeError if init_db was not called."""
+    """Return the initialized MongoDB database."""
     if _db is None:
         raise RuntimeError(
-            "Database not initialised. Call init_db(app) before using get_db()."
+            "Database is not initialized. Call init_db() first."
         )
+
     return _db
 
 
 def get_client():
-    """Return the raw MongoClient (useful for health checks)."""
+    """Return the MongoDB client."""
     return _client
+
+
+def close_client():
+    """Close the MongoDB connection and reset its references."""
+    global _client, _db
+
+    if _client is not None:
+        _client.close()
+
+    _client = None
+    _db = None

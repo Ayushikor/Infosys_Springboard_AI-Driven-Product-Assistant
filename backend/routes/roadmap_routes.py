@@ -1,49 +1,89 @@
-"""Roadmap CRUD routes."""
+"""Roadmap CRUD routes using FastAPI."""
 
-from flask import Blueprint, request, session
+from fastapi import APIRouter, Request, Body
+from fastapi.responses import JSONResponse
+
 from db import get_db
-from helpers import ok, fail, generate_id, now_iso, mongo_doc_to_dict, mongo_docs_to_list
+from helpers import (
+    ok,
+    fail,
+    generate_id,
+    now_iso,
+    mongo_doc_to_dict,
+    mongo_docs_to_list,
+)
 
-roadmap_bp = Blueprint("roadmap", __name__, url_prefix="/api/roadmap")
+router = APIRouter(prefix="/api/roadmap", tags=["Roadmap"])
 
 
-def _user_id():
-    return session.get("user_id")
+def _error_response(message, status_code=400):
+    """Convert the existing Flask-style fail() result to a FastAPI response."""
+    body, status = fail(message, status=status_code)
+    return JSONResponse(content=body, status_code=status)
+
+
+def _user_id(request: Request):
+    """Get the logged-in user's ID."""
+    return request.session.get("user_id")
 
 
 def _log_activity(user_id, text):
-    get_db()["activity"].insert_one({
-        "id": generate_id("act-"),
-        "userId": user_id,
-        "text": text,
-        "at": now_iso(),
-    })
+    """Record an activity for the user."""
+    get_db()["activity"].insert_one(
+        {
+            "id": generate_id("act-"),
+            "userId": user_id,
+            "text": text,
+            "at": now_iso(),
+        }
+    )
 
 
-@roadmap_bp.route("", methods=["GET"])
-def get_all():
-    uid = _user_id()
+@router.get("")
+def get_all(request: Request):
+    """Return all roadmap items for the logged-in user."""
+    uid = _user_id(request)
+
     if not uid:
-        return fail("Not authenticated.", status=401)
-    items = mongo_docs_to_list(get_db()["roadmap"].find({"userId": uid}))
+        return _error_response("Not authenticated.", 401)
+
+    items = mongo_docs_to_list(
+        get_db()["roadmap"].find({"userId": uid})
+    )
+
     return ok(items)
 
 
-@roadmap_bp.route("", methods=["POST"])
-def create():
-    uid = _user_id()
-    if not uid:
-        return fail("Not authenticated.", status=401)
+@router.post("")
+def create(
+    request: Request,
+    body: dict | None = Body(default=None),
+):
+    """Create a roadmap item."""
+    uid = _user_id(request)
 
-    body = request.get_json(silent=True) or {}
-    name = (body.get("name") or "").strip()
+    if not uid:
+        return _error_response("Not authenticated.", 401)
+
+    body = body or {}
+
+    name = body.get("name") or ""
+
+    if not isinstance(name, str):
+        return _error_response("Name is required.")
+
+    name = name.strip()
+
     if not name:
-        return fail("Name is required.")
+        return _error_response("Name is required.")
 
     start = body.get("startDate", "")
     target = body.get("targetDate", "")
+
     if start and target and target < start:
-        return fail("Target date cannot be before start date.")
+        return _error_response(
+            "Target date cannot be before start date."
+        )
 
     item = {
         "id": generate_id("rm-"),
@@ -59,53 +99,136 @@ def create():
     }
 
     get_db()["roadmap"].insert_one(item)
-    _log_activity(uid, f'Roadmap item "{item["name"]}" added')
+
+    _log_activity(
+        uid,
+        f'Roadmap item "{item["name"]}" added',
+    )
+
     return ok(mongo_doc_to_dict(item), "Roadmap item created")
 
 
-@roadmap_bp.route("/<item_id>", methods=["PUT"])
-def update(item_id):
-    uid = _user_id()
+@router.put("/{item_id}")
+def update(
+    item_id: str,
+    request: Request,
+    body: dict | None = Body(default=None),
+):
+    """Update an existing roadmap item."""
+    uid = _user_id(request)
+
     if not uid:
-        return fail("Not authenticated.", status=401)
+        return _error_response("Not authenticated.", 401)
 
     db = get_db()
-    existing = db["roadmap"].find_one({"id": item_id, "userId": uid})
-    if not existing:
-        return fail("Roadmap item not found.", status=404)
 
-    body = request.get_json(silent=True) or {}
+    existing = db["roadmap"].find_one(
+        {
+            "id": item_id,
+            "userId": uid,
+        }
+    )
+
+    if not existing:
+        return _error_response("Roadmap item not found.", 404)
+
+    body = body or {}
     merged = {**existing, **body}
 
     start = merged.get("startDate", "")
     target = merged.get("targetDate", "")
-    if start and target and target < start:
-        return fail("Target date cannot be before start date.")
 
-    updates = {}
-    for field in ("name", "featureId", "startDate", "targetDate", "priority", "status", "owner", "theme"):
-        if field in body:
-            updates[field] = body[field]
+    if start and target and target < start:
+        return _error_response(
+            "Target date cannot be before start date."
+        )
+
+    allowed_fields = (
+        "name",
+        "featureId",
+        "startDate",
+        "targetDate",
+        "priority",
+        "status",
+        "owner",
+        "theme",
+    )
+
+    updates = {
+        field: body[field]
+        for field in allowed_fields
+        if field in body
+    }
+
+    if "name" in updates:
+        if (
+            not isinstance(updates["name"], str)
+            or not updates["name"].strip()
+        ):
+            return _error_response("Name is required.")
+
+        updates["name"] = updates["name"].strip()
 
     if updates:
-        db["roadmap"].update_one({"id": item_id, "userId": uid}, {"$set": updates})
+        db["roadmap"].update_one(
+            {
+                "id": item_id,
+                "userId": uid,
+            },
+            {"$set": updates},
+        )
 
-    updated = db["roadmap"].find_one({"id": item_id, "userId": uid})
-    _log_activity(uid, f'Roadmap item "{updated["name"]}" updated')
-    return ok(mongo_doc_to_dict(updated), "Roadmap item updated")
+    updated = db["roadmap"].find_one(
+        {
+            "id": item_id,
+            "userId": uid,
+        }
+    )
+
+    _log_activity(
+        uid,
+        f'Roadmap item "{updated["name"]}" updated',
+    )
+
+    return ok(
+        mongo_doc_to_dict(updated),
+        "Roadmap item updated",
+    )
 
 
-@roadmap_bp.route("/<item_id>", methods=["DELETE"])
-def remove(item_id):
-    uid = _user_id()
+@router.delete("/{item_id}")
+def remove(item_id: str, request: Request):
+    """Delete a roadmap item."""
+    uid = _user_id(request)
+
     if not uid:
-        return fail("Not authenticated.", status=401)
+        return _error_response("Not authenticated.", 401)
 
     db = get_db()
-    target = db["roadmap"].find_one({"id": item_id, "userId": uid})
-    if not target:
-        return fail("Roadmap item not found.", status=404)
 
-    db["roadmap"].delete_one({"id": item_id, "userId": uid})
-    _log_activity(uid, f'Roadmap item "{target["name"]}" deleted')
-    return ok({"id": item_id}, "Roadmap item deleted")
+    target = db["roadmap"].find_one(
+        {
+            "id": item_id,
+            "userId": uid,
+        }
+    )
+
+    if not target:
+        return _error_response("Roadmap item not found.", 404)
+
+    db["roadmap"].delete_one(
+        {
+            "id": item_id,
+            "userId": uid,
+        }
+    )
+
+    _log_activity(
+        uid,
+        f'Roadmap item "{target["name"]}" deleted',
+    )
+
+    return ok(
+        {"id": item_id},
+        "Roadmap item deleted",
+    )

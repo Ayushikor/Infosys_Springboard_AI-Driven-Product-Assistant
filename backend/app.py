@@ -1,146 +1,225 @@
-"""Flask application factory.
 
-Creates and configures the Flask app, initialises the database connection,
-registers all route blueprints, and sets up CORS for the React dev server.
+"""
+FastAPI application for the AI-Driven Product Assistant.
 """
 
-import sys
 import os
+import sys
+from contextlib import asynccontextmanager
 
-# Ensure the backend directory is on the Python path so that `db`, `helpers`,
-# and `routes.*` can be imported regardless of the working directory.
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _PROJECT_ROOT not in sys.path:
-    sys.path.append(_PROJECT_ROOT)
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from starlette.middleware.sessions import SessionMiddleware
 
-from flask import Flask, jsonify
-from flask_cors import CORS
+
+# Make backend and project root importable.
+BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(BACKEND_DIR)
+
+if BACKEND_DIR not in sys.path:
+    sys.path.insert(0, BACKEND_DIR)
+
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(1, PROJECT_ROOT)
+
+
 from config import Config
-from db import init_db, get_client, get_db
+from db import init_db, get_client, get_db, close_client
 from database import create_indexes
-from routes.auth_routes import auth_bp
-from routes.state_routes import state_bp
-from routes.feedback_routes import feedback_bp
-from routes.workspace_routes import workspace_bp
-from routes.theme_routes import theme_bp
-from routes.feature_routes import feature_bp
-from routes.prd_routes import prd_bp
-from routes.roadmap_routes import roadmap_bp
-from routes.dashboard_routes import dashboard_bp
-from routes.preferences_routes import preferences_bp
-from routes.chat_routes import chat_bp
-from routes.product_routes import product_bp
+
+from routes.auth_routes import router as auth_router
+from routes.state_routes import router as state_router
+from routes.feedback_routes import router as feedback_router
+from routes.workspace_routes import router as workspace_router
+from routes.theme_routes import router as theme_router
+from routes.feature_routes import router as feature_router
+from routes.prd_routes import router as prd_router
+from routes.roadmap_routes import router as roadmap_router
+from routes.dashboard_routes import router as dashboard_router
+from routes.preferences_routes import router as preferences_router
+from routes.chat_routes import router as chat_router
+from routes.product_routes import router as product_router
 
 
-def create_app(config_override=None):
-    """Application factory."""
-    app = Flask(__name__)
-    app.config.from_object(Config)
-    if config_override:
-        app.config.update(config_override)
+ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:3000",
+]
 
-    # --- CORS Configuration ---
-    # Allow the React development server to communicate with Flask with credentials (cookies/session).
-    CORS(
-        app,
-        supports_credentials=True,
-        origins=[
-            "http://localhost:5173",
-            "http://localhost:5174",
-            "http://localhost:3000",
-            "http://127.0.0.1:5173",
-            "http://127.0.0.1:5174",
-            "http://127.0.0.1:3000",
-        ],
+
+def create_app(test_config=None):
+    """Create and configure a FastAPI application."""
+
+    settings = {
+        "SECRET_KEY": Config.SECRET_KEY,
+        "MONGO_URI": Config.MONGO_URI,
+        "MONGO_DB_NAME": Config.MONGO_DB_NAME,
+        "ENSURE_INDEXES": getattr(Config, "ENSURE_INDEXES", True),
+        "TESTING": False,
+    }
+
+    if test_config:
+        settings.update(test_config)
+
+    @asynccontextmanager
+    async def lifespan(application: FastAPI):
+        """Initialize MongoDB and indexes when the application starts."""
+
+        print("Initializing MongoDB connection...")
+
+        init_db(
+            mongo_uri=settings["MONGO_URI"],
+            db_name=settings["MONGO_DB_NAME"],
+        )
+
+        if settings["ENSURE_INDEXES"]:
+            create_indexes(get_db())
+
+        print("MongoDB initialization completed.")
+
+        try:
+            yield
+        finally:
+            close_client()
+            print("MongoDB connection closed.")
+
+    application = FastAPI(
+        title="AI-Driven Product Assistant API",
+        description="Backend API for the AI-Driven Product Assistant.",
+        version="1.0.0",
+        lifespan=lifespan,
     )
 
-    # --- Database Initialisation ---
-    print("Initialising MongoDB connection...")
-    init_db(app)
-    if app.config.get("ENSURE_INDEXES", True):
-        create_indexes(get_db())
+    application.state.settings = settings
+    application.state.testing = settings["TESTING"]
 
-    # --- Register Blueprints ---
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(state_bp)
-    app.register_blueprint(feedback_bp)
-    app.register_blueprint(workspace_bp)
-    app.register_blueprint(theme_bp)
-    app.register_blueprint(feature_bp)
-    app.register_blueprint(prd_bp)
-    app.register_blueprint(roadmap_bp)
-    app.register_blueprint(dashboard_bp)
-    app.register_blueprint(preferences_bp)
-    app.register_blueprint(chat_bp)
-    app.register_blueprint(product_bp)
+    # Allow requests from the React frontend.
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=ALLOWED_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
-    # --- Root and Health check endpoints ---
-    @app.route("/", methods=["GET"])
+    # Cookie-based sessions.
+    application.add_middleware(
+        SessionMiddleware,
+        secret_key=settings["SECRET_KEY"],
+        same_site="lax",
+        https_only=False,
+    )
+
+    # Register API routes.
+    application.include_router(auth_router)
+    application.include_router(state_router)
+    application.include_router(feedback_router)
+    application.include_router(workspace_router)
+    application.include_router(theme_router)
+    application.include_router(feature_router)
+    application.include_router(prd_router)
+    application.include_router(roadmap_router)
+    application.include_router(dashboard_router)
+    application.include_router(preferences_router)
+    application.include_router(chat_router)
+    application.include_router(product_router)
+
+    @application.get("/")
     def index():
-        return jsonify({
-            "success": True,
-            "message": "AI-Driven Product Assistant Backend API is running.",
-            "endpoints": "/api/health",
-        })
+        """Return basic API information."""
 
-    @app.route("/api/health", methods=["GET"])
+        return {
+            "success": True,
+            "message": (
+                "AI-Driven Product Assistant Backend API is running."
+            ),
+            "endpoints": "/api/health",
+            "docs": "/docs",
+        }
+
+    @application.get("/api/health")
     def health():
+        """Check API availability and MongoDB connectivity."""
+
         try:
             client = get_client()
+
             if client is None:
-                return jsonify({
-                    "status": "degraded",
-                    "database": "not_initialised",
-                    "message": "MongoDB client is not yet initialised.",
-                }), 503
+                return JSONResponse(
+                    status_code=503,
+                    content={
+                        "status": "degraded",
+                        "database": "not_initialized",
+                        "message": "MongoDB client is not initialized.",
+                    },
+                )
+
             client.admin.command("ping")
-            return jsonify({
+
+            return {
                 "status": "healthy",
                 "database": "connected",
-                "db_name": app.config.get("MONGO_DB_NAME"),
-            }), 200
-        except Exception as exc:
-            return jsonify({
-                "status": "unhealthy",
-                "database": "disconnected",
-                "error": str(exc),
-            }), 503
+                "db_name": settings["MONGO_DB_NAME"],
+            }
 
-    # --- Global error handlers ---
-    @app.errorhandler(400)
-    def bad_request(e):
-        return jsonify({
-            "success": False,
-            "data": None,
-            "message": getattr(e, "description", "Bad request."),
-        }), 400
+        except Exception:
+            return JSONResponse(
+                status_code=503,
+                content={
+                    "status": "unhealthy",
+                    "database": "disconnected",
+                    "message": "Could not connect to MongoDB.",
+                },
+            )
 
-    @app.errorhandler(404)
-    def not_found(e):
-        return jsonify({
-            "success": False,
-            "data": None,
-            "message": "The requested endpoint was not found.",
-        }), 404
+    @application.exception_handler(HTTPException)
+    async def http_exception_handler(
+        request: Request,
+        exc: HTTPException,
+    ):
+        """Return consistent HTTP errors."""
 
-    @app.errorhandler(500)
-    def server_error(e):
-        return jsonify({
-            "success": False,
-            "data": None,
-            "message": "Internal server error occurred.",
-        }), 500
+        message = (
+            exc.detail
+            if isinstance(exc.detail, str)
+            else "The request could not be completed."
+        )
 
-    return app
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={
+                "success": False,
+                "data": None,
+                "message": message,
+            },
+            headers=exc.headers,
+        )
+
+    @application.exception_handler(RequestValidationError)
+    async def validation_exception_handler(
+        request: Request,
+        exc: RequestValidationError,
+    ):
+        """Return consistent validation errors."""
+
+        return JSONResponse(
+            status_code=422,
+            content={
+                "success": False,
+                "data": None,
+                "message": "Validation error",
+                "errors": exc.errors(),
+            },
+        )
+
+    return application
 
 
-if __name__ == "__main__":
-    application = create_app()
-    port = Config.PORT
-    print(f"\n=======================================================")
-    print(f"  AI-Driven Product Assistant Backend")
-    print(f"  Listening on: http://localhost:{port}")
-    print(f"  Health Check: http://localhost:{port}/api/health")
-    print(f"=======================================================\n")
-    application.run(host="0.0.0.0", port=port, debug=Config.DEBUG)
+# Application instance used by Uvicorn.
+app = create_app()
