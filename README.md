@@ -4,12 +4,9 @@ Your Intelligent Companion for Product Management
 
 An AI-powered product management assistant designed to help organize product workflows, manage requirements, collect feedback, prioritize features, and plan product roadmaps.
 
-<br>"Python" (https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-"FastAPI" (https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-"React" (https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-"MongoDB" (https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 
-</div>---
+
+</div>
 
 📌 Table of Contents
 
