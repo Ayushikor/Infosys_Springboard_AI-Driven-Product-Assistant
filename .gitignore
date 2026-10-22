@@ -3,3 +3,6 @@ dist
 .env
 .env.local
 *.log
+__pycache__/
+*.py[cod]
+.pytest_cache/

@@ -10,12 +10,15 @@ import os
 # Ensure the backend directory is on the Python path so that `db`, `helpers`,
 # and `routes.*` can be imported regardless of the working directory.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _PROJECT_ROOT not in sys.path:
+    sys.path.append(_PROJECT_ROOT)
 
 from flask import Flask, jsonify
 from flask_cors import CORS
 from config import Config
-from db import init_db, get_client
-
+from db import init_db, get_client, get_db
+from database import create_indexes
 from routes.auth_routes import auth_bp
 from routes.state_routes import state_bp
 from routes.feedback_routes import feedback_bp
@@ -55,6 +58,8 @@ def create_app(config_override=None):
     # --- Database Initialisation ---
     print("Initialising MongoDB connection...")
     init_db(app)
+    if app.config.get("ENSURE_INDEXES", True):
+        create_indexes(get_db())
 
     # --- Register Blueprints ---
     app.register_blueprint(auth_bp)
