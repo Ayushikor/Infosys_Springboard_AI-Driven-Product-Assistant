@@ -31,8 +31,19 @@ backend/
 │   └── chat_routes.py      # /api/chat (Assistant conversation history)
 └── tests/
     ├── __init__.py
-    └── test_api.py         # Pytest test suite with mock MongoDB
+    ├── test_api.py                 # API tests with an in-memory mock MongoDB
+    └── test_database_package.py    # Tests for the database/ package
+
+../database/                # Schemas, validators and index definitions (see database/README.md)
+├── __init__.py
+├── indexes.py              # create_indexes(db): centralised, idempotent index creation
+├── README.md
+└── schemas/                # One module per collection (fields, example document, validator)
 ```
+
+The `database/` folder sits at the project root, next to `backend/` and `src/`. It organises
+document structures, validation helpers and index definitions, and it does **not** open its
+own connection: `backend/db.py` remains the single source of the MongoDB client and handle.
 
 ---
 
@@ -61,10 +72,16 @@ cp .env.example .env
 | :--- | :--- | :--- |
 | `MONGO_URI` | `mongodb://localhost:27017` | MongoDB connection string (local or MongoDB Atlas) |
 | `MONGO_DB_NAME` | `product_assistant_db` | Name of the MongoDB database |
-| `FLASK_SECRET_KEY` | `dev-secret-key-student-project` | Secret key used for session signing and cookies |
+| `FLASK_SECRET_KEY` | `dev-secret-change-me` | Secret key used for session signing and cookies |
 | `FLASK_ENV` | `development` | Flask environment |
 | `FLASK_DEBUG` | `0` | Debug mode (`1` for reload, `0` for production/quiet) |
 | `PORT` | `5000` | HTTP port for the Flask backend |
+
+### Optional application setting
+
+| Setting | Default | Description |
+| :--- | :--- | :--- |
+| `ENSURE_INDEXES` | `True` | App config option (not an environment variable). Pass `False` to `create_app({...})` to skip index creation at startup, e.g. in tests that use a fake database. |
 
 > **Security Note:** Never commit `.env` containing real production passwords or cloud database credentials. Use `.env.example` as a template.
 
@@ -123,9 +140,29 @@ Response:
 
 ---
 
-## 5. Running the Tests
+## 5. Database Package & Indexes
 
-The test suite runs against an in-memory mock MongoDB layer so it can be executed anywhere without a running database daemon:
+On startup, `create_app()` calls `create_indexes(get_db())` right after `init_db(app)`.
+Index creation is idempotent and safe on existing data:
+
+- A **unique index is skipped with a warning** (`Skipping unique index ...`) if existing
+  documents already contain duplicates for that key. Nothing is modified; clean the data and
+  restart to create the index.
+- If MongoDB is unreachable, index creation stops after the first failure and the server still
+  starts, as before.
+
+Collections, fields, relationships, indexes and example documents are documented in
+[`../database/README.md`](../database/README.md). Validators in `database/schemas/` are plain
+functions (`validate(collection, doc)` returns a list of errors); they are available for use
+but are not applied by the routes, so existing request and response behaviour is unchanged.
+
+---
+
+## 6. Running the Tests
+
+The API tests run against an in-memory mock MongoDB layer so they can be executed anywhere
+without a running database daemon. The database package tests use `mongomock` (included in
+`requirements.txt`) for the index tests:
 
 ```bash
 pytest tests/ -v
@@ -133,7 +170,7 @@ pytest tests/ -v
 
 ---
 
-## 6. Connecting the React Frontend
+## 7. Connecting the React Frontend
 
 The React frontend includes a built-in switch between local mock data and the live Flask backend:
 
@@ -150,7 +187,7 @@ The React frontend includes a built-in switch between local mock data and the li
 
 ---
 
-## 7. API Reference Summary
+## 8. API Reference Summary
 
 All API responses follow a uniform JSON structure:
 ```json

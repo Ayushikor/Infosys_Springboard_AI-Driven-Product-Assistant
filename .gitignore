@@ -1,13 +1,20 @@
-node_modules
-dist
+Frontend
+
+node_modules/
+dist/
 .env
 .env.local
 *.log
 
-# Backend
-backend/__pycache__/
-backend/**/__pycache__/
-backend/.env
-backend/venv/
-*.pyc
+Python backend
+
+pycache/
+*.py[cod]
 .pytest_cache/
+backend/venv/
+backend/.env
+
+Python cache directories
+
+backend/pycache/
+backend/**/pycache/

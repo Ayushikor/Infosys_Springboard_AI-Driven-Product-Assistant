@@ -151,9 +151,9 @@ def app(mock_db):
             "SECRET_KEY": "test-secret-key-123",
             "MONGO_URI": "mongodb://localhost:27017",
             "MONGO_DB_NAME": "test_db",
+            "ENSURE_INDEXES": False,
         })
         yield application
-
 
 @pytest.fixture
 def client(app):
