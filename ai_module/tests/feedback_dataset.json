@@ -1,0 +1,112 @@
+[
+  {
+    "name": "positive usability feedback",
+    "text": "The new dashboard is clear and easy to navigate.",
+    "analysis": {
+      "sentiment": "positive",
+      "category": "usability",
+      "pain_points": [],
+      "feature_requests": [],
+      "summary": "The user finds the dashboard clear and easy to use."
+    }
+  },
+  {
+    "name": "negative checkout feedback",
+    "text": "Checkout is frustrating because the form keeps resetting.",
+    "analysis": {
+      "sentiment": "negative",
+      "category": "checkout",
+      "pain_points": ["The checkout form resets"],
+      "feature_requests": [],
+      "summary": "The user is frustrated by the resetting checkout form."
+    }
+  },
+  {
+    "name": "neutral account feedback",
+    "text": "I changed my account email in settings today.",
+    "analysis": {
+      "sentiment": "neutral",
+      "category": "account",
+      "pain_points": [],
+      "feature_requests": [],
+      "summary": "The user changed their account email in settings."
+    }
+  },
+  {
+    "name": "bug report",
+    "text": "The save button does nothing after I edit my profile.",
+    "analysis": {
+      "sentiment": "negative",
+      "category": "bug",
+      "pain_points": ["Profile changes cannot be saved"],
+      "feature_requests": [],
+      "summary": "The profile save button does not work."
+    }
+  },
+  {
+    "name": "performance issue",
+    "text": "Search takes nearly a minute to show results.",
+    "analysis": {
+      "sentiment": "negative",
+      "category": "performance",
+      "pain_points": ["Search results are very slow"],
+      "feature_requests": [],
+      "summary": "The user reports slow search results."
+    }
+  },
+  {
+    "name": "single feature request",
+    "text": "Please add a dark mode option.",
+    "analysis": {
+      "sentiment": "neutral",
+      "category": "feature_request",
+      "pain_points": [],
+      "feature_requests": ["Add a dark mode option"],
+      "summary": "The user requests dark mode."
+    }
+  },
+  {
+    "name": "positive performance feedback",
+    "text": "The latest update made the app much faster.",
+    "analysis": {
+      "sentiment": "positive",
+      "category": "performance",
+      "pain_points": [],
+      "feature_requests": [],
+      "summary": "The user appreciates the improved app speed."
+    }
+  },
+  {
+    "name": "mixed bug and feature request",
+    "text": "Notifications arrive twice; please add a control to mute them.",
+    "analysis": {
+      "sentiment": "negative",
+      "category": "notifications",
+      "pain_points": ["Notifications arrive twice"],
+      "feature_requests": ["Add a control to mute notifications"],
+      "summary": "The user reports duplicate notifications and requests a mute control."
+    }
+  },
+  {
+    "name": "multiple feature requests",
+    "text": "Add CSV export and let me schedule weekly reports.",
+    "analysis": {
+      "sentiment": "neutral",
+      "category": "reporting",
+      "pain_points": [],
+      "feature_requests": ["Add CSV export", "Allow scheduling weekly reports"],
+      "summary": "The user requests CSV export and scheduled weekly reports."
+    }
+  },
+  {
+    "name": "neutral billing feedback",
+    "text": "My invoice for October is available in billing.",
+    "analysis": {
+      "sentiment": "neutral",
+      "category": "billing",
+      "pain_points": [],
+      "feature_requests": [],
+      "summary": "The October invoice is available in billing."
+    }
+  }
+]

@@ -18,3 +18,8 @@ Python cache directories
 
 backend/pycache/
 backend/**/pycache/
+
+.venv/
+venv/
+__pycache__/
+.DS_Store
