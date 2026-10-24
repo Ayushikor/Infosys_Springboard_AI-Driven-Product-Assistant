@@ -1,4 +1,6 @@
 """Feedback CRUD routes using FastAPI."""
+import os
+import httpx
 
 from fastapi import APIRouter, Request, Body
 from fastapi.responses import JSONResponse
@@ -18,6 +20,85 @@ router = APIRouter(
     prefix="/api/feedback",
     tags=["Feedback"],
 )
+
+@router.post("/{feedback_id}/analyze")
+def analyze_feedback(feedback_id: str, request: Request):
+    """Analyze saved feedback using the separate AI service."""
+
+    # 1. Verify authentication.
+    uid = request.session.get("user_id")
+
+    if not uid:
+        return _error_response("Not authenticated.", status=401)
+
+    # 2. Find feedback belonging to the logged-in user.
+    feedback = get_db()["feedback"].find_one({
+        "id": feedback_id,
+        "userId": uid,
+    })
+
+    if not feedback:
+        return _error_response("Feedback not found.", status=404)
+
+    # 3. Get the actual feedback message.
+    feedback_text = str(feedback.get("message", "")).strip()
+
+    if not feedback_text:
+        return _error_response(
+            "Feedback message is empty.",
+            status=400,
+        )
+
+    # 4. Read the AI service URL from the environment.
+    ai_service_url = os.getenv(
+        "AI_SERVICE_URL",
+        "http://127.0.0.1:8001",
+    ).rstrip("/")
+
+    # 5. Call the AI service.
+    try:
+        response = httpx.post(
+            f"{ai_service_url}/feedback/analyze",
+            json={"text": feedback_text},
+            timeout=30.0,
+        )
+
+        response.raise_for_status()
+
+        analysis = response.json()
+
+    except httpx.TimeoutException:
+        return _error_response(
+            "AI analysis timed out. Please try again.",
+            status=504,
+        )
+
+    except httpx.HTTPStatusError:
+        return _error_response(
+            "AI analysis service returned an error.",
+            status=502,
+        )
+
+    except httpx.RequestError:
+        return _error_response(
+            "Could not connect to the AI analysis service.",
+            status=503,
+        )
+
+    except ValueError:
+        return _error_response(
+            "AI analysis service returned an invalid response.",
+            status=502,
+        )
+
+    # 6. Return the analysis using your existing response format.
+    return ok(
+        {
+            "feedback_id": feedback_id,
+            "analysis": analysis,
+        },
+        "Feedback analyzed successfully",
+    )
 
 
 def _user_id(request: Request):
