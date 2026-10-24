@@ -8,23 +8,6 @@ An AI-powered product management assistant designed to help organize product wor
 
 </div>
 
-📌 Table of Contents
-
-- "About the Project" (#-about-the-project)
-- "Problem Statement" (#-problem-statement)
-- "Key Features" (#-key-features)
-- "Technology Stack" (#-technology-stack)
-- "System Architecture" (#-system-architecture)
-- "Project Structure" (#-project-structure)
-- "Getting Started" (#-getting-started)
-- "Backend Setup" (#-backend-setup)
-- "Frontend Setup" (#-frontend-setup)
-- "API Documentation" (#-api-documentation)
-- "Environment Variables" (#-environment-variables)
-- "Testing" (#-testing)
-- "Security" (#-security)
-- "Future Enhancements" (#-future-enhancements)
-- "Contributors" (#-contributors)
 
 ---
 
