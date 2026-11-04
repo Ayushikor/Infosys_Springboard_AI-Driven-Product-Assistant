@@ -23,3 +23,5 @@ backend/**/pycache/
 venv/
 __pycache__/
 .DS_Store
+
+.vscode/
