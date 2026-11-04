@@ -336,3 +336,145 @@ def import_many(
         {"added": added, "skipped": skipped},
         f"Imported {added} record(s)",
     )
+
+@router.post("/pain-points/identify")
+def identify_pain_points(
+    request: Request,
+    body: dict = Body(default={}),
+):
+    """Identify customer pain points using Agent 2."""
+
+    # 1. Verify authentication.
+    uid = _user_id(request)
+
+    if not uid:
+        return _error_response(
+            "Not authenticated.",
+            status=401,
+        )
+
+    # 2. Get optional feedback IDs.
+    feedback_ids = body.get("feedback_ids")
+
+    if feedback_ids is not None:
+        if (
+            not isinstance(feedback_ids, list)
+            or not feedback_ids
+            or len(feedback_ids) > 500
+            or not all(
+                isinstance(item, str) and item.strip()
+                for item in feedback_ids
+            )
+        ):
+            return _error_response(
+                "feedback_ids must be a non-empty array "
+                "containing at most 500 valid IDs.",
+                status=400,
+            )
+
+        feedback_ids = [
+            item.strip() for item in feedback_ids
+        ]
+
+        if len(feedback_ids) != len(set(feedback_ids)):
+            return _error_response(
+                "Feedback IDs must be unique.",
+                status=400,
+            )
+
+    # 3. Fetch feedback belonging to the logged-in user.
+    db = get_db()
+
+    query = {"userId": uid}
+
+    if feedback_ids is not None:
+        query["id"] = {"$in": feedback_ids}
+
+    feedback_documents = list(
+        db["feedback"]
+        .find(query)
+        .sort("createdAt", -1)
+        .limit(501)
+    )
+
+    if feedback_ids is not None:
+        if len(feedback_documents) != len(feedback_ids):
+            return _error_response(
+                "Some feedback records were not found.",
+                status=404,
+            )
+
+    if not feedback_documents:
+        return _error_response(
+            "No feedback records found.",
+            status=404,
+        )
+
+    if len(feedback_documents) > 500:
+        return _error_response(
+            "Maximum 500 feedback records can be analyzed at once.",
+            status=400,
+        )
+
+    # 4. Prepare feedback for Agent 2.
+    feedback_records = [
+        {
+            "id": str(item["id"]),
+            "title": str(item.get("title", "")),
+            "message": str(item.get("message", "")),
+        }
+        for item in feedback_documents
+    ]
+
+    # 5. Read AI service URL.
+    ai_service_url = os.getenv(
+        "AI_SERVICE_URL",
+        "http://127.0.0.1:8001",
+    ).rstrip("/")
+
+    # 6. Send feedback to Agent 2.
+    try:
+        response = httpx.post(
+            f"{ai_service_url}/pain-points/identify",
+            json={
+                "feedback": feedback_records,
+            },
+            timeout=120.0,
+        )
+
+        response.raise_for_status()
+
+        result = response.json()
+
+    except httpx.TimeoutException:
+        return _error_response(
+            "Pain-point identification timed out. Please try again.",
+            status=504,
+        )
+
+    except httpx.HTTPStatusError:
+        return _error_response(
+            "AI pain-point identification service returned an error.",
+            status=502,
+        )
+
+    except httpx.RequestError:
+        return _error_response(
+            "Could not connect to the AI service.",
+            status=503,
+        )
+
+    except ValueError:
+        return _error_response(
+            "AI service returned an invalid response.",
+            status=502,
+        )
+
+    # 7. Return results to the frontend.
+    return ok(
+        {
+            "total_feedback_analyzed": len(feedback_records),
+            "pain_points": result.get("pain_points", []),
+        },
+        "Customer pain points identified successfully.",
+    )
