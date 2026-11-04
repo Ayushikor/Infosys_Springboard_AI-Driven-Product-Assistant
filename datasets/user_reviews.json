@@ -1,0 +1,602 @@
+[
+  {
+    "feedback_id": "REV-001",
+    "source_channel": "Apple App Store",
+    "raw_text": "Interface looks nice but is cluttered once you have more than a handful of themes. Needs better grouping.",
+    "timestamp": "2026-09-30T17:42:08Z"
+  },
+  {
+    "feedback_id": "REV-002",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Needs a better way to merge duplicate feedback automatically. Doing it by hand takes a while.",
+    "timestamp": "2026-09-30T23:09:13Z"
+  },
+  {
+    "feedback_id": "REV-003",
+    "source_channel": "Trustpilot",
+    "raw_text": "Sentiment analysis mislabels sarcasm and mixed comments, which skews our reports.",
+    "timestamp": "2026-09-30T23:13:36Z"
+  },
+  {
+    "feedback_id": "REV-004",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Too many settings spread across different menus. I always have to hunt for things.",
+    "timestamp": "2026-10-01T07:37:07Z"
+  },
+  {
+    "feedback_id": "REV-005",
+    "source_channel": "Capterra",
+    "raw_text": "Account got locked and support took two days to respond. Our entire product team couldn't work. Unacceptable for a business tool.",
+    "timestamp": "2026-10-01T12:34:12Z"
+  },
+  {
+    "feedback_id": "REV-006",
+    "source_channel": "Trustpilot",
+    "raw_text": "Every time we run theme clustering the whole workspace becomes unusable for a few minutes. Not great during working hours.",
+    "timestamp": "2026-10-01T14:02:08Z"
+  },
+  {
+    "feedback_id": "REV-007",
+    "source_channel": "Trustpilot",
+    "raw_text": "After the latest redesign I can't find half the features. The new navigation is a step backward, please bring back the old layout option.",
+    "timestamp": "2026-10-02T04:57:40Z"
+  },
+  {
+    "feedback_id": "REV-008",
+    "source_channel": "G2 Crowd",
+    "raw_text": "The way themes are visualised as clusters is genuinely helpful for presentations.",
+    "timestamp": "2026-10-03T00:11:52Z"
+  },
+  {
+    "feedback_id": "REV-009",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Really smooth sign in experience, even on mobile.",
+    "timestamp": "2026-10-03T00:28:24Z"
+  },
+  {
+    "feedback_id": "REV-010",
+    "source_channel": "Product Hunt",
+    "raw_text": "Good design overall, though dark mode has some contrast problems in the sidebar.",
+    "timestamp": "2026-10-03T16:52:32Z"
+  },
+  {
+    "feedback_id": "REV-011",
+    "source_channel": "Trustpilot",
+    "raw_text": "Very few issues. Release notes are clear and updates don't break anything.",
+    "timestamp": "2026-10-03T17:34:28Z"
+  },
+  {
+    "feedback_id": "REV-012",
+    "source_channel": "Capterra",
+    "raw_text": "Exports of big roadmaps take so long that the browser tab sometimes crashes.",
+    "timestamp": "2026-10-04T20:33:18Z"
+  },
+  {
+    "feedback_id": "REV-013",
+    "source_channel": "Capterra",
+    "raw_text": "Loads quickly on both desktop and tablet. No complaints.",
+    "timestamp": "2026-10-04T21:50:36Z"
+  },
+  {
+    "feedback_id": "REV-014",
+    "source_channel": "Google Play Store",
+    "raw_text": "Logging in with Google takes one click. No issues in six months.",
+    "timestamp": "2026-10-05T00:35:50Z"
+  },
+  {
+    "feedback_id": "REV-015",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Would like competitor tracking features, so we can compare our feedback themes against market trends.",
+    "timestamp": "2026-10-05T01:32:52Z"
+  },
+  {
+    "feedback_id": "REV-016",
+    "source_channel": "Apple App Store",
+    "raw_text": "AI generated PRDs appear in under a minute, a huge time saver compared to writing them manually.",
+    "timestamp": "2026-10-05T09:17:18Z"
+  },
+  {
+    "feedback_id": "REV-017",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Tables are hard to read on large monitors, text is tiny and cannot be zoomed without breaking the layout.",
+    "timestamp": "2026-10-05T11:38:32Z"
+  },
+  {
+    "feedback_id": "REV-018",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Duplicate feedback items appear after every sync with our helpdesk. Cleaning them up wastes time.",
+    "timestamp": "2026-10-05T14:30:35Z"
+  },
+  {
+    "feedback_id": "REV-019",
+    "source_channel": "Capterra",
+    "raw_text": "Integration with Slack keeps disconnecting silently, so we miss alerts. Had to reconnect it three times this month.",
+    "timestamp": "2026-10-05T17:57:58Z"
+  },
+  {
+    "feedback_id": "REV-020",
+    "source_channel": "Capterra",
+    "raw_text": "Version history for PRDs is basic. I'd like to see who changed what, line by line.",
+    "timestamp": "2026-10-06T05:26:53Z"
+  },
+  {
+    "feedback_id": "REV-021",
+    "source_channel": "Google Play Store",
+    "raw_text": "Comments vanish on PRDs when two people edit at the same time.",
+    "timestamp": "2026-10-06T05:36:03Z"
+  },
+  {
+    "feedback_id": "REV-022",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Rarely encounter bugs, and the team patches issues fast. Great support.",
+    "timestamp": "2026-10-06T06:54:15Z"
+  },
+  {
+    "feedback_id": "REV-023",
+    "source_channel": "Trustpilot",
+    "raw_text": "Never had a login problem. Solid and secure.",
+    "timestamp": "2026-10-06T17:07:08Z"
+  },
+  {
+    "feedback_id": "REV-024",
+    "source_channel": "Product Hunt",
+    "raw_text": "Few minor bugs here and there, nothing that stops me from working.",
+    "timestamp": "2026-10-06T20:55:02Z"
+  },
+  {
+    "feedback_id": "REV-025",
+    "source_channel": "Google Play Store",
+    "raw_text": "Password reset emails never arrive. I've tried three times and checked spam, finally had to contact support.",
+    "timestamp": "2026-10-06T21:01:42Z"
+  },
+  {
+    "feedback_id": "REV-026",
+    "source_channel": "Capterra",
+    "raw_text": "Roadmap sharing is limited. There's no way to publish a read only view for customers.",
+    "timestamp": "2026-10-07T12:52:17Z"
+  },
+  {
+    "feedback_id": "REV-027",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Love it. Adding a calendar sync for roadmap milestones would be awesome.",
+    "timestamp": "2026-10-08T03:23:25Z"
+  },
+  {
+    "feedback_id": "REV-028",
+    "source_channel": "Apple App Store",
+    "raw_text": "Not the fastest app I've used but not the slowest. Acceptable for the price.",
+    "timestamp": "2026-10-08T05:15:00Z"
+  },
+  {
+    "feedback_id": "REV-029",
+    "source_channel": "Google Play Store",
+    "raw_text": "AI sometimes hallucinates feedback quotes that don't exist in my data. Have to double check everything.",
+    "timestamp": "2026-10-08T12:16:03Z"
+  },
+  {
+    "feedback_id": "REV-030",
+    "source_channel": "Product Hunt",
+    "raw_text": "Five stars for usability. Onboarding walked me through importing feedback and generating my first PRD in minutes.",
+    "timestamp": "2026-10-09T15:00:04Z"
+  },
+  {
+    "feedback_id": "REV-031",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Notification badges don't clear after reading. Cosmetic but annoying.",
+    "timestamp": "2026-10-09T15:14:51Z"
+  },
+  {
+    "feedback_id": "REV-032",
+    "source_channel": "Capterra",
+    "raw_text": "Login page doesn't show a clear error when the password is wrong, just reloads.",
+    "timestamp": "2026-10-10T03:23:12Z"
+  },
+  {
+    "feedback_id": "REV-033",
+    "source_channel": "G2 Crowd",
+    "raw_text": "No way to bulk edit feedback tags. Doing it one by one is tedious.",
+    "timestamp": "2026-10-10T13:26:44Z"
+  },
+  {
+    "feedback_id": "REV-034",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Initial page load feels heavy, probably too many scripts. Subsequent pages are fine.",
+    "timestamp": "2026-10-10T22:42:02Z"
+  },
+  {
+    "feedback_id": "REV-035",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Quick and snappy. Syncing with our feedback source was done in minutes.",
+    "timestamp": "2026-10-11T01:11:55Z"
+  },
+  {
+    "feedback_id": "REV-036",
+    "source_channel": "Product Hunt",
+    "raw_text": "The app freezes when I open large feedback imports. Have to reload the browser to continue.",
+    "timestamp": "2026-10-11T05:08:48Z"
+  },
+  {
+    "feedback_id": "REV-037",
+    "source_channel": "Capterra",
+    "raw_text": "Clear visual hierarchy, nice typography, and the colour coding for priority is spot on.",
+    "timestamp": "2026-10-11T09:54:52Z"
+  },
+  {
+    "feedback_id": "REV-038",
+    "source_channel": "Capterra",
+    "raw_text": "Really responsive, even on our slow office wifi. Good engineering.",
+    "timestamp": "2026-10-12T05:37:50Z"
+  },
+  {
+    "feedback_id": "REV-039",
+    "source_channel": "Capterra",
+    "raw_text": "No lag at all in our team of 40. Very smooth experience.",
+    "timestamp": "2026-10-12T08:31:00Z"
+  },
+  {
+    "feedback_id": "REV-040",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Impressive speed for AI features, summaries and user stories generate faster than the competitor we trialled.",
+    "timestamp": "2026-10-13T05:34:48Z"
+  },
+  {
+    "feedback_id": "REV-041",
+    "source_channel": "Apple App Store",
+    "raw_text": "This is the best feedback tool I've tried. Please add GitHub integration and it would be unbeatable.",
+    "timestamp": "2026-10-13T07:49:28Z"
+  },
+  {
+    "feedback_id": "REV-042",
+    "source_channel": "Product Hunt",
+    "raw_text": "Login works fine, but I wish there was an option for biometric login on mobile.",
+    "timestamp": "2026-10-13T09:33:55Z"
+  },
+  {
+    "feedback_id": "REV-043",
+    "source_channel": "Google Play Store",
+    "raw_text": "Decent UI, a bit of a learning curve at the start. After a week it clicked.",
+    "timestamp": "2026-10-13T17:17:41Z"
+  },
+  {
+    "feedback_id": "REV-044",
+    "source_channel": "Trustpilot",
+    "raw_text": "Fast, even with thousands of feedback entries. Searching and filtering feel instant.",
+    "timestamp": "2026-10-13T21:03:14Z"
+  },
+  {
+    "feedback_id": "REV-045",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Stable and reliable. We have used it daily for months without a crash.",
+    "timestamp": "2026-10-13T21:12:12Z"
+  },
+  {
+    "feedback_id": "REV-046",
+    "source_channel": "Apple App Store",
+    "raw_text": "Solid product but missing a native Jira integration. We use a workaround with CSV exports which is clunky.",
+    "timestamp": "2026-10-14T13:31:01Z"
+  },
+  {
+    "feedback_id": "REV-047",
+    "source_channel": "Trustpilot",
+    "raw_text": "Page layout shifts while loading so I often click the wrong button. Annoying.",
+    "timestamp": "2026-10-14T15:40:38Z"
+  },
+  {
+    "feedback_id": "REV-048",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Buggy after the last update. User stories disappear from my backlog until I refresh the page.",
+    "timestamp": "2026-10-15T00:31:36Z"
+  },
+  {
+    "feedback_id": "REV-049",
+    "source_channel": "Capterra",
+    "raw_text": "Super easy to use, I'm not technical and had no problems at all.",
+    "timestamp": "2026-10-15T10:01:49Z"
+  },
+  {
+    "feedback_id": "REV-050",
+    "source_channel": "Apple App Store",
+    "raw_text": "Really useful so far. My main wish is the ability to add attachments to feedback items.",
+    "timestamp": "2026-10-16T16:52:40Z"
+  },
+  {
+    "feedback_id": "REV-051",
+    "source_channel": "G2 Crowd",
+    "raw_text": "The CSV import fails on files with commas inside quotes. Had to clean everything manually.",
+    "timestamp": "2026-10-16T21:45:25Z"
+  },
+  {
+    "feedback_id": "REV-052",
+    "source_channel": "Google Play Store",
+    "raw_text": "Search sometimes returns no results even for words I know exist.",
+    "timestamp": "2026-10-16T23:06:26Z"
+  },
+  {
+    "feedback_id": "REV-053",
+    "source_channel": "Google Play Store",
+    "raw_text": "Lost a full PRD after an error message popped up while saving. There was no autosave or recovery. Very frustrating.",
+    "timestamp": "2026-10-17T01:11:04Z"
+  },
+  {
+    "feedback_id": "REV-054",
+    "source_channel": "Product Hunt",
+    "raw_text": "Slick and responsive design. Our stakeholders were impressed when I shared the roadmap view.",
+    "timestamp": "2026-10-17T08:43:26Z"
+  },
+  {
+    "feedback_id": "REV-055",
+    "source_channel": "G2 Crowd",
+    "raw_text": "SSO integration was painless. IT approved it quickly and we rolled it out to 60 people in a day.",
+    "timestamp": "2026-10-17T10:35:47Z"
+  },
+  {
+    "feedback_id": "REV-056",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Great stability, and when something does go wrong the error messages actually help.",
+    "timestamp": "2026-10-17T21:57:12Z"
+  },
+  {
+    "feedback_id": "REV-057",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Would give 5 stars if the UI were more customisable, but the defaults are decent.",
+    "timestamp": "2026-10-17T22:55:47Z"
+  },
+  {
+    "feedback_id": "REV-058",
+    "source_channel": "Trustpilot",
+    "raw_text": "Performance is generally good, with occasional lag during peak hours.",
+    "timestamp": "2026-10-18T06:52:58Z"
+  },
+  {
+    "feedback_id": "REV-059",
+    "source_channel": "Apple App Store",
+    "raw_text": "Magic links and SSO make onboarding contractors a breeze.",
+    "timestamp": "2026-10-18T09:52:23Z"
+  },
+  {
+    "feedback_id": "REV-060",
+    "source_channel": "Capterra",
+    "raw_text": "The product is stable most of the time but occasionally gives vague error messages.",
+    "timestamp": "2026-10-19T04:09:46Z"
+  },
+  {
+    "feedback_id": "REV-061",
+    "source_channel": "Trustpilot",
+    "raw_text": "Secure and simple. Two factor authentication was easy to set up.",
+    "timestamp": "2026-10-19T23:56:15Z"
+  },
+  {
+    "feedback_id": "REV-062",
+    "source_channel": "Capterra",
+    "raw_text": "Authentication is okay. Session timeout is a bit short for my taste.",
+    "timestamp": "2026-10-20T09:59:48Z"
+  },
+  {
+    "feedback_id": "REV-063",
+    "source_channel": "Product Hunt",
+    "raw_text": "Needs more export options. PDF is fine but we'd like Word and Markdown too.",
+    "timestamp": "2026-10-20T17:13:37Z"
+  },
+  {
+    "feedback_id": "REV-064",
+    "source_channel": "Trustpilot",
+    "raw_text": "Notifications and the activity feed lag behind by several minutes, so we get outdated information.",
+    "timestamp": "2026-10-20T22:32:26Z"
+  },
+  {
+    "feedback_id": "REV-065",
+    "source_channel": "Capterra",
+    "raw_text": "Great for turning feedback into requirements. Slack notifications would make it a perfect 5 stars.",
+    "timestamp": "2026-10-21T05:09:57Z"
+  },
+  {
+    "feedback_id": "REV-066",
+    "source_channel": "Capterra",
+    "raw_text": "Dashboard is painfully slow with our data volume. Takes up to 30 seconds to load, which is unacceptable for a daily tool.",
+    "timestamp": "2026-10-21T12:25:35Z"
+  },
+  {
+    "feedback_id": "REV-067",
+    "source_channel": "Capterra",
+    "raw_text": "Loading times have gotten worse over the last few releases. Hope they address it.",
+    "timestamp": "2026-10-21T12:37:30Z"
+  },
+  {
+    "feedback_id": "REV-068",
+    "source_channel": "Product Hunt",
+    "raw_text": "The dashboard gives me everything I need in one view. Clean, modern, and not overwhelming.",
+    "timestamp": "2026-10-21T13:19:45Z"
+  },
+  {
+    "feedback_id": "REV-069",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Invite flow is confusing, new teammates get an error unless they use the exact email I invited.",
+    "timestamp": "2026-10-21T17:31:25Z"
+  },
+  {
+    "feedback_id": "REV-070",
+    "source_channel": "Google Play Store",
+    "raw_text": "UI is okay but nothing special. Does the job.",
+    "timestamp": "2026-10-21T17:39:58Z"
+  },
+  {
+    "feedback_id": "REV-071",
+    "source_channel": "Google Play Store",
+    "raw_text": "Mostly bug free, though the Safari experience has some rendering glitches.",
+    "timestamp": "2026-10-21T23:32:52Z"
+  },
+  {
+    "feedback_id": "REV-072",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Dashboard timed out three times during our quarterly planning session. Very embarrassing in front of leadership.",
+    "timestamp": "2026-10-22T04:18:34Z"
+  },
+  {
+    "feedback_id": "REV-073",
+    "source_channel": "Trustpilot",
+    "raw_text": "Cannot export feedback with theme tags to our BI tool. That limits how much we can do with the data.",
+    "timestamp": "2026-10-22T04:19:46Z"
+  },
+  {
+    "feedback_id": "REV-074",
+    "source_channel": "Capterra",
+    "raw_text": "Had one error with exports, retried and it worked. Fine overall.",
+    "timestamp": "2026-10-22T18:36:09Z"
+  },
+  {
+    "feedback_id": "REV-075",
+    "source_channel": "Apple App Store",
+    "raw_text": "Good tool, would like to see a public API for custom integrations.",
+    "timestamp": "2026-10-23T08:04:16Z"
+  },
+  {
+    "feedback_id": "REV-076",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Beautiful interface, our designers and PMs both picked it up instantly. Feels like the tool was made by people who actually do product work.",
+    "timestamp": "2026-10-23T16:27:32Z"
+  },
+  {
+    "feedback_id": "REV-077",
+    "source_channel": "Capterra",
+    "raw_text": "Missing role based access control, which is a dealbreaker for our security team.",
+    "timestamp": "2026-10-24T16:06:49Z"
+  },
+  {
+    "feedback_id": "REV-078",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Very good value. Adding scheduled reports would be the cherry on top.",
+    "timestamp": "2026-10-24T16:47:37Z"
+  },
+  {
+    "feedback_id": "REV-079",
+    "source_channel": "Product Hunt",
+    "raw_text": "Can't stay logged in on my phone, it asks me to sign in every time I open the app.",
+    "timestamp": "2026-10-24T19:03:02Z"
+  },
+  {
+    "feedback_id": "REV-080",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Standard auth, nothing special but nothing broken.",
+    "timestamp": "2026-10-25T00:51:51Z"
+  },
+  {
+    "feedback_id": "REV-081",
+    "source_channel": "Google Play Store",
+    "raw_text": "Disappointed that there is no Zapier or webhook support. Automation options are very limited.",
+    "timestamp": "2026-10-25T02:56:17Z"
+  },
+  {
+    "feedback_id": "REV-082",
+    "source_channel": "G2 Crowd",
+    "raw_text": "The automated user story feature is fantastic. I'd love to see support for custom story templates in the future.",
+    "timestamp": "2026-10-25T14:19:41Z"
+  },
+  {
+    "feedback_id": "REV-083",
+    "source_channel": "Trustpilot",
+    "raw_text": "Good security features, SAML support and audit logs gave our compliance team confidence.",
+    "timestamp": "2026-10-25T18:34:27Z"
+  },
+  {
+    "feedback_id": "REV-084",
+    "source_channel": "Apple App Store",
+    "raw_text": "Speed is decent. Could be better when switching between workspaces.",
+    "timestamp": "2026-10-26T02:28:49Z"
+  },
+  {
+    "feedback_id": "REV-085",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Mobile experience is poor. Buttons overlap on my phone and I can't review PRDs on the go.",
+    "timestamp": "2026-10-26T15:11:33Z"
+  },
+  {
+    "feedback_id": "REV-086",
+    "source_channel": "Apple App Store",
+    "raw_text": "Forced logouts are frequent, I lose my work if I don't save constantly.",
+    "timestamp": "2026-10-26T18:56:43Z"
+  },
+  {
+    "feedback_id": "REV-087",
+    "source_channel": "Trustpilot",
+    "raw_text": "A multi language option would help our international teams.",
+    "timestamp": "2026-10-27T07:15:47Z"
+  },
+  {
+    "feedback_id": "REV-088",
+    "source_channel": "Apple App Store",
+    "raw_text": "Switching between accounts is awkward. I have to log out fully to use a second workspace login.",
+    "timestamp": "2026-10-27T08:01:47Z"
+  },
+  {
+    "feedback_id": "REV-089",
+    "source_channel": "Capterra",
+    "raw_text": "Decent feature set for an early product, but advanced analytics are missing.",
+    "timestamp": "2026-10-27T09:22:38Z"
+  },
+  {
+    "feedback_id": "REV-090",
+    "source_channel": "Trustpilot",
+    "raw_text": "Lacks integrations with the tools we actually use. No Slack, no Linear, no Confluence. Hard to justify for our team.",
+    "timestamp": "2026-10-27T10:48:40Z"
+  },
+  {
+    "feedback_id": "REV-091",
+    "source_channel": "Capterra",
+    "raw_text": "Love the drag and drop roadmap, way more intuitive than the spreadsheet we were using.",
+    "timestamp": "2026-10-28T02:08:26Z"
+  },
+  {
+    "feedback_id": "REV-092",
+    "source_channel": "Google Play Store",
+    "raw_text": "2FA lockout with no recovery codes provided. Had to wait for support to reset it, lost half a day.",
+    "timestamp": "2026-10-28T02:45:10Z"
+  },
+  {
+    "feedback_id": "REV-093",
+    "source_channel": "Trustpilot",
+    "raw_text": "The editor feels cramped, and there's no focus mode for writing long requirements.",
+    "timestamp": "2026-10-28T03:33:47Z"
+  },
+  {
+    "feedback_id": "REV-094",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Okta SSO setup docs are outdated and our admin spent hours figuring out the right settings.",
+    "timestamp": "2026-10-28T15:23:54Z"
+  },
+  {
+    "feedback_id": "REV-095",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Would prefer more granular permissions, but login itself is reliable.",
+    "timestamp": "2026-10-28T21:35:04Z"
+  },
+  {
+    "feedback_id": "REV-096",
+    "source_channel": "Capterra",
+    "raw_text": "Report generation is slow and sometimes times out. Support told us to try smaller date ranges.",
+    "timestamp": "2026-10-28T22:24:34Z"
+  },
+  {
+    "feedback_id": "REV-097",
+    "source_channel": "G2 Crowd",
+    "raw_text": "It's fine for small teams but I'm not sure it would hold up for enterprise volumes.",
+    "timestamp": "2026-10-29T06:38:11Z"
+  },
+  {
+    "feedback_id": "REV-098",
+    "source_channel": "Trustpilot",
+    "raw_text": "Icons aren't labelled and some of them are really not obvious. Hovering for tooltips every time gets old.",
+    "timestamp": "2026-10-29T11:09:44Z"
+  },
+  {
+    "feedback_id": "REV-099",
+    "source_channel": "Product Hunt",
+    "raw_text": "Roadmap export generates a corrupted file about half the time. We have to retry multiple times.",
+    "timestamp": "2026-10-30T01:23:57Z"
+  },
+  {
+    "feedback_id": "REV-100",
+    "source_channel": "G2 Crowd",
+    "raw_text": "Found a bug and support had it fixed in 24 hours. Fantastic service.",
+    "timestamp": "2026-10-30T07:15:34Z"
+  }
+]

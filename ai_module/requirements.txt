@@ -2,5 +2,6 @@ fastapi
 uvicorn[standard]
 pydantic-settings
 google-genai
+crewai[google-genai]
 pytest
 httpx

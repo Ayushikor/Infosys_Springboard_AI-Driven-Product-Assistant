@@ -1,0 +1,602 @@
+[
+  {
+    "feedback_id": "FB-001",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Could the app support login with Microsoft accounts too? Half our company is on Microsoft 365.",
+    "timestamp": "2026-09-30T14:27:32Z"
+  },
+  {
+    "feedback_id": "FB-002",
+    "source_channel": "Customer Success Call",
+    "raw_text": "The PRD editor feels clean and focused. Honestly nicer than the doc tool we used before.",
+    "timestamp": "2026-09-30T14:49:03Z"
+  },
+  {
+    "feedback_id": "FB-003",
+    "source_channel": "User Interview Notes",
+    "raw_text": "On my 13 inch laptop the roadmap view cuts off the right column and there is no horizontal scroll. I literally can't see the status of the Q4 items.",
+    "timestamp": "2026-09-30T16:41:11Z"
+  },
+  {
+    "feedback_id": "FB-004",
+    "source_channel": "In-App Widget",
+    "raw_text": "Password reset email arrives but the link seems to expire very quickly, maybe a few minutes.",
+    "timestamp": "2026-09-30T20:46:49Z"
+  },
+  {
+    "feedback_id": "FB-005",
+    "source_channel": "In-App Widget",
+    "raw_text": "Great product overall! A public API so we could push our own survey data in would be amazing.",
+    "timestamp": "2026-09-30T20:54:38Z"
+  },
+  {
+    "feedback_id": "FB-006",
+    "source_channel": "In-App Widget",
+    "raw_text": "invited my colleague and the link says invalid when she clicks it. had to resend like 3 times",
+    "timestamp": "2026-10-01T04:49:55Z"
+  },
+  {
+    "feedback_id": "FB-007",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Please add role based permissions. Right now everyone in the workspace can delete PRDs.",
+    "timestamp": "2026-10-01T06:35:52Z"
+  },
+  {
+    "feedback_id": "FB-008",
+    "source_channel": "In-App Widget",
+    "raw_text": "Modal windows don't close when I press escape and the close icon is tiny on mobile. Had to refresh the page to get out of one.",
+    "timestamp": "2026-10-01T09:23:40Z"
+  },
+  {
+    "feedback_id": "FB-009",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Can admins see a log of who logged in and when? Our security team asked about it.",
+    "timestamp": "2026-10-01T13:03:59Z"
+  },
+  {
+    "feedback_id": "FB-010",
+    "source_channel": "In-App Widget",
+    "raw_text": "Export is limited to PDF. We need Word or Markdown, nobody on my team edits PDFs.",
+    "timestamp": "2026-10-01T17:24:26Z"
+  },
+  {
+    "feedback_id": "FB-011",
+    "source_channel": "User Interview Notes",
+    "raw_text": "Tables don't remember my column widths. I resize them every single time I open the feedback list.",
+    "timestamp": "2026-10-01T19:28:57Z"
+  },
+  {
+    "feedback_id": "FB-012",
+    "source_channel": "In-App Widget",
+    "raw_text": "I can't figure out where the PRD export button went after the last update. Spent five minutes clicking around the toolbar.",
+    "timestamp": "2026-10-01T23:38:50Z"
+  },
+  {
+    "feedback_id": "FB-013",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Super helpful tool. A comparison view between two PRD versions would be the cherry on top.",
+    "timestamp": "2026-10-02T05:03:54Z"
+  },
+  {
+    "feedback_id": "FB-014",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Dashboard charts never finish loading on our VPN connection. Everyone in the Berlin office has the same problem.",
+    "timestamp": "2026-10-03T00:16:50Z"
+  },
+  {
+    "feedback_id": "FB-015",
+    "source_channel": "In-App Widget",
+    "raw_text": "Login is smooth and the remember me option works properly across devices.",
+    "timestamp": "2026-10-03T14:37:25Z"
+  },
+  {
+    "feedback_id": "FB-016",
+    "source_channel": "Community Forum",
+    "raw_text": "The main dashboard takes around 20 seconds to load once we cross a few thousand feedback items. It was fine a month ago.",
+    "timestamp": "2026-10-03T17:43:36Z"
+  },
+  {
+    "feedback_id": "FB-017",
+    "source_channel": "In-App Widget",
+    "raw_text": "The AI generated stories are a lot more accurate after the update, haven't hit any weird output this week.",
+    "timestamp": "2026-10-03T23:45:11Z"
+  },
+  {
+    "feedback_id": "FB-018",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Sentiment shows negative for clearly positive comments. I checked a few and the AI got them wrong.",
+    "timestamp": "2026-10-05T03:53:50Z"
+  },
+  {
+    "feedback_id": "FB-019",
+    "source_channel": "In-App Widget",
+    "raw_text": "Switched from Chrome to Safari and had to log in again even though I ticked stay signed in.",
+    "timestamp": "2026-10-05T06:04:11Z"
+  },
+  {
+    "feedback_id": "FB-020",
+    "source_channel": "In-App Widget",
+    "raw_text": "Really like how the sentiment colours are consistent across the dashboard and the feedback list. Easy to scan.",
+    "timestamp": "2026-10-05T07:10:36Z"
+  },
+  {
+    "feedback_id": "FB-021",
+    "source_channel": "In-App Widget",
+    "raw_text": "Our whole team is stuck. Importing a 5k row CSV froze the app and now every page in the workspace times out.",
+    "timestamp": "2026-10-05T14:26:46Z"
+  },
+  {
+    "feedback_id": "FB-022",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "The layout is fine overall, but the tag filters take up a lot of room on a laptop screen. Maybe make them collapsible?",
+    "timestamp": "2026-10-05T15:35:00Z"
+  },
+  {
+    "feedback_id": "FB-023",
+    "source_channel": "User Interview Notes",
+    "raw_text": "Really happy with it. Adding GitHub issue links to roadmap items would be a nice bonus.",
+    "timestamp": "2026-10-07T00:25:13Z"
+  },
+  {
+    "feedback_id": "FB-024",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Locked out of my account after too many attempts and there's no clear way to unlock it myself.",
+    "timestamp": "2026-10-07T05:34:31Z"
+  },
+  {
+    "feedback_id": "FB-025",
+    "source_channel": "Community Forum",
+    "raw_text": "Haven't run into any bugs in a month of daily use. Rock solid for us so far.",
+    "timestamp": "2026-10-07T12:35:27Z"
+  },
+  {
+    "feedback_id": "FB-026",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Love the new theme board. Seeing feedback clusters as cards makes it so much easier to explain pain points to my team.",
+    "timestamp": "2026-10-07T21:28:43Z"
+  },
+  {
+    "feedback_id": "FB-027",
+    "source_channel": "User Interview Notes",
+    "raw_text": "Notification bell opens instantly now, nice improvement over last month.",
+    "timestamp": "2026-10-07T22:18:21Z"
+  },
+  {
+    "feedback_id": "FB-028",
+    "source_channel": "In-App Widget",
+    "raw_text": "Navigation is mostly intuitive. I only got lost looking for workspace settings, they're hidden under the profile menu.",
+    "timestamp": "2026-10-07T23:28:38Z"
+  },
+  {
+    "feedback_id": "FB-029",
+    "source_channel": "User Interview Notes",
+    "raw_text": "The sidebar keeps collapsing every time I switch workspaces. I have to reopen it again and again, super annoying.",
+    "timestamp": "2026-10-08T12:56:23Z"
+  },
+  {
+    "feedback_id": "FB-030",
+    "source_channel": "In-App Widget",
+    "raw_text": "The automated user story generator sometimes returns the same story twice with different titles.",
+    "timestamp": "2026-10-08T20:42:56Z"
+  },
+  {
+    "feedback_id": "FB-031",
+    "source_channel": "Community Forum",
+    "raw_text": "Really enjoying the tool. Custom fields on feedback items, like account tier and region, would make it perfect for us.",
+    "timestamp": "2026-10-10T01:47:04Z"
+  },
+  {
+    "feedback_id": "FB-032",
+    "source_channel": "Community Forum",
+    "raw_text": "Uploading a CSV with more than 10 columns fails silently, no error, nothing imported.",
+    "timestamp": "2026-10-10T05:58:53Z"
+  },
+  {
+    "feedback_id": "FB-033",
+    "source_channel": "User Interview Notes",
+    "raw_text": "The AI summary of a theme came back in a couple of seconds. That's impressive compared to other tools we tried.",
+    "timestamp": "2026-10-10T14:15:22Z"
+  },
+  {
+    "feedback_id": "FB-034",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Filtering feedback by sentiment is super snappy even with a huge list. Good job.",
+    "timestamp": "2026-10-11T04:58:02Z"
+  },
+  {
+    "feedback_id": "FB-035",
+    "source_channel": "Community Forum",
+    "raw_text": "Drag and drop on the roadmap board is jumpy. Cards snap back to their old column about half the time.",
+    "timestamp": "2026-10-11T06:26:25Z"
+  },
+  {
+    "feedback_id": "FB-036",
+    "source_channel": "Community Forum",
+    "raw_text": "Love the automated user stories. It would be perfect if I could set a template for the acceptance criteria format.",
+    "timestamp": "2026-10-11T08:38:13Z"
+  },
+  {
+    "feedback_id": "FB-037",
+    "source_channel": "In-App Widget",
+    "raw_text": "Logging in drops me straight into the workspace I used last, which is exactly what I want.",
+    "timestamp": "2026-10-11T11:44:25Z"
+  },
+  {
+    "feedback_id": "FB-038",
+    "source_channel": "Community Forum",
+    "raw_text": "We'd like to enforce 2FA for all members of our workspace. I only see it as optional per user.",
+    "timestamp": "2026-10-11T15:42:10Z"
+  },
+  {
+    "feedback_id": "FB-039",
+    "source_channel": "In-App Widget",
+    "raw_text": "Great product so far. Only thing I'd add is a Notion export so we can share PRDs with the wider company.",
+    "timestamp": "2026-10-11T20:53:49Z"
+  },
+  {
+    "feedback_id": "FB-040",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Cannot bulk export feedback to CSV with the theme tags included, and I need that for our monthly report.",
+    "timestamp": "2026-10-12T10:56:01Z"
+  },
+  {
+    "feedback_id": "FB-041",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Reported a bug with the CSV import last week and it was fixed in two days. Impressive turnaround.",
+    "timestamp": "2026-10-12T14:20:03Z"
+  },
+  {
+    "feedback_id": "FB-042",
+    "source_channel": "Customer Success Call",
+    "raw_text": "The latest release fixed the duplicate notifications. Thanks for sorting that out so quickly.",
+    "timestamp": "2026-10-13T03:30:54Z"
+  },
+  {
+    "feedback_id": "FB-043",
+    "source_channel": "In-App Widget",
+    "raw_text": "Comments on PRDs sometimes post twice if I click the button quickly.",
+    "timestamp": "2026-10-13T21:59:27Z"
+  },
+  {
+    "feedback_id": "FB-044",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Imported feedback shows up with weird characters, the apostrophes turn into question marks. Not sure if it's our file.",
+    "timestamp": "2026-10-14T10:23:53Z"
+  },
+  {
+    "feedback_id": "FB-045",
+    "source_channel": "User Interview Notes",
+    "raw_text": "Dashboard loads noticeably faster since the last release. Used to wait a while, now it's basically instant.",
+    "timestamp": "2026-10-15T04:40:32Z"
+  },
+  {
+    "feedback_id": "FB-046",
+    "source_channel": "In-App Widget",
+    "raw_text": "Switching between workspaces takes ages, the spinner just hangs for a while.",
+    "timestamp": "2026-10-15T09:24:53Z"
+  },
+  {
+    "feedback_id": "FB-047",
+    "source_channel": "In-App Widget",
+    "raw_text": "Tooltip on the priority score is showing the wrong formula description I think.",
+    "timestamp": "2026-10-15T09:35:07Z"
+  },
+  {
+    "feedback_id": "FB-048",
+    "source_channel": "Community Forum",
+    "raw_text": "Nobody on our team of 25 can sign in since this morning, the login page just spins and returns an error.",
+    "timestamp": "2026-10-15T09:52:43Z"
+  },
+  {
+    "feedback_id": "FB-049",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "We can't adopt this across the company without an SSO integration with Okta, procurement told us this is a blocker.",
+    "timestamp": "2026-10-16T02:45:24Z"
+  },
+  {
+    "feedback_id": "FB-050",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "The empty states are confusing, I thought my import had failed but it was just still processing with no loading indicator.",
+    "timestamp": "2026-10-16T05:17:19Z"
+  },
+  {
+    "feedback_id": "FB-051",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Theme clustering ran in seconds on our 800 records, much quicker than I expected.",
+    "timestamp": "2026-10-16T09:04:25Z"
+  },
+  {
+    "feedback_id": "FB-052",
+    "source_channel": "In-App Widget",
+    "raw_text": "The session expired message shows up, but the page doesn't redirect to login. Minor, but worth fixing.",
+    "timestamp": "2026-10-16T21:31:15Z"
+  },
+  {
+    "feedback_id": "FB-053",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "The roadmap timeline view is really easy on the eyes, our execs actually understood it without me explaining.",
+    "timestamp": "2026-10-16T23:55:01Z"
+  },
+  {
+    "feedback_id": "FB-054",
+    "source_channel": "In-App Widget",
+    "raw_text": "Speed is fine overall. The only slow part is the sync with the shared drive, but that might be on our side.",
+    "timestamp": "2026-10-17T09:41:20Z"
+  },
+  {
+    "feedback_id": "FB-055",
+    "source_channel": "In-App Widget",
+    "raw_text": "The roadmap is awesome. Adding a quarter view with swimlanes by team would make it complete.",
+    "timestamp": "2026-10-17T23:05:06Z"
+  },
+  {
+    "feedback_id": "FB-056",
+    "source_channel": "In-App Widget",
+    "raw_text": "Appreciate that you support magic link login. Really handy for our contractors.",
+    "timestamp": "2026-10-18T02:41:44Z"
+  },
+  {
+    "feedback_id": "FB-057",
+    "source_channel": "User Interview Notes",
+    "raw_text": "Single sign on worked on the first try with Okta. Smooth experience, thanks!",
+    "timestamp": "2026-10-20T14:20:51Z"
+  },
+  {
+    "feedback_id": "FB-058",
+    "source_channel": "Community Forum",
+    "raw_text": "We really need a two way Jira integration so approved stories show up in our sprint backlog automatically.",
+    "timestamp": "2026-10-21T05:50:12Z"
+  },
+  {
+    "feedback_id": "FB-059",
+    "source_channel": "User Interview Notes",
+    "raw_text": "The new filter bar is great, saved me a lot of time when prepping for the sprint review.",
+    "timestamp": "2026-10-21T06:23:29Z"
+  },
+  {
+    "feedback_id": "FB-060",
+    "source_channel": "In-App Widget",
+    "raw_text": "The 2FA code from the authenticator app is often rejected the first time and works on the second try.",
+    "timestamp": "2026-10-21T06:51:59Z"
+  },
+  {
+    "feedback_id": "FB-061",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Our dashboard times out whenever we filter by a date range longer than 90 days. We need that for quarterly reviews.",
+    "timestamp": "2026-10-21T08:30:55Z"
+  },
+  {
+    "feedback_id": "FB-062",
+    "source_channel": "Customer Success Call",
+    "raw_text": "SSO setup with Google Workspace took five minutes, no support needed. Nice.",
+    "timestamp": "2026-10-21T14:59:25Z"
+  },
+  {
+    "feedback_id": "FB-063",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Imports are way faster after the update. 2k rows done before I finished my coffee.",
+    "timestamp": "2026-10-21T20:59:24Z"
+  },
+  {
+    "feedback_id": "FB-064",
+    "source_channel": "In-App Widget",
+    "raw_text": "Would love scheduled weekly digests of new feedback themes sent by email.",
+    "timestamp": "2026-10-23T09:28:48Z"
+  },
+  {
+    "feedback_id": "FB-065",
+    "source_channel": "In-App Widget",
+    "raw_text": "Dark mode text on the dashboard cards is too faint, the grey on dark blue is hard to read.",
+    "timestamp": "2026-10-23T14:47:49Z"
+  },
+  {
+    "feedback_id": "FB-066",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Not sure if it's a bug but the count on the dashboard says 120 feedback items while the list shows 118.",
+    "timestamp": "2026-10-23T16:29:02Z"
+  },
+  {
+    "feedback_id": "FB-067",
+    "source_channel": "Community Forum",
+    "raw_text": "Seeing a small console error on the theme page, nothing seems broken but wanted to flag it.",
+    "timestamp": "2026-10-23T18:44:34Z"
+  },
+  {
+    "feedback_id": "FB-068",
+    "source_channel": "User Interview Notes",
+    "raw_text": "I keep getting logged out every 10 minutes. Lost my unsaved PRD draft twice this week.",
+    "timestamp": "2026-10-23T21:51:14Z"
+  },
+  {
+    "feedback_id": "FB-069",
+    "source_channel": "In-App Widget",
+    "raw_text": "We lost a whole afternoon of edits on our roadmap, the page refreshed and everything reverted to the last version from Monday.",
+    "timestamp": "2026-10-24T02:42:00Z"
+  },
+  {
+    "feedback_id": "FB-070",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "still no slack integration lol. we all live in slack so i copy paste summaries over every week, kinda painful",
+    "timestamp": "2026-10-24T03:24:45Z"
+  },
+  {
+    "feedback_id": "FB-071",
+    "source_channel": "User Interview Notes",
+    "raw_text": "Got an unexpected error banner once when generating a roadmap, tried again and it worked.",
+    "timestamp": "2026-10-24T05:04:12Z"
+  },
+  {
+    "feedback_id": "FB-072",
+    "source_channel": "Community Forum",
+    "raw_text": "Could we get a mobile app or at least a better mobile layout for reviewing PRDs on the go?",
+    "timestamp": "2026-10-24T07:46:37Z"
+  },
+  {
+    "feedback_id": "FB-073",
+    "source_channel": "In-App Widget",
+    "raw_text": "Typing in the PRD editor has a slight delay on long documents. Not a big deal but I noticed it.",
+    "timestamp": "2026-10-24T18:31:48Z"
+  },
+  {
+    "feedback_id": "FB-074",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Generating a PRD takes almost two minutes. By the time it finishes I've lost my train of thought.",
+    "timestamp": "2026-10-25T06:15:22Z"
+  },
+  {
+    "feedback_id": "FB-075",
+    "source_channel": "In-App Widget",
+    "raw_text": "Bulk tagging 200 items works but it takes a while. Could it run in the background?",
+    "timestamp": "2026-10-25T14:16:22Z"
+  },
+  {
+    "feedback_id": "FB-076",
+    "source_channel": "In-App Widget",
+    "raw_text": "No way to link feedback to a Linear issue. We track engineering work there so this is a big gap for us.",
+    "timestamp": "2026-10-25T15:06:14Z"
+  },
+  {
+    "feedback_id": "FB-077",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Onboarding checklist was really clear. I had my first feedback import done within ten minutes without reading any docs.",
+    "timestamp": "2026-10-25T22:20:18Z"
+  },
+  {
+    "feedback_id": "FB-078",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Would be nice to have keyboard shortcuts for common actions like new PRD or switch workspace.",
+    "timestamp": "2026-10-26T08:58:52Z"
+  },
+  {
+    "feedback_id": "FB-079",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Searching the feedback list lags badly. I type a keyword and nothing happens for a good five seconds.",
+    "timestamp": "2026-10-26T11:03:40Z"
+  },
+  {
+    "feedback_id": "FB-080",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Deleting a theme doesn't remove it from the filter dropdown until I refresh.",
+    "timestamp": "2026-10-26T20:48:45Z"
+  },
+  {
+    "feedback_id": "FB-081",
+    "source_channel": "In-App Widget",
+    "raw_text": "Would be great to attach screenshots or recordings to a feedback item.",
+    "timestamp": "2026-10-26T21:27:23Z"
+  },
+  {
+    "feedback_id": "FB-082",
+    "source_channel": "In-App Widget",
+    "raw_text": "The Jira link keeps failing with 'Something went wrong' and there's no detail about what happened.",
+    "timestamp": "2026-10-26T23:36:38Z"
+  },
+  {
+    "feedback_id": "FB-083",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Page loads are acceptable for us right now, but I worry about how it will scale when we add the support team's data.",
+    "timestamp": "2026-10-27T02:11:02Z"
+  },
+  {
+    "feedback_id": "FB-084",
+    "source_channel": "In-App Widget",
+    "raw_text": "I'd like longer sessions for our internal kiosk dashboard, being logged out every few hours is a pain.",
+    "timestamp": "2026-10-27T03:25:46Z"
+  },
+  {
+    "feedback_id": "FB-085",
+    "source_channel": "In-App Widget",
+    "raw_text": "Role assignment on invite is easy to understand, I was able to onboard the whole team in an afternoon.",
+    "timestamp": "2026-10-27T03:52:13Z"
+  },
+  {
+    "feedback_id": "FB-086",
+    "source_channel": "In-App Widget",
+    "raw_text": "Not sure if this is intended, but the date pickers use US format and our team works with day first dates.",
+    "timestamp": "2026-10-27T10:24:28Z"
+  },
+  {
+    "feedback_id": "FB-087",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "first load every morning is sooo slow, then it's fine after that. caching maybe??",
+    "timestamp": "2026-10-27T23:02:24Z"
+  },
+  {
+    "feedback_id": "FB-088",
+    "source_channel": "In-App Widget",
+    "raw_text": "The password rules aren't shown until after you submit. Would be better to list them up front.",
+    "timestamp": "2026-10-28T04:46:24Z"
+  },
+  {
+    "feedback_id": "FB-089",
+    "source_channel": "In-App Widget",
+    "raw_text": "Clicking save on a PRD shows a success toast but when I reopen it my changes are gone.",
+    "timestamp": "2026-10-28T05:42:34Z"
+  },
+  {
+    "feedback_id": "FB-090",
+    "source_channel": "Community Forum",
+    "raw_text": "Pagination on the feedback list goes back to page 1 when I return from an item. Minor annoyance.",
+    "timestamp": "2026-10-28T08:11:41Z"
+  },
+  {
+    "feedback_id": "FB-091",
+    "source_channel": "Customer Success Call",
+    "raw_text": "It would help if the priority labels used different colours. Right now high and medium look almost the same to me.",
+    "timestamp": "2026-10-28T11:12:22Z"
+  },
+  {
+    "feedback_id": "FB-092",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "SAML login fails with a vague error for half of our users. Others from the same company can sign in fine.",
+    "timestamp": "2026-10-28T14:54:56Z"
+  },
+  {
+    "feedback_id": "FB-093",
+    "source_channel": "In-App Widget",
+    "raw_text": "Spotted a typo in the roadmap empty state, it says 'No items yets'. Cosmetic only.",
+    "timestamp": "2026-10-28T20:55:16Z"
+  },
+  {
+    "feedback_id": "FB-094",
+    "source_channel": "In-App Widget",
+    "raw_text": "A Confluence integration would make our documentation process much easier.",
+    "timestamp": "2026-10-29T13:07:43Z"
+  },
+  {
+    "feedback_id": "FB-095",
+    "source_channel": "NPS Survey Response",
+    "raw_text": "Error 500 whenever I try to export a PRD that contains a table. Plain text PRDs export fine.",
+    "timestamp": "2026-10-29T15:09:07Z"
+  },
+  {
+    "feedback_id": "FB-096",
+    "source_channel": "User Interview Notes",
+    "raw_text": "The roadmap page gets really sluggish when there are more than 40 items, scrolling stutters.",
+    "timestamp": "2026-10-29T16:19:17Z"
+  },
+  {
+    "feedback_id": "FB-097",
+    "source_channel": "Customer Success Call",
+    "raw_text": "Can the AI suggest priority scores based on how many customers mentioned something? That would save a lot of manual work.",
+    "timestamp": "2026-10-29T17:55:51Z"
+  },
+  {
+    "feedback_id": "FB-098",
+    "source_channel": "User Interview Notes",
+    "raw_text": "Too many clicks to get from a theme to the raw feedback behind it. It would be nice to see quotes right on the theme page.",
+    "timestamp": "2026-10-29T18:31:23Z"
+  },
+  {
+    "feedback_id": "FB-099",
+    "source_channel": "In-App Widget",
+    "raw_text": "Exporting to PDF is slow for long PRDs. Not a blocker but I wish there was a progress bar so I know it's working.",
+    "timestamp": "2026-10-30T11:21:55Z"
+  },
+  {
+    "feedback_id": "FB-100",
+    "source_channel": "In-App Widget",
+    "raw_text": "It would be really useful to merge duplicate themes. Right now we have three themes that are basically the same thing.",
+    "timestamp": "2026-10-30T11:27:05Z"
+  }
+]

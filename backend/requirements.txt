@@ -8,3 +8,4 @@ email-validator
 passlib[bcrypt]
 python-jose[cryptography]
 httpx
+itsdangerous

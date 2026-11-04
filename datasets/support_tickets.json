@@ -1,0 +1,602 @@
+[
+  {
+    "feedback_id": "TKT-001",
+    "source_channel": "Jira Service Management",
+    "raw_text": "After the update our roadmap page shows overlapping text and half the buttons don't respond. Our planning meeting is in an hour, please escalate.",
+    "timestamp": "2026-09-30T13:00:23Z"
+  },
+  {
+    "feedback_id": "TKT-002",
+    "source_channel": "Freshdesk",
+    "raw_text": "PRD version history shows the wrong author for edits made by our contractor account.",
+    "timestamp": "2026-09-30T16:18:40Z"
+  },
+  {
+    "feedback_id": "TKT-003",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Exporting feedback only gives raw text, with no sentiment or theme columns, which makes the export useless for our report. Is there a setting?",
+    "timestamp": "2026-09-30T18:39:45Z"
+  },
+  {
+    "feedback_id": "TKT-004",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Our new hire cannot accept the workspace invite, the link says expired though it was sent an hour ago.",
+    "timestamp": "2026-09-30T22:30:55Z"
+  },
+  {
+    "feedback_id": "TKT-005",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Roadmap sometimes loads empty on first visit and fills in after a refresh. Cannot reproduce reliably.",
+    "timestamp": "2026-10-01T09:54:06Z"
+  },
+  {
+    "feedback_id": "TKT-006",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Thanks for the guidance on batching imports. Imports now finish in minutes instead of hours.",
+    "timestamp": "2026-10-01T21:01:55Z"
+  },
+  {
+    "feedback_id": "TKT-007",
+    "source_channel": "Email Support",
+    "raw_text": "Can we choose which sections to include when exporting a PRD to PDF? Sometimes we only need the requirements.",
+    "timestamp": "2026-10-02T00:30:38Z"
+  },
+  {
+    "feedback_id": "TKT-008",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Password reset email isn't arriving. Checked spam, tried with two email addresses.",
+    "timestamp": "2026-10-02T04:19:22Z"
+  },
+  {
+    "feedback_id": "TKT-009",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Hi team, how do I change the default view of the roadmap from timeline to board? I can't find the setting anywhere.",
+    "timestamp": "2026-10-02T19:31:10Z"
+  },
+  {
+    "feedback_id": "TKT-010",
+    "source_channel": "Freshdesk",
+    "raw_text": "PRD generation keeps timing out when the linked theme has more than 500 feedback items.",
+    "timestamp": "2026-10-03T07:57:30Z"
+  },
+  {
+    "feedback_id": "TKT-011",
+    "source_channel": "Email Support",
+    "raw_text": "Just wanted to say the new priority colour scheme is much clearer, thanks for listening to our feedback.",
+    "timestamp": "2026-10-03T12:40:12Z"
+  },
+  {
+    "feedback_id": "TKT-012",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Loading speed is back to normal after your fix, thank you for the quick response.",
+    "timestamp": "2026-10-03T13:19:24Z"
+  },
+  {
+    "feedback_id": "TKT-013",
+    "source_channel": "Email Support",
+    "raw_text": "Is there a way to integrate with Jira? We want approved user stories to create tickets automatically.",
+    "timestamp": "2026-10-04T04:14:55Z"
+  },
+  {
+    "feedback_id": "TKT-014",
+    "source_channel": "Jira Service Management",
+    "raw_text": "Dropdown menus on the feedback page are cut off at the bottom of the screen so I can't select the last options.",
+    "timestamp": "2026-10-04T15:23:17Z"
+  },
+  {
+    "feedback_id": "TKT-015",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Dark mode toggle doesn't persist, it goes back to light every time I log in.",
+    "timestamp": "2026-10-04T20:31:31Z"
+  },
+  {
+    "feedback_id": "TKT-016",
+    "source_channel": "Email Support",
+    "raw_text": "Can you confirm the session timeout duration for our workspace?",
+    "timestamp": "2026-10-04T20:41:15Z"
+  },
+  {
+    "feedback_id": "TKT-017",
+    "source_channel": "Email Support",
+    "raw_text": "Production workspace is completely unresponsive. Pages time out after 60 seconds and our quarterly planning is blocked.",
+    "timestamp": "2026-10-05T00:41:58Z"
+  },
+  {
+    "feedback_id": "TKT-018",
+    "source_channel": "Freshdesk",
+    "raw_text": "Appreciate the help with the SAML attribute mapping, everything works as expected.",
+    "timestamp": "2026-10-06T06:24:47Z"
+  },
+  {
+    "feedback_id": "TKT-019",
+    "source_channel": "Freshdesk",
+    "raw_text": "Data loss: our saved PRD from yesterday is blank when opened. Please restore from backup urgently.",
+    "timestamp": "2026-10-06T08:15:13Z"
+  },
+  {
+    "feedback_id": "TKT-020",
+    "source_channel": "Email Support",
+    "raw_text": "Bug confirmed fixed in the latest build, thanks for the fast fix. Please close this ticket.",
+    "timestamp": "2026-10-06T10:26:42Z"
+  },
+  {
+    "feedback_id": "TKT-021",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Would it be possible to add a second reviewer step in the PRD approval flow?",
+    "timestamp": "2026-10-07T02:32:21Z"
+  },
+  {
+    "feedback_id": "TKT-022",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Console shows a failed network request on the dashboard, but everything still works.",
+    "timestamp": "2026-10-07T03:20:11Z"
+  },
+  {
+    "feedback_id": "TKT-023",
+    "source_channel": "Email Support",
+    "raw_text": "Notification panel opens instantly now, thanks for the performance fix.",
+    "timestamp": "2026-10-07T12:21:20Z"
+  },
+  {
+    "feedback_id": "TKT-024",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Jira sync marks all issues as 'to do' even when they're done in Jira. Our roadmap is now inaccurate.",
+    "timestamp": "2026-10-08T03:57:24Z"
+  },
+  {
+    "feedback_id": "TKT-025",
+    "source_channel": "Jira Service Management",
+    "raw_text": "Security review failed because there's no audit log export. We need this feature to complete our procurement.",
+    "timestamp": "2026-10-09T10:23:21Z"
+  },
+  {
+    "feedback_id": "TKT-026",
+    "source_channel": "Freshdesk",
+    "raw_text": "The Spanish labels in the export dialog look correct now, thanks for the quick correction.",
+    "timestamp": "2026-10-09T19:30:32Z"
+  },
+  {
+    "feedback_id": "TKT-027",
+    "source_channel": "Jira Service Management",
+    "raw_text": "Still no option to bulk assign owners on the roadmap. This is a very repetitive task for us.",
+    "timestamp": "2026-10-10T00:15:43Z"
+  },
+  {
+    "feedback_id": "TKT-028",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Does the platform support webhooks? We want to trigger our internal workflow when a PRD is approved.",
+    "timestamp": "2026-10-10T18:31:27Z"
+  },
+  {
+    "feedback_id": "TKT-029",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Our team needs Okta group sync for role assignment. Without it we have to manage permissions manually.",
+    "timestamp": "2026-10-11T05:20:04Z"
+  },
+  {
+    "feedback_id": "TKT-030",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Search function freezes the browser when I type quickly. Seen in Chrome and Edge.",
+    "timestamp": "2026-10-11T15:18:30Z"
+  },
+  {
+    "feedback_id": "TKT-031",
+    "source_channel": "Email Support",
+    "raw_text": "Page switches between roadmap and dashboard are noticeably lagging since the last update.",
+    "timestamp": "2026-10-12T02:14:11Z"
+  },
+  {
+    "feedback_id": "TKT-032",
+    "source_channel": "Email Support",
+    "raw_text": "The Jira sync feature saved us hours this sprint. Just wanted to say thank you.",
+    "timestamp": "2026-10-12T14:55:16Z"
+  },
+  {
+    "feedback_id": "TKT-033",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Is it normal for the AI summary to take about 15 seconds on long threads?",
+    "timestamp": "2026-10-12T22:46:20Z"
+  },
+  {
+    "feedback_id": "TKT-034",
+    "source_channel": "Freshdesk",
+    "raw_text": "Any plans for Microsoft Teams integration? Our company doesn't use Slack.",
+    "timestamp": "2026-10-13T08:02:32Z"
+  },
+  {
+    "feedback_id": "TKT-035",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Wanted to report that the tooltip for RICE score shows 'undefined' in one place.",
+    "timestamp": "2026-10-14T03:09:37Z"
+  },
+  {
+    "feedback_id": "TKT-036",
+    "source_channel": "Jira Service Management",
+    "raw_text": "Can the AI user story generator follow our company's own template? Currently the format is fixed.",
+    "timestamp": "2026-10-14T05:53:39Z"
+  },
+  {
+    "feedback_id": "TKT-037",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Do you support passwordless login for contractors?",
+    "timestamp": "2026-10-14T06:12:36Z"
+  },
+  {
+    "feedback_id": "TKT-038",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Error 500 when exporting PRD to PDF. Reproduced on two different PRDs. Steps and screenshot attached.",
+    "timestamp": "2026-10-14T12:44:43Z"
+  },
+  {
+    "feedback_id": "TKT-039",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Feature request: attach files and screenshots directly to feedback items.",
+    "timestamp": "2026-10-14T17:24:03Z"
+  },
+  {
+    "feedback_id": "TKT-040",
+    "source_channel": "Jira Service Management",
+    "raw_text": "Question about the layout: can I hide the sidebar permanently? It takes up too much room on my laptop.",
+    "timestamp": "2026-10-14T22:00:49Z"
+  },
+  {
+    "feedback_id": "TKT-041",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Is there a known performance issue today? Pages feel slower than usual.",
+    "timestamp": "2026-10-14T23:02:53Z"
+  },
+  {
+    "feedback_id": "TKT-042",
+    "source_channel": "Email Support",
+    "raw_text": "Importing Intercom conversations is manual for us right now, we copy and paste each one. That is a lot of wasted time.",
+    "timestamp": "2026-10-14T23:30:37Z"
+  },
+  {
+    "feedback_id": "TKT-043",
+    "source_channel": "Freshdesk",
+    "raw_text": "Feature request: Slack notifications when a new theme crosses a threshold of feedback items.",
+    "timestamp": "2026-10-15T04:36:46Z"
+  },
+  {
+    "feedback_id": "TKT-044",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Can someone explain what the coloured dots next to each theme mean? I couldn't find it in the help centre.",
+    "timestamp": "2026-10-15T11:41:12Z"
+  },
+  {
+    "feedback_id": "TKT-045",
+    "source_channel": "Intercom Chat",
+    "raw_text": "We plan to onboard 200 more users next month. Can you confirm the platform can handle that load?",
+    "timestamp": "2026-10-15T13:08:47Z"
+  },
+  {
+    "feedback_id": "TKT-046",
+    "source_channel": "Jira Service Management",
+    "raw_text": "I'd like to add custom fields for customer tier, but the option isn't available on our plan. Can that be changed?",
+    "timestamp": "2026-10-16T14:35:35Z"
+  },
+  {
+    "feedback_id": "TKT-047",
+    "source_channel": "Jira Service Management",
+    "raw_text": "The 'Generate user stories' button is greyed out for all our users after the last release. Blocking sprint planning.",
+    "timestamp": "2026-10-16T16:36:12Z"
+  },
+  {
+    "feedback_id": "TKT-048",
+    "source_channel": "Jira Service Management",
+    "raw_text": "The tip you sent about collapsing the filter panel worked perfectly. Thank you!",
+    "timestamp": "2026-10-16T19:12:29Z"
+  },
+  {
+    "feedback_id": "TKT-049",
+    "source_channel": "Jira Service Management",
+    "raw_text": "Roadmap dates appear one day earlier for us in IST. Is that timezone handling expected?",
+    "timestamp": "2026-10-16T19:23:37Z"
+  },
+  {
+    "feedback_id": "TKT-050",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Request to allow custom statuses on roadmap items, beyond planned, in progress and completed.",
+    "timestamp": "2026-10-16T19:46:06Z"
+  },
+  {
+    "feedback_id": "TKT-051",
+    "source_channel": "Jira Service Management",
+    "raw_text": "Requesting guidance on setting up a saved view of high priority feedback only. The UI doesn't make it obvious.",
+    "timestamp": "2026-10-16T21:12:53Z"
+  },
+  {
+    "feedback_id": "TKT-052",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Thanks for the walkthrough, the new filters make sense now. Closing this ticket.",
+    "timestamp": "2026-10-17T00:55:58Z"
+  },
+  {
+    "feedback_id": "TKT-053",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Roadmap export has been running for 25 minutes. We need the file for a board meeting this afternoon.",
+    "timestamp": "2026-10-17T03:07:51Z"
+  },
+  {
+    "feedback_id": "TKT-054",
+    "source_channel": "Zendesk Support",
+    "raw_text": "The user story generator returns an empty result when the theme name has an ampersand in it.",
+    "timestamp": "2026-10-17T08:03:29Z"
+  },
+  {
+    "feedback_id": "TKT-055",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Thanks, the stale theme tags are gone after your data fix.",
+    "timestamp": "2026-10-18T05:42:43Z"
+  },
+  {
+    "feedback_id": "TKT-056",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Cursor jumps to the beginning of the line while typing in the PRD editor. Happens in Firefox only.",
+    "timestamp": "2026-10-18T13:50:00Z"
+  },
+  {
+    "feedback_id": "TKT-057",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Noticing a brief pause in the PRD editor every few seconds when autosave runs. Is that expected?",
+    "timestamp": "2026-10-18T15:57:52Z"
+  },
+  {
+    "feedback_id": "TKT-058",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Dashboard takes more than 40 seconds to load for everyone in our workspace since yesterday. Tickets from three users already.",
+    "timestamp": "2026-10-18T17:15:34Z"
+  },
+  {
+    "feedback_id": "TKT-059",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Thanks for the quick patch on the CSV encoding problem. Special characters now show up correctly.",
+    "timestamp": "2026-10-19T02:20:03Z"
+  },
+  {
+    "feedback_id": "TKT-060",
+    "source_channel": "Freshdesk",
+    "raw_text": "The save button on the PRD page is hidden behind the footer on my screen resolution. Attaching a screenshot, please fix.",
+    "timestamp": "2026-10-19T04:16:55Z"
+  },
+  {
+    "feedback_id": "TKT-061",
+    "source_channel": "Email Support",
+    "raw_text": "Single sign on redirect loop on Safari, users can't get past the login screen.",
+    "timestamp": "2026-10-19T10:20:14Z"
+  },
+  {
+    "feedback_id": "TKT-062",
+    "source_channel": "Email Support",
+    "raw_text": "How can I change the email address linked to my login? I changed jobs.",
+    "timestamp": "2026-10-20T07:29:07Z"
+  },
+  {
+    "feedback_id": "TKT-063",
+    "source_channel": "Email Support",
+    "raw_text": "Do you have a CDN? Our users in Australia notice slow loading of assets.",
+    "timestamp": "2026-10-21T03:19:38Z"
+  },
+  {
+    "feedback_id": "TKT-064",
+    "source_channel": "Zendesk Support",
+    "raw_text": "We want to enforce SSO only for our domain. Where can I configure that?",
+    "timestamp": "2026-10-21T08:15:40Z"
+  },
+  {
+    "feedback_id": "TKT-065",
+    "source_channel": "Jira Service Management",
+    "raw_text": "Is there a way to resize the columns in the prioritisation table? Everything is squeezed.",
+    "timestamp": "2026-10-21T10:41:50Z"
+  },
+  {
+    "feedback_id": "TKT-066",
+    "source_channel": "Email Support",
+    "raw_text": "CSV import of 8,000 rows has been stuck at 'processing' for over an hour.",
+    "timestamp": "2026-10-21T11:57:05Z"
+  },
+  {
+    "feedback_id": "TKT-067",
+    "source_channel": "Jira Service Management",
+    "raw_text": "The new Slack integration works great. One extra idea: allow posting to different channels per theme.",
+    "timestamp": "2026-10-21T12:09:13Z"
+  },
+  {
+    "feedback_id": "TKT-068",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Filter by date range ignores the end date. Items after it still appear.",
+    "timestamp": "2026-10-22T01:50:56Z"
+  },
+  {
+    "feedback_id": "TKT-069",
+    "source_channel": "Email Support",
+    "raw_text": "Please consider adding an API endpoint to fetch roadmap items. We want to show them on our internal portal.",
+    "timestamp": "2026-10-22T03:02:27Z"
+  },
+  {
+    "feedback_id": "TKT-070",
+    "source_channel": "Jira Service Management",
+    "raw_text": "We were told during the sales demo that Confluence export was coming soon. It's been months, do you have an ETA?",
+    "timestamp": "2026-10-22T13:50:43Z"
+  },
+  {
+    "feedback_id": "TKT-071",
+    "source_channel": "Intercom Chat",
+    "raw_text": "SSO is working correctly after your configuration steps. Thank you for the quick help.",
+    "timestamp": "2026-10-22T22:36:32Z"
+  },
+  {
+    "feedback_id": "TKT-072",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Remember me finally works after clearing cookies as you suggested. Thanks!",
+    "timestamp": "2026-10-23T19:06:01Z"
+  },
+  {
+    "feedback_id": "TKT-073",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Comment notifications are sent to the wrong user, our PM got comments meant for the design lead.",
+    "timestamp": "2026-10-24T04:23:11Z"
+  },
+  {
+    "feedback_id": "TKT-074",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Slack integration posts duplicate messages, five copies for every new theme. Our channel is flooded.",
+    "timestamp": "2026-10-24T06:35:32Z"
+  },
+  {
+    "feedback_id": "TKT-075",
+    "source_channel": "Email Support",
+    "raw_text": "Seeing a minor visual glitch with the sentiment chart legend overlapping on small screens.",
+    "timestamp": "2026-10-24T06:37:34Z"
+  },
+  {
+    "feedback_id": "TKT-076",
+    "source_channel": "Email Support",
+    "raw_text": "Pop up for the onboarding tour keeps coming back every time I log in even though I dismissed it.",
+    "timestamp": "2026-10-24T12:28:54Z"
+  },
+  {
+    "feedback_id": "TKT-077",
+    "source_channel": "Freshdesk",
+    "raw_text": "Could you check the server status? Our team in India sees slow response times in the afternoons.",
+    "timestamp": "2026-10-24T16:35:40Z"
+  },
+  {
+    "feedback_id": "TKT-078",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Thanks, the password reset worked now. I can log in again.",
+    "timestamp": "2026-10-24T19:12:27Z"
+  },
+  {
+    "feedback_id": "TKT-079",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Imported CSV shows duplicate rows for each feedback item. Happens every time with our Zendesk export.",
+    "timestamp": "2026-10-25T17:58:03Z"
+  },
+  {
+    "feedback_id": "TKT-080",
+    "source_channel": "Email Support",
+    "raw_text": "How do I enable two factor authentication for my account?",
+    "timestamp": "2026-10-26T00:35:50Z"
+  },
+  {
+    "feedback_id": "TKT-081",
+    "source_channel": "Freshdesk",
+    "raw_text": "Is Azure AD supported for SSO? Our IT team needs to know before we commit.",
+    "timestamp": "2026-10-26T04:06:50Z"
+  },
+  {
+    "feedback_id": "TKT-082",
+    "source_channel": "Freshdesk",
+    "raw_text": "Thanks for adding the Markdown export, exactly what we asked for. Please close the ticket.",
+    "timestamp": "2026-10-26T06:05:39Z"
+  },
+  {
+    "feedback_id": "TKT-083",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Not sure if this is a bug: the roadmap shows a completed item as 'in progress' after a refresh.",
+    "timestamp": "2026-10-26T12:24:02Z"
+  },
+  {
+    "feedback_id": "TKT-084",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Tooltip text is cut off on the theme cards and unreadable. Using Chrome on Windows.",
+    "timestamp": "2026-10-27T01:32:39Z"
+  },
+  {
+    "feedback_id": "TKT-085",
+    "source_channel": "Email Support",
+    "raw_text": "Thanks for fixing the sidebar issue so quickly. Everything looks right now.",
+    "timestamp": "2026-10-27T06:50:20Z"
+  },
+  {
+    "feedback_id": "TKT-086",
+    "source_channel": "Zendesk Support",
+    "raw_text": "The feedback list takes a few seconds to apply filters. Can you check if something is off with our account?",
+    "timestamp": "2026-10-27T10:13:23Z"
+  },
+  {
+    "feedback_id": "TKT-087",
+    "source_channel": "Zendesk Support",
+    "raw_text": "How do I rename a theme? I clicked around but nothing seems editable.",
+    "timestamp": "2026-10-27T18:43:57Z"
+  },
+  {
+    "feedback_id": "TKT-088",
+    "source_channel": "Email Support",
+    "raw_text": "Mobile view of the dashboard is broken on iPhone, charts overflow the screen and I can't scroll.",
+    "timestamp": "2026-10-27T22:43:08Z"
+  },
+  {
+    "feedback_id": "TKT-089",
+    "source_channel": "Freshdesk",
+    "raw_text": "None of our 40 users can log in via SSO since 9 AM. Error: 'SAML assertion invalid'. Please escalate immediately.",
+    "timestamp": "2026-10-28T19:24:41Z"
+  },
+  {
+    "feedback_id": "TKT-090",
+    "source_channel": "Zendesk Support",
+    "raw_text": "What are the recommended limits for the number of feedback items per workspace before things slow down?",
+    "timestamp": "2026-10-28T21:39:07Z"
+  },
+  {
+    "feedback_id": "TKT-091",
+    "source_channel": "Email Support",
+    "raw_text": "Error message on login says 'something went wrong' with no further details. Hard to know what to fix.",
+    "timestamp": "2026-10-28T23:51:04Z"
+  },
+  {
+    "feedback_id": "TKT-092",
+    "source_channel": "Zendesk Support",
+    "raw_text": "AI summary contains information that isn't in our feedback. Looks like a hallucination, ticket reference attached.",
+    "timestamp": "2026-10-29T08:31:49Z"
+  },
+  {
+    "feedback_id": "TKT-093",
+    "source_channel": "Intercom Chat",
+    "raw_text": "2FA codes from Google Authenticator are rejected, time sync on my phone is correct.",
+    "timestamp": "2026-10-29T11:44:19Z"
+  },
+  {
+    "feedback_id": "TKT-094",
+    "source_channel": "Freshdesk",
+    "raw_text": "Invited users get a 'user already exists' error although they've never signed up.",
+    "timestamp": "2026-10-29T16:55:22Z"
+  },
+  {
+    "feedback_id": "TKT-095",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Locked out after entering the wrong password several times. Please unlock account for my email.",
+    "timestamp": "2026-10-29T21:00:45Z"
+  },
+  {
+    "feedback_id": "TKT-096",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Getting logged out repeatedly every 15 minutes while working. Using Chrome, cookies enabled.",
+    "timestamp": "2026-10-29T23:09:29Z"
+  },
+  {
+    "feedback_id": "TKT-097",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Theme clustering job fails after 10 minutes with a timeout error. We have tried three times with the same dataset.",
+    "timestamp": "2026-10-30T00:42:12Z"
+  },
+  {
+    "feedback_id": "TKT-098",
+    "source_channel": "Intercom Chat",
+    "raw_text": "Login works but dashboard shows a blank white page for admins only. Console reports a TypeError.",
+    "timestamp": "2026-10-30T01:56:39Z"
+  },
+  {
+    "feedback_id": "TKT-099",
+    "source_channel": "Freshdesk",
+    "raw_text": "Admin account compromised? We see login attempts from unknown locations in the audit log and need help securing the workspace right now.",
+    "timestamp": "2026-10-30T04:06:01Z"
+  },
+  {
+    "feedback_id": "TKT-100",
+    "source_channel": "Zendesk Support",
+    "raw_text": "Confirming the speed improvements from last week's release. Our dashboard loads in under three seconds now.",
+    "timestamp": "2026-10-30T08:27:35Z"
+  }
+]

@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     llm_provider: str = "gemini"
     gemini_api_key: Optional[str] = None
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.1-flash-lite"
 
     model_config = SettingsConfigDict(
         env_file=".env",
