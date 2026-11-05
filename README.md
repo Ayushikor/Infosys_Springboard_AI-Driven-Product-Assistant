@@ -480,16 +480,6 @@ Open a separate terminal from the project root and navigate to `ai_module/`:
 cd ai_module
 ```
 
-Create an `.env` file inside `ai_module/`:
-
-```env
-LLM_PROVIDER=gemini
-GEMINI_API_KEY=your_gemini_api_key
-GEMINI_MODEL=gemini-3.1-flash-lite
-```
-
-Keep the Gemini API key private. Do not add it to source code, screenshots, or public commits.
-
 Start the AI module with `ai_module/` as the current working directory so its `.env` file is found as expected.
 
 ### 6. Run the AI Module
@@ -828,14 +818,6 @@ Potential future improvements include:
 - ✅ Further validation and end-to-end testing of Pain-Point Identification and Feature Request Clustering.
 
 These are potential enhancements and planned work, not claims that all capabilities are already implemented.
-
-## 👥 Contributors
-
-This project is being developed collaboratively as part of the Infosys Springboard project initiative.
-
-Agent 1 – Theme Extraction, dataset preparation/loading, and integration of the JSON datasets with the AI analysis workflow are the individual contributions documented here.
-
-Agents 2, 3, and 4 were developed by teammates.
 
 Contributors can use GitHub issues, feature branches, and pull requests to discuss, implement, and review changes.
 
