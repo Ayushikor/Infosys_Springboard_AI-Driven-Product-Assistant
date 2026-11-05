@@ -1,6 +1,14 @@
 
+"""
+Pydantic schemas for the Theme Extraction Agent.
+
+Validates customer feedback, theme extraction requests,
+AI-generated themes, and final theme extraction results.
+"""
+
 from pydantic import (
     BaseModel,
+    ConfigDict,
     Field,
     field_validator,
     model_validator,
@@ -10,65 +18,216 @@ from pydantic import (
 class FeedbackItem(BaseModel):
     """Individual customer feedback record."""
 
-    id: str = Field(min_length=1)
-    title: str = ""
-    message: str = ""
+    model_config = ConfigDict(
+        str_strip_whitespace=True,
+    )
+
+    id: str = Field(
+        ...,
+        min_length=1,
+        description="Unique identifier of the feedback record.",
+    )
+
+    title: str = Field(
+        default="",
+        description="Title of the customer feedback.",
+    )
+
+    message: str = Field(
+        default="",
+        description="Original customer feedback message.",
+    )
 
     @field_validator("id")
     @classmethod
     def validate_id(cls, value: str) -> str:
+        """Ensure feedback ID is not empty."""
+
         value = value.strip()
+
         if not value:
-            raise ValueError("Feedback ID cannot be empty.")
+            raise ValueError(
+                "Feedback ID cannot be empty."
+            )
+
         return value
 
     @field_validator("title", "message")
     @classmethod
     def clean_text(cls, value: str) -> str:
+        """Remove unnecessary surrounding whitespace."""
+
         return value.strip()
 
     @model_validator(mode="after")
     def validate_content(self):
+        """Require at least a title or a message."""
+
         if not self.title and not self.message:
-            raise ValueError("Feedback must contain a title or message.")
+            raise ValueError(
+                "Feedback must contain a title or message."
+            )
+
         return self
 
 
 class ThemeExtractionRequest(BaseModel):
-    """Input containing multiple feedback records."""
+    """Input containing multiple customer feedback records."""
 
     feedback: list[FeedbackItem] = Field(
+        ...,
         min_length=1,
         max_length=500,
+        description="Customer feedback records to analyze.",
     )
 
     @model_validator(mode="after")
     def validate_unique_ids(self):
-        ids = [item.id for item in self.feedback]
+        """Ensure input feedback IDs are unique."""
+
+        ids = [
+            item.id
+            for item in self.feedback
+        ]
 
         if len(ids) != len(set(ids)):
-            raise ValueError("Feedback IDs must be unique.")
+            raise ValueError(
+                "Feedback IDs must be unique."
+            )
 
         return self
 
 
 class ExtractedTheme(BaseModel):
-    """A theme identified by the extraction agent."""
+    """A theme identified by the Theme Extraction Agent."""
 
-    name: str = Field(min_length=1)
-    description: str = Field(min_length=1)
-    keywords: list[str] = Field(min_length=1)
-    feedback_ids: list[str] = Field(min_length=1)
+    model_config = ConfigDict(
+        str_strip_whitespace=True,
+    )
+
+    name: str = Field(
+        ...,
+        min_length=1,
+        description="Concise and meaningful name of the extracted theme.",
+    )
+
+    description: str = Field(
+        ...,
+        min_length=1,
+        description="Explanation of the common topic represented by the theme.",
+    )
+
+    keywords: list[str] = Field(
+        ...,
+        min_length=1,
+        description="Relevant keywords representing the theme.",
+    )
+
+    feedback_ids: list[str] = Field(
+        ...,
+        min_length=1,
+        description="Original feedback IDs associated with this theme.",
+    )
+
+    @field_validator("name", "description")
+    @classmethod
+    def validate_text_fields(cls, value: str) -> str:
+        """Reject empty theme names and descriptions."""
+
+        value = value.strip()
+
+        if not value:
+            raise ValueError(
+                "Theme name and description cannot be empty."
+            )
+
+        return value
+
+    @field_validator("keywords")
+    @classmethod
+    def validate_keywords(
+        cls,
+        values: list[str],
+    ) -> list[str]:
+        """Clean keywords and reject empty entries."""
+
+        cleaned_values = [
+            value.strip()
+            for value in values
+        ]
+
+        if any(not value for value in cleaned_values):
+            raise ValueError(
+                "Theme keywords cannot contain empty values."
+            )
+
+        # Remove duplicate keywords while preserving their order.
+        return list(dict.fromkeys(cleaned_values))
+
+    @field_validator("feedback_ids")
+    @classmethod
+    def validate_feedback_ids(
+        cls,
+        values: list[str],
+    ) -> list[str]:
+        """Validate feedback IDs within an individual theme."""
+
+        cleaned_values = [
+            value.strip()
+            for value in values
+        ]
+
+        if any(not value for value in cleaned_values):
+            raise ValueError(
+                "Theme feedback IDs cannot be empty."
+            )
+
+        if len(cleaned_values) != len(set(cleaned_values)):
+            raise ValueError(
+                "Duplicate feedback IDs within the same theme."
+            )
+
+        return cleaned_values
 
 
 class ThemeExtractionOutput(BaseModel):
     """Structured output generated by Agent 1."""
 
-    themes: list[ExtractedTheme] = Field(min_length=1)
+    themes: list[ExtractedTheme] = Field(
+        ...,
+        min_length=1,
+        description="Themes extracted from customer feedback.",
+    )
 
 
 class ThemeExtractionResult(BaseModel):
-    """Final result returned by Agent 1."""
+    """Final validated result returned by Agent 1."""
 
-    total_feedback_analyzed: int = Field(ge=1)
-    themes: list[ExtractedTheme] = Field(min_length=1)
+    total_feedback_analyzed: int = Field(
+        ...,
+        ge=1,
+        description="Total number of original feedback records analyzed.",
+    )
+
+    themes: list[ExtractedTheme] = Field(
+        ...,
+        min_length=1,
+        description="Final extracted themes and their associated feedback.",
+    )
+
+    @model_validator(mode="after")
+    def validate_themes(self):
+        """
+        Validate that the final result contains meaningful themes.
+
+        Feedback IDs may legitimately appear in multiple themes.
+        Duplicate IDs within an individual theme are rejected
+        by the ExtractedTheme schema.
+        """
+
+        if not self.themes:
+            raise ValueError(
+                "At least one extracted theme is required."
+            )
+
+        return self

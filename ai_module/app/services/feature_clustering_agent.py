@@ -1,3 +1,4 @@
+
 """
 CrewAI service for the Feature Clustering Agent.
 
@@ -46,30 +47,49 @@ def _create_llm() -> LLM:
     )
 
 
-def _parse_crew_output(result: Any) -> FeatureClusteringOutput:
+def _parse_crew_output(
+    result: Any,
+) -> FeatureClusteringOutput:
     """Convert CrewAI output into the validated Pydantic schema."""
 
     try:
-        # CrewAI may return a Pydantic object directly.
-        if getattr(result, "pydantic", None) is not None:
+        structured_output = getattr(
+            result,
+            "pydantic",
+            None,
+        )
+
+        if structured_output is not None:
             return FeatureClusteringOutput.model_validate(
-                result.pydantic
+                structured_output
             )
 
-        # It may also return structured JSON.
-        if getattr(result, "json_dict", None):
+        json_output = getattr(
+            result,
+            "json_dict",
+            None,
+        )
+
+        if json_output:
             return FeatureClusteringOutput.model_validate(
-                result.json_dict
+                json_output
             )
 
-        raw_output = getattr(result, "raw", str(result))
+        raw_output = getattr(
+            result,
+            "raw",
+            str(result),
+        )
 
         parsed = json.loads(raw_output)
 
         return FeatureClusteringOutput.model_validate(parsed)
 
     except Exception as exc:
-        logger.exception("Could not parse feature clustering output.")
+        logger.exception(
+            "Could not parse feature clustering output."
+        )
+
         raise FeatureClusteringError(
             "The AI returned an invalid feature clustering response."
         ) from exc
@@ -84,6 +104,9 @@ def _validate_feedback_assignments(
 
     Each record must either belong to one feature cluster
     or appear in unclustered_feedback_ids.
+
+    IDs omitted by Gemini are preserved in the unclustered
+    list and logged for manual review.
     """
 
     input_ids = {
@@ -93,6 +116,7 @@ def _validate_feedback_assignments(
     assigned_ids = []
 
     for cluster in output.feature_clusters:
+
         if cluster.mention_count != len(cluster.feedback_ids):
             raise FeatureClusteringError(
                 f"Incorrect mention count for {cluster.feature_name}."
@@ -100,16 +124,50 @@ def _validate_feedback_assignments(
 
         assigned_ids.extend(cluster.feedback_ids)
 
-    assigned_ids.extend(output.unclustered_feedback_ids)
+    assigned_ids.extend(
+        output.unclustered_feedback_ids
+    )
 
+    # Reject duplicate assignments.
     if len(assigned_ids) != len(set(assigned_ids)):
         raise FeatureClusteringError(
             "A feedback record was assigned more than once."
         )
 
-    if set(assigned_ids) != input_ids:
+    # Reject feedback IDs that were not part of the input.
+    unknown_ids = set(assigned_ids) - input_ids
+
+    if unknown_ids:
         raise FeatureClusteringError(
-            "Some feedback records are missing or contain unknown IDs."
+            f"Unknown feedback IDs returned: {sorted(unknown_ids)}"
+        )
+
+    # Preserve records omitted by Gemini.
+    missing_ids = input_ids - set(assigned_ids)
+
+    if missing_ids:
+        missing_ids = sorted(missing_ids)
+
+        output.unclustered_feedback_ids.extend(
+            missing_ids
+        )
+
+        logger.warning(
+            "%d feedback records were omitted by Gemini "
+            "and added to unclustered_feedback_ids for review: %s",
+            len(missing_ids),
+            missing_ids,
+        )
+
+    # Final completeness check.
+    final_ids = (
+        set(assigned_ids)
+        | set(missing_ids)
+    )
+
+    if final_ids != input_ids:
+        raise FeatureClusteringError(
+            "Not all feedback records were accounted for."
         )
 
 
@@ -201,11 +259,15 @@ YOUR RESPONSIBILITIES:
 10. Do not calculate feature priority or business value.
     Your responsibility is feature clustering only.
 
+11. Double-check that every supplied feedback_id has been
+    accounted for before returning your response.
+
 Return the result using the required structured output schema.
 """,
             expected_output=(
                 "A valid structured FeatureClusteringOutput containing "
-                "feature clusters and unclustered feedback IDs."
+                "feature clusters and unclustered feedback IDs. "
+                "Every supplied feedback ID must be accounted for exactly once."
             ),
             agent=agent,
             output_pydantic=FeatureClusteringOutput,
@@ -222,7 +284,10 @@ Return the result using the required structured output schema.
 
         output = _parse_crew_output(result)
 
-        _validate_feedback_assignments(output, request)
+        _validate_feedback_assignments(
+            output,
+            request,
+        )
 
         total_requests = sum(
             cluster.mention_count

@@ -1,3 +1,6 @@
+
+import logging
+
 from fastapi import FastAPI, HTTPException
 
 from app.schemas.feedback import FeedbackAnalysis, FeedbackRequest
@@ -30,17 +33,57 @@ from app.services import (
     trend_analysis_agent,
 )
 
+from app.services.orchestrator import (
+    OrchestrationError,
+    run_all_analyses,
+)
 
-app = FastAPI(title="AI Feedback Intelligence")
 
+# ---------------------------------------------------------
+# LOGGING CONFIGURATION
+# ---------------------------------------------------------
+
+logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------
+# FASTAPI APPLICATION
+# ---------------------------------------------------------
+
+app = FastAPI(
+    title="AI Feedback Intelligence",
+    description=(
+        "AI-powered customer feedback analysis using "
+        "four specialized AI agents and three project datasets."
+    ),
+    version="1.0.0",
+)
+
+
+# ---------------------------------------------------------
+# HEALTH CHECK
+# ---------------------------------------------------------
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "service": "ai_module"}
+    return {
+        "status": "ok",
+        "service": "ai_module",
+    }
 
 
-@app.post("/feedback/analyze", response_model=FeedbackAnalysis)
-def analyze_feedback(request: FeedbackRequest) -> FeedbackAnalysis:
+# ---------------------------------------------------------
+# INDIVIDUAL FEEDBACK ANALYZER
+# ---------------------------------------------------------
+
+@app.post(
+    "/feedback/analyze",
+    response_model=FeedbackAnalysis,
+)
+def analyze_feedback(
+    request: FeedbackRequest,
+) -> FeedbackAnalysis:
+
     try:
         return feedback_analyzer.analyze_feedback(request.text)
 
@@ -51,6 +94,10 @@ def analyze_feedback(request: FeedbackRequest) -> FeedbackAnalysis:
         ) from None
 
 
+# ---------------------------------------------------------
+# AGENT 1 - THEME EXTRACTION
+# ---------------------------------------------------------
+
 @app.post(
     "/themes/extract",
     response_model=ThemeExtractionResult,
@@ -58,6 +105,7 @@ def analyze_feedback(request: FeedbackRequest) -> FeedbackAnalysis:
 def extract_themes(
     request: ThemeExtractionRequest,
 ) -> ThemeExtractionResult:
+
     try:
         return theme_extraction_agent.extract_themes(request)
 
@@ -68,6 +116,10 @@ def extract_themes(
         ) from None
 
 
+# ---------------------------------------------------------
+# AGENT 2 - PAIN POINT IDENTIFICATION
+# ---------------------------------------------------------
+
 @app.post(
     "/pain-points/identify",
     response_model=PainPointExtractionResult,
@@ -75,6 +127,7 @@ def extract_themes(
 def identify_pain_points(
     request: PainPointExtractionRequest,
 ) -> PainPointExtractionResult:
+
     try:
         return pain_point_agent.identify_pain_points(request)
 
@@ -85,6 +138,10 @@ def identify_pain_points(
         ) from None
 
 
+# ---------------------------------------------------------
+# AGENT 3 - FEATURE CLUSTERING
+# ---------------------------------------------------------
+
 @app.post(
     "/features/cluster",
     response_model=FeatureClusteringResult,
@@ -92,8 +149,11 @@ def identify_pain_points(
 def cluster_features(
     request: FeatureClusteringRequest,
 ) -> FeatureClusteringResult:
+
     try:
-        return feature_clustering_agent.identify_feature_clusters(request)
+        return feature_clustering_agent.identify_feature_clusters(
+            request
+        )
 
     except feature_clustering_agent.FeatureClusteringError:
         raise HTTPException(
@@ -102,6 +162,10 @@ def cluster_features(
         ) from None
 
 
+# ---------------------------------------------------------
+# AGENT 4 - TREND ANALYSIS
+# ---------------------------------------------------------
+
 @app.post(
     "/trends/analyze",
     response_model=TrendAnalysisResult,
@@ -109,11 +173,69 @@ def cluster_features(
 def analyze_trends(
     request: TrendAnalysisRequest,
 ) -> TrendAnalysisResult:
+
     try:
-        return trend_analysis_agent.analyze_feedback_trends(request)
+        return trend_analysis_agent.analyze_feedback_trends(
+            request
+        )
 
     except trend_analysis_agent.TrendAnalysisError:
         raise HTTPException(
             status_code=503,
             detail="Trend analysis is temporarily unavailable.",
+        ) from None
+
+
+# ---------------------------------------------------------
+# MULTI-AGENT ORCHESTRATOR
+# ---------------------------------------------------------
+
+@app.post("/analysis/run-all")
+def run_complete_analysis() -> dict:
+    """
+    Automatically load all three project JSON datasets
+    and execute all four AI agents sequentially.
+
+    Data sources:
+        1. customer_feedback.json
+        2. user_reviews.json
+        3. support_tickets.json
+
+    MongoDB Atlas is not used as an input source.
+
+    No manual feedback JSON is required.
+    """
+
+    try:
+        logger.info("Starting complete multi-agent analysis.")
+
+        result = run_all_analyses()
+
+        logger.info(
+            "Multi-agent analysis completed successfully."
+        )
+
+        return result
+
+    except OrchestrationError as exc:
+        logger.exception(
+            "Multi-agent orchestration failed."
+        )
+
+        raise HTTPException(
+            status_code=503,
+            detail=str(exc),
+        ) from None
+
+    except Exception:
+        logger.exception(
+            "Unexpected error during multi-agent analysis."
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                "An unexpected error occurred during "
+                "multi-agent analysis."
+            ),
         ) from None
