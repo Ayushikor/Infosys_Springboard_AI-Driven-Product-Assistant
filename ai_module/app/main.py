@@ -1,20 +1,35 @@
-
 from fastapi import FastAPI, HTTPException
 
 from app.schemas.feedback import FeedbackAnalysis, FeedbackRequest
+
 from app.schemas.theme_extraction import (
     ThemeExtractionRequest,
     ThemeExtractionResult,
 )
-
-from app.services import feedback_analyzer, theme_extraction_agent
 
 from app.schemas.pain_point import (
     PainPointExtractionRequest,
     PainPointExtractionResult,
 )
 
-from app.services import pain_point_agent
+from app.schemas.feature_clustering import (
+    FeatureClusteringRequest,
+    FeatureClusteringResult,
+)
+
+from app.schemas.trend_analysis import (
+    TrendAnalysisRequest,
+    TrendAnalysisResult,
+)
+
+from app.services import (
+    feedback_analyzer,
+    theme_extraction_agent,
+    pain_point_agent,
+    feature_clustering_agent,
+    trend_analysis_agent,
+)
+
 
 app = FastAPI(title="AI Feedback Intelligence")
 
@@ -28,6 +43,7 @@ def health() -> dict[str, str]:
 def analyze_feedback(request: FeedbackRequest) -> FeedbackAnalysis:
     try:
         return feedback_analyzer.analyze_feedback(request.text)
+
     except feedback_analyzer.FeedbackAnalysisError:
         raise HTTPException(
             status_code=503,
@@ -59,7 +75,6 @@ def extract_themes(
 def identify_pain_points(
     request: PainPointExtractionRequest,
 ) -> PainPointExtractionResult:
-
     try:
         return pain_point_agent.identify_pain_points(request)
 
@@ -67,4 +82,38 @@ def identify_pain_points(
         raise HTTPException(
             status_code=503,
             detail="Pain-point identification is temporarily unavailable.",
+        ) from None
+
+
+@app.post(
+    "/features/cluster",
+    response_model=FeatureClusteringResult,
+)
+def cluster_features(
+    request: FeatureClusteringRequest,
+) -> FeatureClusteringResult:
+    try:
+        return feature_clustering_agent.identify_feature_clusters(request)
+
+    except feature_clustering_agent.FeatureClusteringError:
+        raise HTTPException(
+            status_code=503,
+            detail="Feature clustering is temporarily unavailable.",
+        ) from None
+
+
+@app.post(
+    "/trends/analyze",
+    response_model=TrendAnalysisResult,
+)
+def analyze_trends(
+    request: TrendAnalysisRequest,
+) -> TrendAnalysisResult:
+    try:
+        return trend_analysis_agent.analyze_feedback_trends(request)
+
+    except trend_analysis_agent.TrendAnalysisError:
+        raise HTTPException(
+            status_code=503,
+            detail="Trend analysis is temporarily unavailable.",
         ) from None

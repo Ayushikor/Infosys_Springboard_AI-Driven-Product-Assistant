@@ -5,6 +5,8 @@ import httpx
 from fastapi import APIRouter, Request, Body
 from fastapi.responses import JSONResponse
 
+from datetime import datetime
+
 from db import get_db
 from helpers import (
     ok,
@@ -477,4 +479,284 @@ def identify_pain_points(
             "pain_points": result.get("pain_points", []),
         },
         "Customer pain points identified successfully.",
+    )
+
+@router.post("/features/cluster")
+def cluster_features(
+    request: Request,
+    body: dict = Body(default={}),
+):
+    """Cluster similar customer feature requests using Agent 3."""
+
+    uid = _user_id(request)
+
+    if not uid:
+        return _error_response("Not authenticated.", status=401)
+
+    feedback_ids = body.get("feedback_ids")
+
+    if feedback_ids is not None:
+        if (
+            not isinstance(feedback_ids, list)
+            or not feedback_ids
+            or len(feedback_ids) > 500
+            or not all(isinstance(item, str) and item.strip()
+                       for item in feedback_ids)
+        ):
+            return _error_response(
+                "feedback_ids must be a non-empty array of valid IDs.",
+                status=400,
+            )
+
+        feedback_ids = [item.strip() for item in feedback_ids]
+
+        if len(feedback_ids) != len(set(feedback_ids)):
+            return _error_response(
+                "Feedback IDs must be unique.",
+                status=400,
+            )
+
+    db = get_db()
+    query = {"userId": uid}
+
+    if feedback_ids is not None:
+        query["id"] = {"$in": feedback_ids}
+
+    documents = list(
+        db["feedback"].find(query).sort("createdAt", -1).limit(501)
+    )
+
+    if feedback_ids is not None and len(documents) != len(feedback_ids):
+        return _error_response(
+            "Some feedback records were not found.",
+            status=404,
+        )
+
+    if not documents:
+        return _error_response("No feedback records found.", status=404)
+
+    if len(documents) > 500:
+        return _error_response(
+            "Maximum 500 feedback records can be analyzed.",
+            status=400,
+        )
+
+    feedback_records = [
+        {
+            "feedback_id": str(item["id"]),
+            "source_channel": str(item.get("source") or "Customer Feedback"),
+            "raw_text": str(
+                item.get("message") or item.get("title") or ""
+            ).strip(),
+        }
+        for item in documents
+    ]
+
+    feedback_records = [
+        item for item in feedback_records if item["raw_text"]
+    ]
+
+    if not feedback_records:
+        return _error_response(
+            "No feedback contains usable text.",
+            status=400,
+        )
+
+    ai_service_url = os.getenv(
+        "AI_SERVICE_URL",
+        "http://127.0.0.1:8001",
+    ).rstrip("/")
+
+    try:
+        response = httpx.post(
+            f"{ai_service_url}/features/cluster",
+            json={"feedback": feedback_records},
+            timeout=120.0,
+        )
+        response.raise_for_status()
+        result = response.json()
+
+    except httpx.TimeoutException:
+        return _error_response(
+            "Feature clustering timed out.",
+            status=504,
+        )
+
+    except httpx.HTTPStatusError:
+        return _error_response(
+            "AI feature clustering service returned an error.",
+            status=502,
+        )
+
+    except httpx.RequestError:
+        return _error_response(
+            "Could not connect to the AI service.",
+            status=503,
+        )
+
+    except ValueError:
+        return _error_response(
+            "AI service returned an invalid response.",
+            status=502,
+        )
+
+    return ok(
+        result,
+        "Feature requests clustered successfully.",
+    )
+
+@router.post("/trends/analyze")
+def analyze_trends(
+    request: Request,
+    body: dict = Body(default={}),
+):
+    """Analyze feedback trends over time using Agent 4."""
+
+    uid = _user_id(request)
+
+    if not uid:
+        return _error_response("Not authenticated.", status=401)
+
+    feedback_ids = body.get("feedback_ids")
+
+    if feedback_ids is not None:
+        if (
+            not isinstance(feedback_ids, list)
+            or not feedback_ids
+            or len(feedback_ids) > 500
+            or not all(isinstance(item, str) and item.strip()
+                       for item in feedback_ids)
+        ):
+            return _error_response(
+                "feedback_ids must be a non-empty array of valid IDs.",
+                status=400,
+            )
+
+        feedback_ids = [item.strip() for item in feedback_ids]
+
+        if len(feedback_ids) != len(set(feedback_ids)):
+            return _error_response(
+                "Feedback IDs must be unique.",
+                status=400,
+            )
+
+    db = get_db()
+    query = {"userId": uid}
+
+    if feedback_ids is not None:
+        query["id"] = {"$in": feedback_ids}
+
+    documents = list(
+        db["feedback"].find(query).sort("createdAt", -1).limit(501)
+    )
+
+    if feedback_ids is not None and len(documents) != len(feedback_ids):
+        return _error_response(
+            "Some feedback records were not found.",
+            status=404,
+        )
+
+    if not documents:
+        return _error_response("No feedback records found.", status=404)
+
+    if len(documents) > 500:
+        return _error_response(
+            "Maximum 500 feedback records can be analyzed.",
+            status=400,
+        )
+
+    if len(documents) < 2:
+        return _error_response(
+            "At least 2 feedback records are required for trend analysis.",
+            status=400,
+        )
+
+    feedback_records = []
+
+    for item in documents:
+        timestamp = item.get("createdAt")
+
+        if not timestamp:
+            return _error_response(
+                "Some feedback records are missing creation dates. "
+                "Trend analysis requires timestamps.",
+                status=400,
+            )
+
+        if isinstance(timestamp, datetime):
+            timestamp = timestamp.isoformat()
+        else:
+            timestamp = str(timestamp).strip()
+
+        try:
+            datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+        except ValueError:
+            return _error_response(
+                "A feedback record contains an invalid creation date.",
+                status=400,
+            )
+
+        raw_text = str(
+            item.get("message") or item.get("title") or ""
+        ).strip()
+
+        if not raw_text:
+            continue
+
+        feedback_records.append({
+            "feedback_id": str(item["id"]),
+            "source_channel": str(
+                item.get("source") or "Customer Feedback"
+            ),
+            "raw_text": raw_text,
+            "timestamp": timestamp,
+        })
+
+    if len(feedback_records) < 2:
+        return _error_response(
+            "At least 2 valid, timestamped feedback records are required.",
+            status=400,
+        )
+
+    ai_service_url = os.getenv(
+        "AI_SERVICE_URL",
+        "http://127.0.0.1:8001",
+    ).rstrip("/")
+
+    try:
+        response = httpx.post(
+            f"{ai_service_url}/trends/analyze",
+            json={"feedback": feedback_records},
+            timeout=120.0,
+        )
+        response.raise_for_status()
+        result = response.json()
+
+    except httpx.TimeoutException:
+        return _error_response(
+            "Trend analysis timed out.",
+            status=504,
+        )
+
+    except httpx.HTTPStatusError:
+        return _error_response(
+            "AI trend analysis service returned an error.",
+            status=502,
+        )
+
+    except httpx.RequestError:
+        return _error_response(
+            "Could not connect to the AI service.",
+            status=503,
+        )
+
+    except ValueError:
+        return _error_response(
+            "AI service returned an invalid response.",
+            status=502,
+        )
+
+    return ok(
+        result,
+        "Feedback trends analyzed successfully.",
     )
