@@ -728,44 +728,6 @@ This endpoint reads the three local JSON datasets through the AI module's datase
 
 An HTTP 200 response with `partial_success` does not mean every agent is working. Always inspect the individual statuses.
 
-## 🔑 Environment Variables
-
-The application uses environment variables for configuration. The variable names depend on the service.
-
-### Backend (`backend/.env`)
-
-Typical configuration includes:
-
-```env
-MONGO_URI=mongodb://localhost:27017
-MONGO_DB_NAME=product_assistant_db
-SECRET_KEY=replace-with-a-long-random-secret
-DEBUG=0
-PORT=8000
-ENSURE_INDEXES=true
-```
-
-### AI Module (`ai_module/.env`)
-
-```env
-LLM_PROVIDER=gemini
-GEMINI_API_KEY=your_gemini_api_key
-GEMINI_MODEL=gemini-3.1-flash-lite
-```
-
-### Frontend (root `.env`)
-
-When using the real main backend API mode, the configuration may include:
-
-```env
-VITE_API_MODE=real
-VITE_API_BASE_URL=http://127.0.0.1:8000/api
-```
-
-Refer to the root and backend `.env.example` files and the service configuration files for actual variable names and defaults.
-
-Never publish API keys, database passwords, tokens, or other secrets in source code or documentation.
-
 ## 🧪 Testing
 
 ### AI Module Tests
