@@ -1,9 +1,18 @@
-// Central API configuration. Default mode is "mock".
-const mode = (import.meta.env.VITE_API_MODE || 'mock').toLowerCase();
+
+// Central API configuration.
+
+const mode = (
+  import.meta.env.VITE_API_MODE || "mock"
+).toLowerCase();
 
 export const apiConfig = {
   mode,
-  baseUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
+
+  baseUrl:
+    import.meta.env.VITE_API_BASE_URL ||
+    "http://localhost:8000/api",
+
   mockDelayMs: 250,
-  isMock: mode !== 'real',
+
+  isMock: mode !== "real",
 };

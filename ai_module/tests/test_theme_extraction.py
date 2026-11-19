@@ -18,11 +18,23 @@ from app.services.theme_extraction_agent import (
 import app.services.theme_extraction_agent as agent_module
 
 
+# ---------------------------------------------------------
+# REQUEST VALIDATION TESTS
+# ---------------------------------------------------------
+
+
 def test_valid_feedback_request():
+
     request = ThemeExtractionRequest(
         feedback=[
-            FeedbackItem(id="FB-001", title="Slow loading"),
-            FeedbackItem(id="FB-002", title="App is slow"),
+            FeedbackItem(
+                id="FB-001",
+                title="Slow loading",
+            ),
+            FeedbackItem(
+                id="FB-002",
+                title="App is slow",
+            ),
         ]
     )
 
@@ -30,16 +42,30 @@ def test_valid_feedback_request():
 
 
 def test_duplicate_feedback_ids_rejected():
+
     with pytest.raises(ValidationError):
+
         ThemeExtractionRequest(
             feedback=[
-                FeedbackItem(id="FB-001", title="Slow loading"),
-                FeedbackItem(id="FB-001", title="App is slow"),
+                FeedbackItem(
+                    id="FB-001",
+                    title="Slow loading",
+                ),
+                FeedbackItem(
+                    id="FB-001",
+                    title="App is slow",
+                ),
             ]
         )
 
 
+# ---------------------------------------------------------
+# THEME ASSIGNMENT TESTS
+# ---------------------------------------------------------
+
+
 def test_valid_theme_assignments():
+
     result = ThemeExtractionOutput(
         themes=[
             {
@@ -58,6 +84,7 @@ def test_valid_theme_assignments():
 
 
 def test_feedback_can_belong_to_multiple_themes():
+
     result = ThemeExtractionOutput(
         themes=[
             {
@@ -82,28 +109,29 @@ def test_feedback_can_belong_to_multiple_themes():
 
 
 def test_duplicate_ids_within_same_theme_rejected():
-    result = ThemeExtractionOutput(
-        themes=[
-            {
-                "name": "Performance",
-                "description": "Application speed issues",
-                "keywords": ["slow loading"],
-                "feedback_ids": ["FB-001", "FB-001"],
-            }
-        ]
-    )
+
+    # The Pydantic schema rejects duplicate IDs during
+    # ThemeExtractionOutput construction.
 
     with pytest.raises(
-        ThemeExtractionError,
-        match="duplicate feedback IDs",
+        ValidationError,
+        match="Duplicate feedback IDs within the same theme",
     ):
-        _validate_theme_assignments(
-            result,
-            {"FB-001"},
+
+        ThemeExtractionOutput(
+            themes=[
+                {
+                    "name": "Performance",
+                    "description": "Application speed issues",
+                    "keywords": ["slow loading"],
+                    "feedback_ids": ["FB-001", "FB-001"],
+                }
+            ]
         )
 
 
 def test_missing_feedback_added_to_uncategorized_theme():
+
     result = ThemeExtractionOutput(
         themes=[
             {
@@ -130,6 +158,7 @@ def test_missing_feedback_added_to_uncategorized_theme():
 
 
 def test_unknown_feedback_id_rejected():
+
     result = ThemeExtractionOutput(
         themes=[
             {
@@ -142,13 +171,20 @@ def test_unknown_feedback_id_rejected():
     )
 
     with pytest.raises(ThemeExtractionError):
+
         _validate_theme_assignments(
             result,
             {"FB-001"},
         )
 
 
+# ---------------------------------------------------------
+# MOCKED CREWAI EXECUTION TEST
+# ---------------------------------------------------------
+
+
 def test_agent_execution_with_mocked_crewai(monkeypatch):
+
     fake_output = ThemeExtractionOutput(
         themes=[
             {
@@ -160,31 +196,39 @@ def test_agent_execution_with_mocked_crewai(monkeypatch):
         ]
     )
 
+    # Mock Gemini configuration.
     monkeypatch.setattr(
         agent_module,
         "_create_llm",
         lambda: object(),
     )
 
+    # Mock CrewAI Agent.
     monkeypatch.setattr(
         agent_module,
         "Agent",
         lambda **kwargs: object(),
     )
 
+    # Mock CrewAI Task.
     monkeypatch.setattr(
         agent_module,
         "Task",
         lambda **kwargs: object(),
     )
 
+    # Mock CrewAI execution.
     class FakeCrew:
+
         def __init__(self, **kwargs):
-            pass
+            self.kwargs = kwargs
 
         def kickoff(self, inputs):
             assert "feedback_records" in inputs
-            return SimpleNamespace(pydantic=fake_output)
+
+            return SimpleNamespace(
+                pydantic=fake_output
+            )
 
     monkeypatch.setattr(
         agent_module,
@@ -194,8 +238,14 @@ def test_agent_execution_with_mocked_crewai(monkeypatch):
 
     request = ThemeExtractionRequest(
         feedback=[
-            FeedbackItem(id="FB-001", title="Slow loading"),
-            FeedbackItem(id="FB-002", title="Pages load slowly"),
+            FeedbackItem(
+                id="FB-001",
+                title="Slow loading",
+            ),
+            FeedbackItem(
+                id="FB-002",
+                title="Pages load slowly",
+            ),
         ]
     )
 

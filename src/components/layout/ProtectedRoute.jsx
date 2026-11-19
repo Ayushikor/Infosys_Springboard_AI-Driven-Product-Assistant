@@ -1,17 +1,82 @@
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 
-// Redirects unauthenticated users to /login, remembering where they wanted to go.
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
+// ---------------------------------------------------------
+// PROTECTED ROUTE
+// ---------------------------------------------------------
+
 export function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth();
+  const {
+    isAuthenticated,
+    isLoading,
+  } = useAuth();
+
   const location = useLocation();
-  if (!isAuthenticated) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+
+  // Wait until session restoration finishes.
+  if (isLoading) {
+    return (
+      <div
+        className="min-h-screen flex items-center justify-center"
+        role="status"
+        aria-live="polite"
+      >
+        <p className="text-gray-500">
+          Checking your session...
+        </p>
+      </div>
+    );
+  }
+
+  // Redirect unauthenticated users to login.
+  if (!isAuthenticated) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location.pathname }}
+      />
+    );
+  }
+
   return children;
 }
 
-// Redirects already-logged-in users away from the login and register pages.
+// ---------------------------------------------------------
+// PUBLIC-ONLY ROUTE
+// ---------------------------------------------------------
+
 export function PublicOnlyRoute({ children }) {
-  const { isAuthenticated } = useAuth();
-  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
+  const {
+    isAuthenticated,
+    isLoading,
+  } = useAuth();
+
+  // Avoid redirecting before checking the session.
+  if (isLoading) {
+    return (
+      <div
+        className="min-h-screen flex items-center justify-center"
+        role="status"
+        aria-live="polite"
+      >
+        <p className="text-gray-500">
+          Checking your session...
+        </p>
+      </div>
+    );
+  }
+
+  // Already authenticated users go to dashboard.
+  if (isAuthenticated) {
+    return (
+      <Navigate
+        to="/dashboard"
+        replace
+      />
+    );
+  }
+
   return children;
 }

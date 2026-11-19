@@ -382,3 +382,33 @@ def logout(request: Request):
     request.session.pop("user_id", None)
 
     return ok(None, "Logged out")
+
+
+@router.get("/me")
+def current_user(request: Request):
+    """Restore the authenticated user's session."""
+
+    uid = request.session.get("user_id")
+
+    if not uid:
+        return _error_response(
+            "Not authenticated. Please log in.",
+            status_code=401,
+        )
+
+    user = get_db()["users"].find_one({
+        "id": uid,
+    })
+
+    if not user:
+        request.session.pop("user_id", None)
+
+        return _error_response(
+            "User account not found. Please log in again.",
+            status_code=401,
+        )
+
+    return ok(
+        {"user": _sanitize_user(user)},
+        "Current user retrieved successfully.",
+    )

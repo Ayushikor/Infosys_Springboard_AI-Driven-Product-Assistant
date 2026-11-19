@@ -1,39 +1,88 @@
+
 """
 Pydantic schemas for the Feature Clustering Agent.
 
-The agent groups similar feature requests from customer feedback,
-user reviews, and support tickets.
+Agent 3 consumes:
+- Original candidate feedback
+- Theme context from Agent 1
+- Pain-point context from Agent 2
+
+Gemini identifies and groups feature requests.
+Python calculates mention counts and source channels.
 """
 
 from pydantic import BaseModel, Field, ConfigDict, model_validator
 
 
+# ---------------------------------------------------------
+# ORIGINAL FEEDBACK
+# ---------------------------------------------------------
+
 class FeatureFeedbackItem(BaseModel):
-    """One normalized feedback record."""
+    """One original feedback record."""
 
     model_config = ConfigDict(extra="forbid")
 
-    feedback_id: str = Field(
-        ...,
-        min_length=1,
-        description="Original feedback ID, such as FB-001 or REV-001.",
-    )
+    feedback_id: str = Field(..., min_length=1)
+    source_channel: str = Field(..., min_length=1)
+    raw_text: str = Field(..., min_length=1)
 
-    source_channel: str = Field(
-        ...,
-        min_length=1,
-        description="Original source of the feedback.",
-    )
 
-    raw_text: str = Field(
-        ...,
-        min_length=1,
-        description="Original customer feedback text.",
-    )
+# ---------------------------------------------------------
+# UPSTREAM CONTEXT FROM AGENT 1
+# ---------------------------------------------------------
 
+class FeatureThemeContext(BaseModel):
+    """Compact theme context produced by Agent 1."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(..., min_length=1)
+    description: str = Field(..., min_length=1)
+    keywords: list[str] = Field(default_factory=list)
+    feedback_ids: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def validate_unique_feedback_ids(self):
+        if len(self.feedback_ids) != len(set(self.feedback_ids)):
+            raise ValueError(
+                "Duplicate feedback IDs inside a theme context."
+            )
+        return self
+
+
+# ---------------------------------------------------------
+# UPSTREAM CONTEXT FROM AGENT 2
+# ---------------------------------------------------------
+
+class FeaturePainPointContext(BaseModel):
+    """Compact pain-point context produced by Agent 2."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(..., min_length=1)
+    category: str = Field(..., min_length=1)
+    severity: str = Field(..., min_length=1)
+    description: str = Field(..., min_length=1)
+    feedback_ids: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def validate_unique_feedback_ids(self):
+        if len(self.feedback_ids) != len(set(self.feedback_ids)):
+            raise ValueError(
+                "Duplicate feedback IDs inside a pain-point context."
+            )
+        return self
+
+
+# ---------------------------------------------------------
+# AGENT 3 REQUEST
+# ---------------------------------------------------------
 
 class FeatureClusteringRequest(BaseModel):
-    """Input request containing feedback records."""
+    """
+    Original candidate feedback plus context from Agents 1 and 2.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
@@ -43,81 +92,160 @@ class FeatureClusteringRequest(BaseModel):
         max_length=500,
     )
 
+    theme_context: list[FeatureThemeContext] = Field(
+        default_factory=list
+    )
+
+    pain_point_context: list[FeaturePainPointContext] = Field(
+        default_factory=list
+    )
+
     @model_validator(mode="after")
-    def validate_unique_feedback_ids(self):
+    def validate_request_ids(self):
         ids = [item.feedback_id for item in self.feedback]
 
         if len(ids) != len(set(ids)):
-            raise ValueError("Duplicate feedback IDs are not allowed.")
+            raise ValueError(
+                "Duplicate feedback IDs are not allowed."
+            )
+
+        valid_ids = set(ids)
+
+        for context_name, contexts in (
+            ("theme_context", self.theme_context),
+            ("pain_point_context", self.pain_point_context),
+        ):
+            for context in contexts:
+                unknown_ids = set(context.feedback_ids) - valid_ids
+
+                if unknown_ids:
+                    raise ValueError(
+                        f"{context_name} contains IDs not supplied "
+                        f"to Agent 3: {sorted(unknown_ids)}"
+                    )
 
         return self
 
 
-class FeatureCluster(BaseModel):
-    """A group of similar feature requests."""
+# ---------------------------------------------------------
+# GEMINI OUTPUT
+# ---------------------------------------------------------
 
-    feature_name: str = Field(
-        ...,
-        min_length=1,
-        description="Short and meaningful name of the requested feature.",
-    )
+class FeatureClusterDraft(BaseModel):
+    """
+    Fields Gemini must produce.
 
-    description: str = Field(
-        ...,
-        min_length=1,
-        description="Explanation of the feature requested by customers.",
-    )
+    mention_count and source_channels are deliberately excluded.
+    Python calculates those from the original records.
+    """
 
-    category: str = Field(
-        ...,
-        min_length=1,
-        description="Category such as Integration, Security, Export, or UI.",
-    )
+    model_config = ConfigDict(extra="forbid")
 
-    mention_count: int = Field(
-        ...,
-        ge=1,
-        description="Number of feedback records in this cluster.",
-    )
+    feature_name: str = Field(..., min_length=1)
+
+    description: str = Field(..., min_length=1)
+
+    category: str = Field(..., min_length=1)
 
     feedback_ids: list[str] = Field(
         ...,
         min_length=1,
-        description="Original IDs supporting this feature request.",
-    )
-
-    source_channels: list[str] = Field(
-        default_factory=list,
-        description="Sources where this feature was requested.",
     )
 
     @model_validator(mode="after")
-    def validate_mention_count(self):
+    def validate_unique_feedback_ids(self):
         if len(self.feedback_ids) != len(set(self.feedback_ids)):
-            raise ValueError("Duplicate feedback IDs inside a cluster.")
-
-        if self.mention_count != len(self.feedback_ids):
-            raise ValueError("mention_count must equal number of feedback_ids.")
-
+            raise ValueError(
+                "Duplicate feedback IDs inside a feature cluster."
+            )
         return self
 
 
 class FeatureClusteringOutput(BaseModel):
-    """Structured output generated by the AI agent."""
+    """Structured draft output generated by Gemini."""
 
-    feature_clusters: list[FeatureCluster] = Field(
-        default_factory=list,
-        description="Groups of similar feature requests.",
+    model_config = ConfigDict(extra="forbid")
+
+    feature_clusters: list[FeatureClusterDraft] = Field(
+        default_factory=list
     )
 
     unclustered_feedback_ids: list[str] = Field(
-        default_factory=list,
-        description="Feedback IDs that do not contain a feature request.",
+        default_factory=list
     )
 
+    @model_validator(mode="after")
+    def validate_assignments(self):
+        assigned_ids = [
+            feedback_id
+            for cluster in self.feature_clusters
+            for feedback_id in cluster.feedback_ids
+        ]
+
+        assigned_ids.extend(self.unclustered_feedback_ids)
+
+        if len(assigned_ids) != len(set(assigned_ids)):
+            raise ValueError(
+                "A feedback ID was assigned more than once."
+            )
+
+        return self
+
+
+# ---------------------------------------------------------
+# FINAL FEATURE CLUSTER
+# ---------------------------------------------------------
+
+class FeatureCluster(BaseModel):
+    """Final feature cluster with Python-calculated metadata."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    feature_name: str = Field(..., min_length=1)
+
+    description: str = Field(..., min_length=1)
+
+    category: str = Field(..., min_length=1)
+
+    mention_count: int = Field(..., ge=1)
+
+    feedback_ids: list[str] = Field(
+        ...,
+        min_length=1,
+    )
+
+    source_channels: list[str] = Field(
+        default_factory=list
+    )
+
+    @model_validator(mode="after")
+    def validate_cluster_metadata(self):
+        if len(self.feedback_ids) != len(set(self.feedback_ids)):
+            raise ValueError(
+                "Duplicate feedback IDs inside a cluster."
+            )
+
+        if self.mention_count != len(self.feedback_ids):
+            raise ValueError(
+                "mention_count must equal number of feedback_ids."
+            )
+
+        if len(self.source_channels) != len(set(self.source_channels)):
+            raise ValueError(
+                "Duplicate source channels inside a cluster."
+            )
+
+        return self
+
+
+# ---------------------------------------------------------
+# FINAL RESULT
+# ---------------------------------------------------------
 
 class FeatureClusteringResult(BaseModel):
     """Final validated result returned by the service."""
+
+    model_config = ConfigDict(extra="forbid")
 
     total_feedback_analyzed: int = Field(..., ge=0)
 
@@ -125,81 +253,147 @@ class FeatureClusteringResult(BaseModel):
 
     total_feature_requests: int = Field(..., ge=0)
 
-    clusters: list[FeatureCluster]
+    clusters: list[FeatureCluster] = Field(
+        default_factory=list
+    )
 
-    unclustered_feedback_ids: list[str]
+    unclustered_feedback_ids: list[str] = Field(
+        default_factory=list
+    )
 
     @model_validator(mode="after")
-    def validate_result_counts(self):
+    def validate_result_counts_and_assignments(self):
         if self.total_feature_clusters != len(self.clusters):
-            raise ValueError("Feature cluster count does not match.")
+            raise ValueError(
+                "Feature cluster count does not match."
+            )
 
-        actual_requests = sum(c.mention_count for c in self.clusters)
+        actual_requests = sum(
+            cluster.mention_count for cluster in self.clusters
+        )
 
         if self.total_feature_requests != actual_requests:
-            raise ValueError("Feature request count does not match.")
+            raise ValueError(
+                "Feature request count does not match."
+            )
+
+        assigned_ids = [
+            feedback_id
+            for cluster in self.clusters
+            for feedback_id in cluster.feedback_ids
+        ]
+
+        assigned_ids.extend(self.unclustered_feedback_ids)
+
+        if len(assigned_ids) != len(set(assigned_ids)):
+            raise ValueError(
+                "A feedback ID appears more than once in the final result."
+            )
+
+        if len(assigned_ids) != self.total_feedback_analyzed:
+            raise ValueError(
+                "Final result does not account for every analyzed record."
+            )
 
         return self
 
+
+# ---------------------------------------------------------
+# BUILD FINAL RESULT USING ORIGINAL DATA
+# ---------------------------------------------------------
 
 def build_result(
     request: FeatureClusteringRequest,
     output: FeatureClusteringOutput,
 ) -> FeatureClusteringResult:
     """
-    Merge the LLM output with the original request and validate it.
+    Reconcile Gemini's assignments against original feedback.
 
-    - Rejects IDs the LLM invented.
-    - Rejects IDs that are both clustered and unclustered.
-    - Recomputes mention_count and source_channels from the request,
-      so they never depend on what the LLM claimed.
+    - Rejects invented IDs.
+    - Rejects duplicate assignments.
+    - Rejects cluster/unclustered overlap.
+    - Preserves omitted records as unclustered.
+    - Calculates mention_count in Python.
+    - Calculates source_channels in Python.
     """
+
     channel_by_id = {
-        item.feedback_id: item.source_channel for item in request.feedback
+        item.feedback_id: item.source_channel
+        for item in request.feedback
     }
+
     valid_ids = set(channel_by_id)
 
     clustered_ids: set[str] = set()
-    clusters: list[FeatureCluster] = []
+    final_clusters: list[FeatureCluster] = []
 
-    for cluster in output.feature_clusters:
-        unknown = set(cluster.feedback_ids) - valid_ids
-        if unknown:
+    for draft in output.feature_clusters:
+
+        draft_ids = set(draft.feedback_ids)
+
+        unknown_ids = draft_ids - valid_ids
+
+        if unknown_ids:
             raise ValueError(
-                f"Cluster '{cluster.feature_name}' has unknown IDs: {sorted(unknown)}"
+                f"Cluster '{draft.feature_name}' has unknown IDs: "
+                f"{sorted(unknown_ids)}"
             )
 
-        clustered_ids.update(cluster.feedback_ids)
+        duplicate_assignments = clustered_ids & draft_ids
 
-        clusters.append(
-            cluster.model_copy(
-                update={
-                    "mention_count": len(cluster.feedback_ids),
-                    "source_channels": sorted(
-                        {channel_by_id[i] for i in cluster.feedback_ids}
-                    ),
-                }
+        if duplicate_assignments:
+            raise ValueError(
+                "Feedback IDs appear in multiple clusters: "
+                f"{sorted(duplicate_assignments)}"
+            )
+
+        clustered_ids.update(draft_ids)
+
+        final_clusters.append(
+            FeatureCluster(
+                feature_name=draft.feature_name,
+                description=draft.description,
+                category=draft.category,
+                feedback_ids=draft.feedback_ids,
+                mention_count=len(draft.feedback_ids),
+                source_channels=sorted(
+                    {
+                        channel_by_id[feedback_id]
+                        for feedback_id in draft.feedback_ids
+                    }
+                ),
             )
         )
 
-    unclustered = list(dict.fromkeys(output.unclustered_feedback_ids))
+    unclustered = list(
+        dict.fromkeys(output.unclustered_feedback_ids)
+    )
 
     unknown_unclustered = set(unclustered) - valid_ids
+
     if unknown_unclustered:
-        raise ValueError(f"Unknown unclustered IDs: {sorted(unknown_unclustered)}")
+        raise ValueError(
+            f"Unknown unclustered IDs: {sorted(unknown_unclustered)}"
+        )
 
     overlap = clustered_ids & set(unclustered)
-    if overlap:
-        raise ValueError(f"IDs both clustered and unclustered: {sorted(overlap)}")
 
-    # Anything the LLM forgot to mention is treated as unclustered.
-    missing = valid_ids - clustered_ids - set(unclustered)
-    unclustered.extend(sorted(missing))
+    if overlap:
+        raise ValueError(
+            f"IDs both clustered and unclustered: {sorted(overlap)}"
+        )
+
+    # Preserve any records Gemini omitted.
+    missing_ids = valid_ids - clustered_ids - set(unclustered)
+
+    unclustered.extend(sorted(missing_ids))
 
     return FeatureClusteringResult(
         total_feedback_analyzed=len(request.feedback),
-        total_feature_clusters=len(clusters),
-        total_feature_requests=sum(c.mention_count for c in clusters),
-        clusters=clusters,
+        total_feature_clusters=len(final_clusters),
+        total_feature_requests=sum(
+            cluster.mention_count for cluster in final_clusters
+        ),
+        clusters=final_clusters,
         unclustered_feedback_ids=unclustered,
     )

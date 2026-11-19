@@ -14,7 +14,10 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.sessions import SessionMiddleware
 
 
-# Make backend and project root importable.
+# ---------------------------------------------------------
+# IMPORT PATH CONFIGURATION
+# ---------------------------------------------------------
+
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BACKEND_DIR)
 
@@ -24,6 +27,10 @@ if BACKEND_DIR not in sys.path:
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(1, PROJECT_ROOT)
 
+
+# ---------------------------------------------------------
+# APPLICATION IMPORTS
+# ---------------------------------------------------------
 
 from config import Config
 from db import init_db, get_client, get_db, close_client
@@ -42,6 +49,13 @@ from routes.preferences_routes import router as preferences_router
 from routes.chat_routes import router as chat_router
 from routes.product_routes import router as product_router
 
+# NEW: AI analysis routes
+from routes.analysis_routes import router as analysis_router
+
+
+# ---------------------------------------------------------
+# CORS CONFIGURATION
+# ---------------------------------------------------------
 
 ALLOWED_ORIGINS = [
     "http://localhost:5173",
@@ -53,6 +67,10 @@ ALLOWED_ORIGINS = [
 ]
 
 
+# ---------------------------------------------------------
+# APPLICATION FACTORY
+# ---------------------------------------------------------
+
 def create_app(test_config=None):
     """Create and configure a FastAPI application."""
 
@@ -60,12 +78,20 @@ def create_app(test_config=None):
         "SECRET_KEY": Config.SECRET_KEY,
         "MONGO_URI": Config.MONGO_URI,
         "MONGO_DB_NAME": Config.MONGO_DB_NAME,
-        "ENSURE_INDEXES": getattr(Config, "ENSURE_INDEXES", True),
+        "ENSURE_INDEXES": getattr(
+            Config,
+            "ENSURE_INDEXES",
+            True,
+        ),
         "TESTING": False,
     }
 
     if test_config:
         settings.update(test_config)
+
+    # -----------------------------------------------------
+    # APPLICATION LIFESPAN
+    # -----------------------------------------------------
 
     @asynccontextmanager
     async def lifespan(application: FastAPI):
@@ -79,19 +105,27 @@ def create_app(test_config=None):
         )
 
         if settings["ENSURE_INDEXES"]:
-            create_indexes(get_db())
+            index_summary = create_indexes(get_db())
+            print("MongoDB index summary:", index_summary)
 
         print("MongoDB initialization completed.")
 
         try:
             yield
+
         finally:
             close_client()
             print("MongoDB connection closed.")
 
+    # -----------------------------------------------------
+    # FASTAPI INSTANCE
+    # -----------------------------------------------------
+
     application = FastAPI(
         title="AI-Driven Product Assistant API",
-        description="Backend API for the AI-Driven Product Assistant.",
+        description=(
+            "Backend API for the AI-Driven Product Assistant."
+        ),
         version="1.0.0",
         lifespan=lifespan,
     )
@@ -99,7 +133,10 @@ def create_app(test_config=None):
     application.state.settings = settings
     application.state.testing = settings["TESTING"]
 
-    # Allow requests from the React frontend.
+    # -----------------------------------------------------
+    # CORS MIDDLEWARE
+    # -----------------------------------------------------
+
     application.add_middleware(
         CORSMiddleware,
         allow_origins=ALLOWED_ORIGINS,
@@ -108,7 +145,10 @@ def create_app(test_config=None):
         allow_headers=["*"],
     )
 
-    # Cookie-based sessions.
+    # -----------------------------------------------------
+    # SESSION MIDDLEWARE
+    # -----------------------------------------------------
+
     application.add_middleware(
         SessionMiddleware,
         secret_key=settings["SECRET_KEY"],
@@ -116,7 +156,10 @@ def create_app(test_config=None):
         https_only=False,
     )
 
-    # Register API routes.
+    # -----------------------------------------------------
+    # REGISTER API ROUTES
+    # -----------------------------------------------------
+
     application.include_router(auth_router)
     application.include_router(state_router)
     application.include_router(feedback_router)
@@ -129,6 +172,13 @@ def create_app(test_config=None):
     application.include_router(preferences_router)
     application.include_router(chat_router)
     application.include_router(product_router)
+
+    # NEW: Register AI analysis endpoints
+    application.include_router(analysis_router)
+
+    # -----------------------------------------------------
+    # ROOT ENDPOINT
+    # -----------------------------------------------------
 
     @application.get("/")
     def index():
@@ -143,6 +193,10 @@ def create_app(test_config=None):
             "docs": "/docs",
         }
 
+    # -----------------------------------------------------
+    # DATABASE HEALTH CHECK
+    # -----------------------------------------------------
+
     @application.get("/api/health")
     def health():
         """Check API availability and MongoDB connectivity."""
@@ -156,7 +210,9 @@ def create_app(test_config=None):
                     content={
                         "status": "degraded",
                         "database": "not_initialized",
-                        "message": "MongoDB client is not initialized.",
+                        "message": (
+                            "MongoDB client is not initialized."
+                        ),
                     },
                 )
 
@@ -177,6 +233,10 @@ def create_app(test_config=None):
                     "message": "Could not connect to MongoDB.",
                 },
             )
+
+    # -----------------------------------------------------
+    # HTTP EXCEPTION HANDLER
+    # -----------------------------------------------------
 
     @application.exception_handler(HTTPException)
     async def http_exception_handler(
@@ -201,6 +261,10 @@ def create_app(test_config=None):
             headers=exc.headers,
         )
 
+    # -----------------------------------------------------
+    # VALIDATION EXCEPTION HANDLER
+    # -----------------------------------------------------
+
     @application.exception_handler(RequestValidationError)
     async def validation_exception_handler(
         request: Request,
@@ -221,5 +285,8 @@ def create_app(test_config=None):
     return application
 
 
-# Application instance used by Uvicorn.
+# ---------------------------------------------------------
+# APPLICATION INSTANCE USED BY UVICORN
+# ---------------------------------------------------------
+
 app = create_app()

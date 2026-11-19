@@ -1,8 +1,11 @@
+
 fastapi
 uvicorn[standard]
-pymongo
+pymongo[srv]
 python-dotenv
 pydantic
+pydantic-settings
+crewai
 python-multipart
 email-validator
 passlib[bcrypt]

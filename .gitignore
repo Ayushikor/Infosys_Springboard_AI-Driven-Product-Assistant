@@ -1,28 +1,26 @@
-Frontend
 
+# Frontend
 node_modules/
 dist/
+
+# Environment variables and secrets
 .env
-.env.local
+.env.*
+!.env.example
+
+# Logs
 *.log
 
-Python backend
-
-pycache/
+# Python
+__pycache__/
 *.py[cod]
 .pytest_cache/
-backend/venv/
-backend/.env
-
-Python cache directories
-
-backend/pycache/
-backend/**/pycache/
-
 .venv/
 venv/
-__pycache__/
-.DS_Store
 
+# Editor settings
 .vscode/
-.env.example
+
+# Operating system
+.DS_Store
+Thumbs.db

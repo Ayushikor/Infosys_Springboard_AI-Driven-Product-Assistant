@@ -11,11 +11,18 @@ from app.schemas.trend_analysis import (
     IdentifiedTrend,
     TrendAnalysisOutput,
 )
+
 from app.services import trend_analysis_agent as agent_module
+
 from app.services.trend_analysis_agent import (
     TrendAnalysisError,
     _build_result,
 )
+
+
+# ---------------------------------------------------------
+# TEST HELPERS
+# ---------------------------------------------------------
 
 
 def create_request():
@@ -39,7 +46,10 @@ def create_request():
                 raw_text="Checkout loading is slow.",
                 timestamp="2026-10-13T10:00:00+05:30",
             ),
-        ]
+        ],
+        theme_context=[],
+        pain_point_context=[],
+        feature_context=[],
     )
 
 
@@ -58,7 +68,11 @@ def create_trend(*feedback_ids):
 def create_output():
     return TrendAnalysisOutput(
         trends=[
-            create_trend("FB-001", "FB-002", "FB-003")
+            create_trend(
+                "FB-001",
+                "FB-002",
+                "FB-003",
+            )
         ],
         overall_summary="Checkout performance complaints increased.",
         recurring_topics=["Slow Checkout"],
@@ -66,14 +80,22 @@ def create_output():
     )
 
 
+# ---------------------------------------------------------
+# REQUEST VALIDATION TESTS
+# ---------------------------------------------------------
+
+
 def test_valid_trend_analysis_request():
+
     request = create_request()
 
     assert len(request.feedback) == 3
 
 
 def test_duplicate_feedback_ids_rejected():
+
     with pytest.raises(ValidationError):
+
         TrendAnalysisRequest(
             feedback=[
                 TrendFeedbackItem(
@@ -88,12 +110,24 @@ def test_duplicate_feedback_ids_rejected():
                     raw_text="Checkout is slow.",
                     timestamp="2026-10-06T10:00:00+05:30",
                 ),
-            ]
+            ],
+            theme_context=[],
+            pain_point_context=[],
+            feature_context=[],
         )
 
 
+# ---------------------------------------------------------
+# TREND CALCULATION TESTS
+# ---------------------------------------------------------
+
+
 def test_increasing_trend_direction():
-    result = _build_result(create_output(), create_request())
+
+    result = _build_result(
+        create_output(),
+        create_request(),
+    )
 
     trend = result.trends[0]
 
@@ -102,7 +136,11 @@ def test_increasing_trend_direction():
 
 
 def test_weekly_counts_calculated_from_timestamps():
-    result = _build_result(create_output(), create_request())
+
+    result = _build_result(
+        create_output(),
+        create_request(),
+    )
 
     weekly_counts = result.trends[0].weekly_counts
 
@@ -111,67 +149,98 @@ def test_weekly_counts_calculated_from_timestamps():
     assert weekly_counts[1].mention_count == 2
 
 
+# ---------------------------------------------------------
+# FEEDBACK ID VALIDATION TESTS
+# ---------------------------------------------------------
+
+
 def test_unknown_feedback_id_rejected():
+
     request = create_request()
 
     output = TrendAnalysisOutput(
         trends=[
-            create_trend("FB-001", "FB-999")
+            create_trend(
+                "FB-001",
+                "FB-999",
+            )
         ],
         overall_summary="Test summary.",
     )
 
     with pytest.raises(TrendAnalysisError):
-        _build_result(output, request)
+
+        _build_result(
+            output,
+            request,
+        )
 
 
 def test_duplicate_feedback_ids_within_trend_rejected():
-    request = create_request()
 
-    output = TrendAnalysisOutput(
-        trends=[
-            create_trend("FB-001", "FB-001")
-        ],
-        overall_summary="Test summary.",
-    )
+    with pytest.raises(
+        ValidationError,
+        match="Duplicate feedback IDs inside a trend",
+    ):
 
-    with pytest.raises(TrendAnalysisError):
-        _build_result(output, request)
+        create_trend(
+            "FB-001",
+            "FB-001",
+        )
 
 
 def test_feedback_not_belonging_to_a_trend_is_allowed():
+
     request = create_request()
 
     output = TrendAnalysisOutput(
         trends=[
             create_trend("FB-001")
         ],
-        overall_summary="Only one recurring topic was identified.",
+        overall_summary=(
+            "Only one recurring topic was identified."
+        ),
     )
 
-    result = _build_result(output, request)
+    result = _build_result(
+        output,
+        request,
+    )
 
     assert result.total_feedback_analyzed == 3
     assert result.total_trends_identified == 1
     assert result.trends[0].feedback_ids == ["FB-001"]
 
 
+# ---------------------------------------------------------
+# TIMESTAMP VALIDATION TEST
+# ---------------------------------------------------------
+
+
 def test_naive_timestamp_rejected():
+
     request = TrendAnalysisRequest(
         feedback=[
             TrendFeedbackItem(
                 feedback_id="FB-001",
                 source_channel="App Review",
                 raw_text="Slow checkout.",
-                timestamp=datetime(2026, 10, 5, 10, 0),
+                timestamp=datetime(
+                    2026, 10, 5, 10, 0
+                ),
             ),
             TrendFeedbackItem(
                 feedback_id="FB-002",
                 source_channel="Support Ticket",
                 raw_text="Checkout is slow.",
-                timestamp=datetime(2026, 10, 6, 10, 0),
+                timestamp=datetime(
+                    2026, 10, 6, 10, 0
+                ),
             ),
-        ]
+        ],
+        theme_context=[],
+        pain_point_context=[],
+        feature_context=[],
     )
 
     output = TrendAnalysisOutput(
@@ -180,36 +249,48 @@ def test_naive_timestamp_rejected():
     )
 
     with pytest.raises(TrendAnalysisError):
-        _build_result(output, request)
+
+        _build_result(
+            output,
+            request,
+        )
+
+
+# ---------------------------------------------------------
+# MOCKED AGENT EXECUTION TEST
+# ---------------------------------------------------------
 
 
 def test_agent_execution_with_mocked_crewai(monkeypatch):
+
     fake_output = create_output()
 
+    # Mock Gemini configuration.
     monkeypatch.setattr(
         agent_module,
         "_create_llm",
         lambda: object(),
     )
 
+    # Mock CrewAI Agent.
     monkeypatch.setattr(
         agent_module,
         "Agent",
         lambda **kwargs: object(),
     )
 
+    # Mock CrewAI Task.
     monkeypatch.setattr(
         agent_module,
         "Task",
         lambda **kwargs: object(),
     )
 
+    # Mock CrewAI Crew.
     class FakeCrew:
-        def __init__(self, **kwargs):
-            pass
 
-        def kickoff(self):
-            return SimpleNamespace(pydantic=fake_output)
+        def __init__(self, **kwargs):
+            self.kwargs = kwargs
 
     monkeypatch.setattr(
         agent_module,
@@ -217,10 +298,43 @@ def test_agent_execution_with_mocked_crewai(monkeypatch):
         FakeCrew,
     )
 
+    # Mock the shared token-tracking wrapper.
+    def fake_kickoff_with_tracking(
+        crew,
+        agent_name,
+        model=None,
+        inputs=None,
+    ):
+
+        assert isinstance(crew, FakeCrew)
+        assert agent_name == "trend_analysis"
+        assert inputs is not None
+
+        # Verify Agent 4 receives upstream contexts.
+        assert "theme_context" in inputs
+        assert "pain_point_context" in inputs
+        assert "feature_context" in inputs
+        assert "weekly_activity" in inputs
+        assert "feedback_data" in inputs
+
+        return SimpleNamespace(
+            pydantic=fake_output
+        )
+
+    monkeypatch.setattr(
+        agent_module,
+        "kickoff_with_token_tracking",
+        fake_kickoff_with_tracking,
+    )
+
+    # Execute Agent 4.
     request = create_request()
 
-    result = agent_module.analyze_feedback_trends(request)
+    result = agent_module.analyze_feedback_trends(
+        request
+    )
 
+    # Verify the final result.
     assert result.total_feedback_analyzed == 3
     assert result.total_trends_identified == 1
     assert result.trends[0].topic == "Slow Checkout"
