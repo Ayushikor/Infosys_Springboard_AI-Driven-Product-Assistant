@@ -444,3 +444,179 @@ class TestState:
         assert "features" in data
         assert "themes" in data
         assert "workspaces" in data
+        
+
+class TestAnalysisBatches:
+
+    def _register_and_login(self, client):
+        import uuid
+
+        suffix = uuid.uuid4().hex[:8]
+        email = f"batch{suffix}@example.com"
+        username = f"batch{suffix}"
+
+        register = client.post(
+            "/api/auth/register",
+            json={
+                "name": "Batch Test User",
+                "username": username,
+                "email": email,
+                "password": "Password123!",
+                "confirmPassword": "Password123!",
+            },
+        )
+
+        assert register.status_code == 200
+
+        login = client.post(
+            "/api/auth/login",
+            json={
+                "email": email,
+                "password": "Password123!",
+            },
+        )
+
+        assert login.status_code == 200
+
+        return login.json()["data"]["user"]["id"]
+
+    def _insert_run(self, mock_db, user_id, run_id):
+        mock_db["analysis_runs"].insert_one({
+            "id": run_id,
+            "run_id": run_id,
+            "userId": user_id,
+            "status": "completed",
+            "total_batches": 2,
+            "completed_batches": 2,
+            "partial_or_failed_batches": 0,
+        })
+
+        for index in (1, 2):
+            mock_db["analysis_batches"].insert_one({
+                "id": f"{run_id}-batch-{index}",
+                "run_id": run_id,
+                "userId": user_id,
+                "batch_index": index,
+                "record_count": 150,
+                "status": "completed",
+                "success": True,
+                "feedback_ids": ["FB-001"],
+                "agent_status": {
+                    "themes": "completed",
+                    "pain_points": "completed",
+                    "feature_clusters": "completed",
+                    "trends": "completed",
+                },
+                "errors": {},
+                "results": {"themes": {"themes": []}},
+                "token_usage": {"total_tokens": 1000},
+            })
+
+    def test_batch_endpoint_requires_authentication(self, client):
+        response = client.get(
+            "/api/analysis/runs/test-run/batches"
+        )
+
+        assert response.status_code == 401
+
+    def test_batch_endpoint_returns_safe_data(
+        self,
+        client,
+        mock_db,
+    ):
+        from unittest.mock import patch
+
+        user_id = self._register_and_login(client)
+        run_id = "analysis-test-batch"
+
+        self._insert_run(mock_db, user_id, run_id)
+
+        with patch(
+            "services.analysis_service.get_db",
+            return_value=mock_db,
+        ):
+            response = client.get(
+                f"/api/analysis/runs/{run_id}/batches"
+            )
+
+        assert response.status_code == 200
+
+        data = response.json()["data"]
+
+        assert data["total_batches"] == 2
+        assert data["completed_batches"] == 2
+        assert len(data["batches"]) == 2
+
+        first = data["batches"][0]
+
+        assert first["record_count"] == 150
+        assert first["status"] == "completed"
+
+        forbidden = {
+            "_id",
+            "id",
+            "userId",
+            "workspaceId",
+            "feedback_ids",
+            "token_usage",
+            "results",
+        }
+
+        assert forbidden.isdisjoint(first.keys())
+
+    def test_batch_endpoint_prevents_cross_user_access(
+        self,
+        client,
+        mock_db,
+    ):
+        from unittest.mock import patch
+
+        owner_id = self._register_and_login(client)
+        run_id = "analysis-private-test"
+
+        self._insert_run(mock_db, owner_id, run_id)
+
+        # Authenticate a different account.
+        other_id = self._register_and_login(client)
+
+        assert other_id != owner_id
+
+        with patch(
+            "services.analysis_service.get_db",
+            return_value=mock_db,
+        ):
+            response = client.get(
+                f"/api/analysis/runs/{run_id}/batches"
+            )
+
+        assert response.status_code == 404
+
+    def test_batch_endpoint_can_include_results(
+        self,
+        client,
+        mock_db,
+    ):
+        from unittest.mock import patch
+
+        user_id = self._register_and_login(client)
+        run_id = "analysis-results-test"
+
+        self._insert_run(mock_db, user_id, run_id)
+
+        with patch(
+            "services.analysis_service.get_db",
+            return_value=mock_db,
+        ):
+            response = client.get(
+                f"/api/analysis/runs/{run_id}/batches",
+                params={"include_results": "true"},
+            )
+
+        assert response.status_code == 200
+
+        first = response.json()["data"]["batches"][0]
+
+        assert "results" in first
+        assert "userId" not in first
+        assert "workspaceId" not in first
+        assert "token_usage" not in first

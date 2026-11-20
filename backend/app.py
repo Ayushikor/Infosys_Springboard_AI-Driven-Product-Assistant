@@ -12,7 +12,9 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from starlette.middleware.sessions import SessionMiddleware
-
+from routes.analysis_batch_routes import (
+    router as analysis_batch_router,
+)
 
 # ---------------------------------------------------------
 # IMPORT PATH CONFIGURATION
@@ -172,6 +174,7 @@ def create_app(test_config=None):
     application.include_router(preferences_router)
     application.include_router(chat_router)
     application.include_router(product_router)
+    application.include_router(analysis_batch_router)
 
     # NEW: Register AI analysis endpoints
     application.include_router(analysis_router)

@@ -1,9 +1,7 @@
-
 """
 Sequential orchestrator for the four AI feedback analysis agents.
 
 Pipeline:
-
     Agent 1: Theme Extraction
         |
         v
@@ -59,7 +57,6 @@ from app.services import (
 
 from app.services.token_usage import capture_token_usage
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -70,7 +67,6 @@ class OrchestrationError(RuntimeError):
 # ---------------------------------------------------------
 # GENERIC HELPERS
 # ---------------------------------------------------------
-
 
 def _get_value(
     item: Any,
@@ -173,7 +169,6 @@ def _get_original_feedback_text(
 # FAILURE HANDLING
 # ---------------------------------------------------------
 
-
 def _skip_downstream_agents(
     agent_status: dict,
     errors: dict,
@@ -184,7 +179,6 @@ def _skip_downstream_agents(
     """Mark dependent agents as skipped after upstream failure."""
 
     for key, agent_name in downstream:
-
         agent_status[key] = "skipped_dependency"
         results[key] = None
 
@@ -222,7 +216,6 @@ def _mark_agent_failed(
 # AGENT 1 CONTEXT
 # ---------------------------------------------------------
 
-
 def _build_theme_context_for_agent_3(
     theme_result: Any,
     allowed_ids: set[str],
@@ -232,7 +225,6 @@ def _build_theme_context_for_agent_3(
     context = []
 
     for theme in theme_result.themes:
-
         relevant_ids = [
             feedback_id
             for feedback_id in theme.feedback_ids
@@ -258,7 +250,6 @@ def _build_theme_context_for_agent_3(
 # AGENT 2 CONTEXT
 # ---------------------------------------------------------
 
-
 def _build_pain_context_for_agent_3(
     pain_result: Any,
     allowed_ids: set[str],
@@ -268,7 +259,6 @@ def _build_pain_context_for_agent_3(
     context = []
 
     for point in pain_result.pain_points:
-
         relevant_ids = [
             feedback_id
             for feedback_id in point.feedback_ids
@@ -294,7 +284,6 @@ def _build_pain_context_for_agent_3(
 # ---------------------------------------------------------
 # AGENT 4 CONTEXT
 # ---------------------------------------------------------
-
 
 def _build_pain_context_for_agent_4(
     pain_result: Any,
@@ -359,8 +348,9 @@ def _build_feature_context_for_agent_4(
 # MAIN SEQUENTIAL ORCHESTRATOR
 # ---------------------------------------------------------
 
-
-def run_all_analyses() -> dict:
+def run_all_analyses(
+    records: list[dict[str, Any]] | None = None,
+) -> dict:
     """
     Run the four AI agents as a sequential data pipeline.
 
@@ -369,6 +359,7 @@ def run_all_analyses() -> dict:
     Agent 3 output -> Agent 4 input
 
     Successful results are preserved.
+
     Dependent agents are skipped when an upstream agent fails.
 
     Agent failures produce a partial_success response rather than
@@ -377,42 +368,67 @@ def run_all_analyses() -> dict:
     """
 
     # -----------------------------------------------------
-    # STEP 1: LOAD DATASETS
+    # STEP 1: LOAD INPUT RECORDS
     # -----------------------------------------------------
 
-    try:
-        records = load_feedback_dataset()
+    if records is None:
+        # Local JSON fallback for development and testing.
+        try:
+            records = load_feedback_dataset()
 
-    except Exception as exc:
-        logger.exception(
-            "Could not load feedback datasets."
+            logger.info(
+                "Loaded %d records from local JSON datasets.",
+                len(records),
+            )
+
+        except Exception as exc:
+            logger.exception(
+                "Could not load local feedback datasets."
+            )
+
+            raise OrchestrationError(
+                "The local feedback datasets could not be loaded."
+            ) from exc
+
+    else:
+        # Production path: records supplied by the main backend.
+        if not isinstance(records, list):
+            raise OrchestrationError(
+                "Provided feedback records must be a list."
+            )
+
+        records = list(records)
+
+        logger.info(
+            "Received %d records from the main backend.",
+            len(records),
         )
-
-        raise OrchestrationError(
-            "The local feedback datasets could not be loaded."
-        ) from exc
 
     if not records:
         raise OrchestrationError(
-            "No feedback records were found."
+            "No feedback records were provided."
+        )
+
+    if len(records) < 2:
+        raise OrchestrationError(
+            "At least two feedback records are required "
+            "for the four-agent pipeline."
         )
 
     if len(records) > 500:
         raise OrchestrationError(
-    "The dataset exceeds the 500-record limit "
-    "(maximum of 500 records per agent)."
-)
+            "The dataset exceeds the 500-record limit "
+            "(maximum of 500 records per agent)."
+        )
 
     # -----------------------------------------------------
     # STEP 2: VALIDATE ORIGINAL RECORDS
     # -----------------------------------------------------
 
     try:
-
         feedback_by_id = {}
 
         for record in records:
-
             if not isinstance(record, dict):
                 raise ValueError(
                     "A feedback dataset record is not a dictionary."
@@ -425,21 +441,24 @@ def run_all_analyses() -> dict:
                     "A feedback record is missing feedback_id."
                 )
 
+            if not record.get("timestamp"):
+                raise ValueError(
+                    f"Feedback record {feedback_id} is missing "
+                    "its timestamp."
+                )
+
+            if not _get_original_feedback_text(record):
+                raise ValueError(
+                    f"Feedback record {feedback_id} is missing "
+                    "its original text."
+                )
+
             feedback_by_id[feedback_id] = record
 
         if len(feedback_by_id) != len(records):
             raise ValueError(
                 "Duplicate feedback IDs were found."
             )
-
-        # Ensure original feedback text is available.
-        for record in records:
-
-            if not _get_original_feedback_text(record):
-                raise ValueError(
-                    "A feedback record is missing its original text: "
-                    f"{record['feedback_id']}"
-                )
 
         source_counts = dict(
             Counter(
@@ -452,7 +471,6 @@ def run_all_analyses() -> dict:
         common_feedback = _build_common_feedback(records)
 
     except Exception as exc:
-
         logger.exception(
             "Feedback dataset validation or normalization failed."
         )
@@ -504,7 +522,6 @@ def run_all_analyses() -> dict:
         )
 
         try:
-
             theme_request = ThemeExtractionRequest(
                 feedback=common_feedback,
             )
@@ -534,7 +551,6 @@ def run_all_analyses() -> dict:
             )
 
         except Exception as exc:
-
             logger.exception(
                 "Agent 1 - Theme Extraction failed."
             )
@@ -577,13 +593,11 @@ def run_all_analyses() -> dict:
         # =================================================
 
         if theme_result is not None:
-
             logger.info(
                 "Starting Agent 2 with Agent 1 theme context."
             )
 
             try:
-
                 # Agent 1 output becomes Agent 2 input.
                 pain_request = PainPointExtractionRequest(
                     feedback=common_feedback,
@@ -631,7 +645,6 @@ def run_all_analyses() -> dict:
                 )
 
             except Exception as exc:
-
                 logger.exception(
                     "Agent 2 - Pain Point Identification failed."
                 )
@@ -670,13 +683,11 @@ def run_all_analyses() -> dict:
         # =================================================
 
         if pain_result is not None:
-
             logger.info(
                 "Starting Agent 3 with Agent 1 and Agent 2 context."
             )
 
             try:
-
                 # Agent 2 identifies likely feature requests.
                 # Uncertain records are also included for review.
                 candidate_ids = (
@@ -709,7 +720,6 @@ def run_all_analyses() -> dict:
                 }
 
                 if not candidate_records:
-
                     # No model call is necessary if there are
                     # no feature-request or uncertain candidates.
                     feature_result = {
@@ -732,7 +742,6 @@ def run_all_analyses() -> dict:
                     )
 
                 else:
-
                     # Retrieve original feedback using the IDs.
                     feature_feedback = [
                         FeatureFeedbackItem(
@@ -811,7 +820,6 @@ def run_all_analyses() -> dict:
                     )
 
             except Exception as exc:
-
                 logger.exception(
                     "Agent 3 - Feature Clustering failed."
                 )
@@ -850,13 +858,11 @@ def run_all_analyses() -> dict:
             and pain_result is not None
             and feature_result is not None
         ):
-
             logger.info(
                 "Starting Agent 4 with combined upstream context."
             )
 
             try:
-
                 # Agent 1 context.
                 theme_context = [
                     {
@@ -933,7 +939,6 @@ def run_all_analyses() -> dict:
                 )
 
             except Exception as exc:
-
                 logger.exception(
                     "Agent 4 - Trend Analysis failed."
                 )
@@ -969,47 +974,35 @@ def run_all_analyses() -> dict:
 
         response = {
             "success": all_completed,
-
             "status": (
                 "completed"
                 if all_completed
                 else "partial_success"
             ),
-
             "pipeline_type": "sequential",
-
             "total_feedback_analyzed": len(records),
-
             "source_counts": source_counts,
-
             "execution_order": execution_order,
-
             "data_flow": {
                 "agent_1_to_agent_2": (
                     "theme_context"
                     if theme_result is not None
                     else "unavailable"
                 ),
-
                 "agent_2_to_agent_3": (
                     "pain_point_context_and_feature_request_ids"
                     if pain_result is not None
                     else "unavailable"
                 ),
-
                 "agent_3_to_agent_4": (
                     "feature_cluster_context"
                     if feature_result is not None
                     else "unavailable"
                 ),
             },
-
             "agent_status": agent_status,
-
             "errors": errors,
-
             "results": results,
-
             "token_usage": token_usage.report(),
         }
 

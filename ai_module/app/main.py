@@ -1,25 +1,23 @@
 
 import logging
+from typing import Any
 
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.schemas.feedback import FeedbackAnalysis, FeedbackRequest
-
 from app.schemas.theme_extraction import (
     ThemeExtractionRequest,
     ThemeExtractionResult,
 )
-
 from app.schemas.pain_point import (
     PainPointExtractionRequest,
     PainPointExtractionResult,
 )
-
 from app.schemas.feature_clustering import (
     FeatureClusteringRequest,
     FeatureClusteringResult,
 )
-
 from app.schemas.trend_analysis import (
     TrendAnalysisRequest,
     TrendAnalysisResult,
@@ -38,31 +36,86 @@ from app.services.orchestrator import (
     run_all_analyses,
 )
 
-
-# ---------------------------------------------------------
-# LOGGING CONFIGURATION
-# ---------------------------------------------------------
+from app.services.batch_orchestrator import (
+    BatchAnalysisError,
+    DEFAULT_BATCH_SIZE,
+    MAX_TOTAL_FEEDBACK_RECORDS,
+    run_batched_analyses,
+    aggregate_batch_responses,
+)
 
 logger = logging.getLogger(__name__)
 
 
-# ---------------------------------------------------------
+# =========================================================
+# REQUEST MODELS
+# =========================================================
+
+class AnalysisRunRequest(BaseModel):
+    """Feedback records supplied by the authenticated main backend."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    feedback_records: list[dict[str, Any]] = Field(
+        ...,
+        min_length=2,
+        max_length=MAX_TOTAL_FEEDBACK_RECORDS,
+        description="Normalized feedback records (2 to 10,000).",
+    )
+
+    batch_size: int = Field(
+        default=DEFAULT_BATCH_SIZE,
+        ge=2,
+        le=500,
+        description="Maximum feedback records per AI batch.",
+    )
+
+
+class BatchAggregationRequest(BaseModel):
+    """Request to merge previously completed AI batch outputs."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    batch_responses: list[dict[str, Any]] = Field(
+        ...,
+        min_length=1,
+        max_length=5000,
+        description="Previously completed batch analysis responses.",
+    )
+
+    total_feedback_analyzed: int = Field(
+        ...,
+        ge=2,
+        le=MAX_TOTAL_FEEDBACK_RECORDS,
+    )
+
+    source_counts: dict[str, int]
+
+    batch_size: int = Field(
+        default=DEFAULT_BATCH_SIZE,
+        ge=2,
+        le=500,
+    )
+
+
+# =========================================================
 # FASTAPI APPLICATION
-# ---------------------------------------------------------
+# =========================================================
 
 app = FastAPI(
     title="AI Feedback Intelligence",
     description=(
-        "AI-powered customer feedback analysis using "
-        "four specialized AI agents and three project datasets."
+        "AI-powered customer feedback analysis using four "
+        "specialized sequential agents, batch execution, "
+        "and deterministic batch aggregation."
     ),
-    version="1.0.0",
+    version="1.3.0",
 )
 
 
-# ---------------------------------------------------------
+# =========================================================
 # HEALTH CHECK
-# ---------------------------------------------------------
+# =========================================================
 
 @app.get("/health")
 def health() -> dict[str, str]:
@@ -72,9 +125,9 @@ def health() -> dict[str, str]:
     }
 
 
-# ---------------------------------------------------------
-# INDIVIDUAL FEEDBACK ANALYZER
-# ---------------------------------------------------------
+# =========================================================
+# SINGLE FEEDBACK ANALYSIS
+# =========================================================
 
 @app.post(
     "/feedback/analyze",
@@ -94,9 +147,9 @@ def analyze_feedback(
         ) from None
 
 
-# ---------------------------------------------------------
-# AGENT 1 - THEME EXTRACTION
-# ---------------------------------------------------------
+# =========================================================
+# AGENT 1: THEME EXTRACTION
+# =========================================================
 
 @app.post(
     "/themes/extract",
@@ -116,9 +169,9 @@ def extract_themes(
         ) from None
 
 
-# ---------------------------------------------------------
-# AGENT 2 - PAIN POINT IDENTIFICATION
-# ---------------------------------------------------------
+# =========================================================
+# AGENT 2: PAIN POINT IDENTIFICATION
+# =========================================================
 
 @app.post(
     "/pain-points/identify",
@@ -138,9 +191,9 @@ def identify_pain_points(
         ) from None
 
 
-# ---------------------------------------------------------
-# AGENT 3 - FEATURE CLUSTERING
-# ---------------------------------------------------------
+# =========================================================
+# AGENT 3: FEATURE CLUSTERING
+# =========================================================
 
 @app.post(
     "/features/cluster",
@@ -162,9 +215,9 @@ def cluster_features(
         ) from None
 
 
-# ---------------------------------------------------------
-# AGENT 4 - TREND ANALYSIS
-# ---------------------------------------------------------
+# =========================================================
+# AGENT 4: TREND ANALYSIS
+# =========================================================
 
 @app.post(
     "/trends/analyze",
@@ -186,48 +239,85 @@ def analyze_trends(
         ) from None
 
 
-# ---------------------------------------------------------
-# MULTI-AGENT ORCHESTRATOR
-# ---------------------------------------------------------
+# =========================================================
+# COMPLETE FOUR-AGENT PIPELINE
+# =========================================================
 
 @app.post("/analysis/run-all")
-def run_complete_analysis() -> dict:
+def run_complete_analysis(
+    request: AnalysisRunRequest | None = None,
+) -> dict:
     """
-    Automatically load all three project JSON datasets
-    and execute all four AI agents sequentially.
+    Execute the four-agent sequential analysis pipeline.
 
-    Data sources:
-        1. customer_feedback.json
-        2. user_reviews.json
-        3. support_tickets.json
+    Production:
+        The main backend supplies feedback records.
+        Records are processed in bounded batches.
 
-    MongoDB Atlas is not used as an input source.
+    Streaming backend:
+        Sends one MongoDB batch per request.
 
-    No manual feedback JSON is required.
+    Development:
+        An empty request body uses local JSON datasets.
     """
 
     try:
-        logger.info("Starting complete multi-agent analysis.")
+        # Local development fallback.
+        if request is None:
 
-        result = run_all_analyses()
+            logger.info(
+                "Starting four-agent analysis using local JSON datasets."
+            )
+
+            result = run_all_analyses()
+
+        else:
+
+            records = request.feedback_records
+            batch_size = request.batch_size
+
+            logger.info(
+                "Starting AI analysis: %d records, batch size %d.",
+                len(records),
+                batch_size,
+            )
+
+            # Preserve compatibility with requests containing up to
+            # 10,000 records. The backend streaming service sends
+            # only one bounded batch in each request.
+            result = run_batched_analyses(
+                records=records,
+                single_batch_runner=lambda batch: run_all_analyses(
+                    records=batch
+                ),
+                batch_size=batch_size,
+            )
 
         logger.info(
-            "Multi-agent analysis completed successfully."
+            "Analysis finished: status=%s, records=%s, batches=%s.",
+            result.get("status"),
+            result.get("total_feedback_analyzed"),
+            (result.get("batch_summary") or {}).get(
+                "total_batches",
+                1,
+            ),
         )
 
         return result
 
-    except OrchestrationError as exc:
+    except (OrchestrationError, BatchAnalysisError) as exc:
+
         logger.exception(
-            "Multi-agent orchestration failed."
+            "Analysis orchestration could not start."
         )
 
         raise HTTPException(
-            status_code=503,
+            status_code=422,
             detail=str(exc),
         ) from None
 
     except Exception:
+
         logger.exception(
             "Unexpected error during multi-agent analysis."
         )
@@ -238,4 +328,61 @@ def run_complete_analysis() -> dict:
                 "An unexpected error occurred during "
                 "multi-agent analysis."
             ),
+        ) from None
+
+
+# =========================================================
+# DETERMINISTIC BATCH AGGREGATION
+# =========================================================
+
+@app.post("/analysis/aggregate-batches")
+def aggregate_streamed_batches(
+    request: BatchAggregationRequest,
+) -> dict:
+    """
+    Merge already-completed batch results.
+
+    This endpoint does not execute Gemini or any AI agent.
+    It performs deterministic Python aggregation only.
+
+    Used by the main backend after all MongoDB batches
+    have been independently processed and persisted.
+    """
+
+    try:
+
+        result = aggregate_batch_responses(
+            request.batch_responses,
+            total_feedback_analyzed=request.total_feedback_analyzed,
+            source_counts=request.source_counts,
+            batch_size=request.batch_size,
+        )
+
+        # Batch documents are already persisted by the main backend.
+        # Avoid returning a second copy of all individual batch results.
+        result.pop("batch_results", None)
+
+        return result
+
+    except BatchAnalysisError as exc:
+
+        logger.warning(
+            "Invalid batch aggregation request: %s",
+            exc,
+        )
+
+        raise HTTPException(
+            status_code=422,
+            detail=str(exc),
+        ) from None
+
+    except Exception:
+
+        logger.exception(
+            "Could not aggregate streamed analysis batches."
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail="Could not merge the analysis batches.",
         ) from None
