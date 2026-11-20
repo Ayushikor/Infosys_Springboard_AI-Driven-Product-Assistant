@@ -64,7 +64,10 @@ const notImplemented = (name) => () =>
 
 const realApi = {
 
+  // -------------------------------------------------------
   // AUTHENTICATION
+  // -------------------------------------------------------
+
   auth: {
     login: (email, password) =>
       realRequest("post", "/auth/login", {
@@ -83,12 +86,19 @@ const realApi = {
       realRequest("get", "/auth/me"),
   },
 
+  // -------------------------------------------------------
   // APPLICATION STATE
+  // -------------------------------------------------------
+
   loadState: () =>
     realRequest("get", "/state"),
 
+  // -------------------------------------------------------
   // FEEDBACK
+  // -------------------------------------------------------
+
   feedback: {
+
     getAll: () =>
       realRequest("get", "/feedback"),
 
@@ -101,13 +111,22 @@ const realApi = {
     remove: (id) =>
       realRequest("delete", `/feedback/${id}`),
 
-    importMany: (rows) =>
+    // Retrieve uploaded datasets belonging to the user.
+    getDatasets: () =>
+      realRequest("get", "/feedback/datasets"),
+
+    // Import feedback records with their original filename.
+    importMany: (rows, fileName = "Uploaded dataset") =>
       realRequest("post", "/feedback/import", {
         records: rows,
+        fileName,
       }),
   },
 
+  // -------------------------------------------------------
   // WORKSPACES
+  // -------------------------------------------------------
+
   workspaces: {
     getAll: () =>
       realRequest("get", "/workspaces"),
@@ -122,7 +141,10 @@ const realApi = {
       realRequest("post", `/workspaces/${id}/switch`),
   },
 
+  // -------------------------------------------------------
   // THEMES
+  // -------------------------------------------------------
+
   themes: {
     getAll: notImplemented("Themes"),
 
@@ -132,7 +154,10 @@ const realApi = {
       }),
   },
 
+  // -------------------------------------------------------
   // FEATURE PRIORITIZATION
+  // -------------------------------------------------------
+
   prioritization: {
     getAll: () =>
       realRequest("get", "/features"),
@@ -147,7 +172,10 @@ const realApi = {
       realRequest("delete", `/features/${id}`),
   },
 
+  // -------------------------------------------------------
   // PRODUCT REQUIREMENT DOCUMENTS
+  // -------------------------------------------------------
+
   prds: {
     getAll: () =>
       realRequest("get", "/prds"),
@@ -162,7 +190,10 @@ const realApi = {
       realRequest("delete", `/prds/${id}`),
   },
 
+  // -------------------------------------------------------
   // ROADMAP
+  // -------------------------------------------------------
+
   roadmap: {
     getAll: () =>
       realRequest("get", "/roadmap"),
@@ -177,7 +208,10 @@ const realApi = {
       realRequest("delete", `/roadmap/${id}`),
   },
 
+  // -------------------------------------------------------
   // DASHBOARD
+  // -------------------------------------------------------
+
   dashboard: {
     getActivity: () =>
       realRequest("get", "/activity"),
@@ -189,12 +223,23 @@ const realApi = {
 
   analysis: {
 
-    // Execute the four-agent pipeline and persist results.
-    run: (workspaceId = null) =>
+    // Execute the four-agent pipeline.
+    // If importId is provided, only that uploaded dataset
+    // will be analysed by the backend.
+
+    run: (workspaceId = null, importId = null) =>
       realRequest(
         "post",
         "/analysis/run",
-        workspaceId ? { workspaceId } : {},
+        {
+          ...(workspaceId !== null && workspaceId !== undefined
+            ? { workspaceId }
+            : {}),
+
+          ...(importId !== null && importId !== undefined
+            ? { importId }
+            : {}),
+        },
         {
           timeout: 330000,
         }
@@ -235,13 +280,19 @@ const realApi = {
       ),
   },
 
+  // -------------------------------------------------------
   // USER PREFERENCES
+  // -------------------------------------------------------
+
   preferences: {
     update: (data) =>
       realRequest("put", "/preferences", data),
   },
 
+  // -------------------------------------------------------
   // CHAT
+  // -------------------------------------------------------
+
   chat: {
     getHistory: () =>
       realRequest("get", "/chat"),

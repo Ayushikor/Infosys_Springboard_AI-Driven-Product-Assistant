@@ -22,6 +22,10 @@ router = APIRouter(
 )
 
 
+# ---------------------------------------------------------
+# AUTHENTICATION AND ERROR HANDLING
+# ---------------------------------------------------------
+
 def _user_id(request: Request):
     """Return the authenticated user's ID from the session."""
     return request.session.get("user_id")
@@ -43,6 +47,10 @@ def _error_response(
         status_code=status_code,
     )
 
+
+# ---------------------------------------------------------
+# WORKSPACE VALIDATION
+# ---------------------------------------------------------
 
 def _resolve_workspace(
     user_id: str,
@@ -112,13 +120,20 @@ def _validate_workspace_filter(
 # RUN COMPLETE FOUR-AGENT ANALYSIS
 # ---------------------------------------------------------
 
-
 @router.post("/run")
 def run_analysis(
     request: Request,
     body: dict | None = Body(default=None),
 ):
-    """Execute the AI module and save its complete response."""
+    """
+    Execute AI analysis.
+
+    When importId is provided, only feedback records belonging
+    to that uploaded dataset are analysed.
+
+    When importId is omitted, the legacy workspace-based
+    analysis behaviour is retained.
+    """
 
     uid = _user_id(request)
 
@@ -129,6 +144,49 @@ def run_analysis(
         )
 
     body = body or {}
+
+    # -----------------------------------------------------
+    # 1. VALIDATE THE SELECTED IMPORT ID
+    # -----------------------------------------------------
+
+    import_id = body.get("importId")
+
+    if import_id is not None:
+
+        if not isinstance(import_id, str):
+            return _error_response(
+                "Invalid import ID.",
+                400,
+            )
+
+        import_id = import_id.strip()
+
+        if not import_id:
+            return _error_response(
+                "Import ID cannot be empty.",
+                400,
+            )
+
+        # Verify dataset ownership before starting analysis.
+        dataset = get_db()["feedback"].find_one(
+            {
+                "userId": uid,
+                "import_id": import_id,
+            },
+            {
+                "_id": 1,
+            },
+        )
+
+        if not dataset:
+            return _error_response(
+                "Uploaded dataset not found or does not belong to you.",
+                404,
+            )
+
+    # -----------------------------------------------------
+    # 2. RESOLVE THE WORKSPACE
+    # -----------------------------------------------------
 
     workspace_id, workspace_error = _resolve_workspace(
         uid,
@@ -141,10 +199,15 @@ def run_analysis(
             404,
         )
 
+    # -----------------------------------------------------
+    # 3. EXECUTE ANALYSIS
+    # -----------------------------------------------------
+
     try:
         result = run_and_save_analysis(
             user_id=uid,
             workspace_id=workspace_id,
+            import_id=import_id,
         )
 
         message = (
@@ -153,7 +216,10 @@ def run_analysis(
             else "Analysis saved with partial results."
         )
 
-        return ok(result, message)
+        return ok(
+            result,
+            message,
+        )
 
     except AnalysisServiceError as exc:
         return _error_response(
@@ -165,7 +231,6 @@ def run_analysis(
 # ---------------------------------------------------------
 # LIST ANALYSIS HISTORY
 # ---------------------------------------------------------
-
 
 @router.get("/runs")
 def get_analysis_history(
@@ -210,7 +275,6 @@ def get_analysis_history(
 # RETRIEVE LATEST ANALYSIS
 # ---------------------------------------------------------
 
-
 @router.get("/runs/latest")
 def get_latest_analysis(
     request: Request,
@@ -254,7 +318,6 @@ def get_latest_analysis(
 # ---------------------------------------------------------
 # RETRIEVE SPECIFIC ANALYSIS RUN
 # ---------------------------------------------------------
-
 
 @router.get("/runs/{run_id}")
 def get_analysis_details(

@@ -26,6 +26,87 @@ const AppDataContext = createContext(null);
 
 
 // ---------------------------------------------------------
+// INITIAL STATES
+// ---------------------------------------------------------
+
+const initialAppState = {
+  loading: true,
+  error: null,
+  data: null,
+};
+
+const initialAnalysisState = {
+  loading: true,
+  running: false,
+  error: null,
+  latest: null,
+  runs: [],
+
+  // Uploaded dataset state.
+  datasets: [],
+  datasetsLoading: false,
+  datasetsError: null,
+};
+
+
+// ---------------------------------------------------------
+// NORMALIZE DATASET RESPONSE
+// ---------------------------------------------------------
+
+const normalizeDatasets = (responseData) => {
+
+  const items = Array.isArray(responseData)
+    ? responseData
+    : Array.isArray(responseData?.items)
+      ? responseData.items
+      : Array.isArray(responseData?.datasets)
+        ? responseData.datasets
+        : [];
+
+  return items
+    .map((item) => {
+
+      const importId =
+        item.import_id ??
+        item.importId ??
+        null;
+
+      return {
+        ...item,
+
+        import_id: importId,
+
+        fileName:
+          item.fileName ||
+          item.file_name ||
+          item.filename ||
+          item.name ||
+          "Uploaded dataset",
+
+        recordCount:
+          Number(
+            item.recordCount ??
+            item.record_count ??
+            item.count ??
+            0
+          ),
+
+        importedAt:
+          item.importedAt ||
+          item.imported_at ||
+          item.createdAt ||
+          null,
+      };
+    })
+    .filter(
+      (item) =>
+        typeof item.import_id === "string" &&
+        item.import_id.trim().length > 0
+    );
+};
+
+
+// ---------------------------------------------------------
 // APPLICATION DATA PROVIDER
 // ---------------------------------------------------------
 
@@ -36,20 +117,11 @@ export function AppDataProvider({ children }) {
     isLoading: authLoading,
   } = useAuth();
 
-  const [state, setState] = useState({
-    loading: true,
-    error: null,
-    data: null,
-  });
+  const [state, setState] = useState(initialAppState);
 
-  // Separate state for persisted AI analysis.
-  const [analysis, setAnalysis] = useState({
-    loading: true,
-    running: false,
-    error: null,
-    latest: null,
-    runs: [],
-  });
+  const [analysis, setAnalysis] = useState(
+    initialAnalysisState
+  );
 
 
   // -------------------------------------------------------
@@ -58,29 +130,141 @@ export function AppDataProvider({ children }) {
 
   const refresh = useCallback(async () => {
 
-    const res = await apiClient.loadState();
+    try {
 
-    if (res.success) {
+      const response = await apiClient.loadState();
+
+      if (response.success) {
+
+        setState({
+          loading: false,
+          error: null,
+          data: response.data,
+        });
+
+      } else {
+
+        setState({
+          loading: false,
+          error: response.message || "Could not load application data.",
+          data: null,
+        });
+
+      }
+
+      return response;
+
+    } catch (error) {
+
+      const message =
+        error.message || "Could not load application data.";
 
       setState({
         loading: false,
-        error: null,
-        data: res.data,
-      });
-
-    } else {
-
-      setState({
-        loading: false,
-        error: res.message,
+        error: message,
         data: null,
       });
 
+      return {
+        success: false,
+        message,
+      };
     }
 
-    return res;
-
   }, []);
+
+
+  // -------------------------------------------------------
+  // LOAD UPLOADED DATASETS
+  // -------------------------------------------------------
+
+  const refreshDatasets = useCallback(async () => {
+
+    if (!user) {
+      return {
+        success: false,
+        message: "User is not authenticated.",
+      };
+    }
+
+    if (
+      typeof apiClient.feedback?.getDatasets !== "function"
+    ) {
+
+      const message = isMockMode
+        ? "Uploaded dataset selection requires real API mode."
+        : "Dataset retrieval is unavailable.";
+
+      setAnalysis((previous) => ({
+        ...previous,
+        datasetsLoading: false,
+        datasetsError: message,
+        datasets: [],
+      }));
+
+      return {
+        success: false,
+        message,
+      };
+    }
+
+    setAnalysis((previous) => ({
+      ...previous,
+      datasetsLoading: true,
+      datasetsError: null,
+    }));
+
+    try {
+
+      const response =
+        await apiClient.feedback.getDatasets();
+
+      if (!response.success) {
+
+        setAnalysis((previous) => ({
+          ...previous,
+          datasetsLoading: false,
+          datasetsError:
+            response.message || "Could not load uploaded datasets.",
+        }));
+
+        return response;
+      }
+
+      const datasets = normalizeDatasets(
+        response.data
+      );
+
+      setAnalysis((previous) => ({
+        ...previous,
+        datasetsLoading: false,
+        datasetsError: null,
+        datasets,
+      }));
+
+      return {
+        success: true,
+        data: datasets,
+      };
+
+    } catch (error) {
+
+      const message =
+        error.message || "Could not load uploaded datasets.";
+
+      setAnalysis((previous) => ({
+        ...previous,
+        datasetsLoading: false,
+        datasetsError: message,
+      }));
+
+      return {
+        success: false,
+        message,
+      };
+    }
+
+  }, [user]);
 
 
   // -------------------------------------------------------
@@ -101,19 +285,22 @@ export function AppDataProvider({ children }) {
       typeof apiClient.analysis?.getRuns !== "function"
     ) {
 
-      setAnalysis({
+      const message = isMockMode
+        ? "AI analysis requires real API mode."
+        : "Analysis API is unavailable.";
+
+      setAnalysis((previous) => ({
+        ...previous,
         loading: false,
         running: false,
-        error: isMockMode
-          ? "AI analysis requires real API mode."
-          : "Analysis API is unavailable.",
+        error: message,
         latest: null,
         runs: [],
-      });
+      }));
 
       return {
         success: false,
-        message: "Analysis API is unavailable.",
+        message,
       };
     }
 
@@ -125,14 +312,16 @@ export function AppDataProvider({ children }) {
 
     try {
 
-      const [latestResponse, historyResponse] =
-        await Promise.all([
-          apiClient.analysis.getLatest(),
-          apiClient.analysis.getRuns(null, 20),
-        ]);
+      const [
+        latestResponse,
+        historyResponse,
+      ] = await Promise.all([
+        apiClient.analysis.getLatest(),
+        apiClient.analysis.getRuns(null, 20),
+      ]);
 
-      // An empty history is valid. The latest endpoint
-      // may return 404 when no analysis has been saved.
+      // The latest endpoint may return 404 when no analysis
+      // has been saved. An empty history is valid.
       const latest = latestResponse.success
         ? latestResponse.data
         : null;
@@ -184,85 +373,106 @@ export function AppDataProvider({ children }) {
   // RUN ALL FOUR AI AGENTS
   // -------------------------------------------------------
 
-  const runAnalysis = useCallback(async (workspaceId = null) => {
+  const runAnalysis = useCallback(
+    async (
+      workspaceId = null,
+      importId = null
+    ) => {
 
-    if (!user) {
-      return {
-        success: false,
-        message: "Please log in before running AI analysis.",
-      };
-    }
+      if (!user) {
+        return {
+          success: false,
+          message: "Please log in before running AI analysis.",
+        };
+      }
 
-    if (typeof apiClient.analysis?.run !== "function") {
-      return {
-        success: false,
-        message: "AI analysis is unavailable in the current API mode.",
-      };
-    }
+      if (typeof apiClient.analysis?.run !== "function") {
+        return {
+          success: false,
+          message: "AI analysis is unavailable in the current API mode.",
+        };
+      }
 
-    setAnalysis((previous) => ({
-      ...previous,
-      running: true,
-      error: null,
-    }));
+      // Dataset-specific analysis requires a valid import ID.
+      if (
+        importId !== null &&
+        (
+          typeof importId !== "string" ||
+          !importId.trim()
+        )
+      ) {
+        return {
+          success: false,
+          message: "Please select a valid uploaded dataset.",
+        };
+      }
 
-    try {
+      setAnalysis((previous) => ({
+        ...previous,
+        running: true,
+        error: null,
+      }));
 
-      const response = await apiClient.analysis.run(
-        workspaceId
-      );
+      try {
 
-      if (!response.success) {
+        const response = await apiClient.analysis.run(
+          workspaceId,
+          importId
+        );
+
+        if (!response.success) {
+
+          setAnalysis((previous) => ({
+            ...previous,
+            running: false,
+            error: response.message || "Analysis failed.",
+          }));
+
+          return response;
+        }
+
+        // The POST endpoint returns the saved MongoDB document.
+        const savedRun = response.data;
+
+        // Refresh history after successful persistence.
+        const historyResponse =
+          await apiClient.analysis.getRuns(null, 20);
 
         setAnalysis((previous) => ({
           ...previous,
           running: false,
-          error: response.message,
+          loading: false,
+          error: historyResponse.success
+            ? null
+            : "Analysis was saved, but history could not be refreshed.",
+          latest: savedRun,
+          runs: historyResponse.success
+            ? historyResponse.data?.items || []
+            : previous.runs,
         }));
 
         return response;
+
+      } catch (error) {
+
+        const message =
+          error.message || "AI analysis could not be completed.";
+
+        setAnalysis((previous) => ({
+          ...previous,
+          running: false,
+          error: message,
+        }));
+
+        return {
+          success: false,
+          message,
+        };
       }
 
-      // The POST endpoint returns the saved MongoDB document.
-      const savedRun = response.data;
-
-      // Refresh the run history after successful persistence.
-      const historyResponse =
-        await apiClient.analysis.getRuns(null, 20);
-
-      setAnalysis((previous) => ({
-        ...previous,
-        running: false,
-        loading: false,
-        error: historyResponse.success
-          ? null
-          : "Analysis was saved, but history could not be refreshed.",
-        latest: savedRun,
-        runs: historyResponse.success
-          ? historyResponse.data?.items || []
-          : previous.runs,
-      }));
-
-      return response;
-
-    } catch (error) {
-
-      const message =
-        error.message || "AI analysis could not be completed.";
-
-      setAnalysis((previous) => ({
-        ...previous,
-        running: false,
-        error: message,
-      }));
-
-      return {
-        success: false,
-        message,
-      };
-    }
-
-  }, [user]);
+    },
+    [user]
+  );
 
 
   // -------------------------------------------------------
@@ -289,7 +499,7 @@ export function AppDataProvider({ children }) {
 
   useEffect(() => {
 
-    // Don't fetch data until authentication is restored.
+    // Wait until authentication restoration is complete.
     if (authLoading) {
       return;
     }
@@ -297,17 +507,13 @@ export function AppDataProvider({ children }) {
     if (!user) {
 
       setState({
+        ...initialAppState,
         loading: false,
-        error: null,
-        data: null,
       });
 
       setAnalysis({
+        ...initialAnalysisState,
         loading: false,
-        running: false,
-        error: null,
-        latest: null,
-        runs: [],
       });
 
       return;
@@ -315,12 +521,14 @@ export function AppDataProvider({ children }) {
 
     refresh();
     refreshAnalysis();
+    refreshDatasets();
 
   }, [
     user,
     authLoading,
     refresh,
     refreshAnalysis,
+    refreshDatasets,
   ]);
 
 
@@ -332,7 +540,9 @@ export function AppDataProvider({ children }) {
 
     const d = state.data;
 
-    if (!d) return null;
+    if (!d) {
+      return null;
+    }
 
     const feedback = d.feedback || [];
     const themes = d.themes || [];
@@ -346,7 +556,10 @@ export function AppDataProvider({ children }) {
 
     const scored = features.map((feature) => {
 
-      const { score, error } = computeRice(feature);
+      const {
+        score,
+        error,
+      } = computeRice(feature);
 
       return {
         ...feature,
@@ -367,7 +580,9 @@ export function AppDataProvider({ children }) {
           allScores
         ),
       }))
-      .sort((a, b) => b.rice - a.rice);
+      .sort(
+        (a, b) => b.rice - a.rice
+      );
 
     return {
       feedbackCount: feedback.length,
@@ -403,13 +618,16 @@ export function AppDataProvider({ children }) {
     derived,
     refresh,
 
-    // New AI analysis state.
+    // AI analysis state.
     analysis,
 
-    // New AI analysis actions.
+    // AI analysis actions.
     runAnalysis,
     refreshAnalysis,
     getAnalysisRun,
+
+    // Dataset actions.
+    refreshDatasets,
 
   }), [
     state,
@@ -419,6 +637,7 @@ export function AppDataProvider({ children }) {
     runAnalysis,
     refreshAnalysis,
     getAnalysisRun,
+    refreshDatasets,
   ]);
 
 

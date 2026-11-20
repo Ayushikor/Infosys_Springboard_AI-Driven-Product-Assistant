@@ -1,4 +1,14 @@
-"""Streaming analysis execution and MongoDB persistence service."""
+"""Streaming analysis execution and MongoDB persistence service.
+
+Supports:
+- User-scoped analysis
+- Uploaded-dataset filtering through import_id
+- MongoDB cursor streaming
+- Sequential execution of four AI agents
+- Per-batch persistence
+- Deterministic aggregation
+- Analysis history and batch retrieval
+"""
 
 import logging
 from datetime import datetime, timezone
@@ -17,7 +27,13 @@ from helpers import (
     mongo_docs_to_list,
 )
 
+
 logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------
+# CONFIGURATION
+# ---------------------------------------------------------
 
 MAX_FEEDBACK_RECORDS = 10_000
 DEFAULT_ANALYSIS_BATCH_SIZE = 200
@@ -30,30 +46,51 @@ AGENT_KEYS = (
 )
 
 
+# ---------------------------------------------------------
+# CUSTOM EXCEPTION
+# ---------------------------------------------------------
+
 class AnalysisServiceError(RuntimeError):
     """Raised when analysis execution or persistence fails."""
 
-    def __init__(self, message: str, status_code: int = 503):
+    def __init__(
+        self,
+        message: str,
+        status_code: int = 503,
+    ):
         super().__init__(message)
         self.status_code = status_code
 
 
-def _mark_failed(collection, run_id: str, message: str) -> None:
+# ---------------------------------------------------------
+# FAILURE HANDLING
+# ---------------------------------------------------------
+
+def _mark_failed(
+    collection,
+    run_id: str,
+    message: str,
+) -> None:
     """Mark a previously created analysis run as failed."""
 
     try:
+        timestamp = now_iso()
+
         collection.update_one(
             {"run_id": run_id},
             {
                 "$set": {
                     "status": "failed",
                     "success": False,
-                    "errors": {"pipeline": message},
-                    "completedAt": now_iso(),
-                    "updatedAt": now_iso(),
+                    "errors": {
+                        "pipeline": message,
+                    },
+                    "completedAt": timestamp,
+                    "updatedAt": timestamp,
                 }
             },
         )
+
     except PyMongoError:
         logger.exception(
             "Could not update failed analysis run %s.",
@@ -61,11 +98,30 @@ def _mark_failed(collection, run_id: str, message: str) -> None:
         )
 
 
+# ---------------------------------------------------------
+# FEEDBACK QUERY
+# ---------------------------------------------------------
+
 def _build_feedback_query(
     user_id: str,
     workspace_id: str | None = None,
+    import_id: str | None = None,
 ) -> dict:
-    """Build a user-scoped query, including legacy workspace-less records."""
+    """
+    Build the MongoDB feedback query.
+
+    When import_id is supplied, ONLY records belonging to
+    that user's uploaded dataset are returned.
+
+    When import_id is omitted, the legacy workspace-based
+    query is retained for backward compatibility.
+    """
+
+    if import_id is not None:
+        return {
+            "userId": user_id,
+            "import_id": import_id,
+        }
 
     workspace_scope = [
         {"workspaceId": {"$exists": False}},
@@ -73,7 +129,10 @@ def _build_feedback_query(
     ]
 
     if workspace_id:
-        workspace_scope.insert(0, {"workspaceId": workspace_id})
+        workspace_scope.insert(
+            0,
+            {"workspaceId": workspace_id},
+        )
 
     return {
         "userId": user_id,
@@ -81,8 +140,14 @@ def _build_feedback_query(
     }
 
 
-def _validate_feedback_count(total: int) -> None:
-    """Validate the total number of feedback records before processing."""
+# ---------------------------------------------------------
+# VALIDATION
+# ---------------------------------------------------------
+
+def _validate_feedback_count(
+    total: int,
+) -> None:
+    """Validate the number of feedback records."""
 
     if total < 2:
         raise AnalysisServiceError(
@@ -99,6 +164,40 @@ def _validate_feedback_count(total: int) -> None:
         )
 
 
+def _validate_import_id(
+    import_id: str | None,
+) -> str | None:
+    """
+    Validate and normalize an uploaded dataset identifier.
+
+    Returns:
+        A trimmed import_id, or None for legacy analysis.
+    """
+
+    if import_id is None:
+        return None
+
+    if not isinstance(import_id, str):
+        raise AnalysisServiceError(
+            "A valid import_id is required.",
+            422,
+        )
+
+    normalized_import_id = import_id.strip()
+
+    if not normalized_import_id:
+        raise AnalysisServiceError(
+            "A valid import_id is required.",
+            422,
+        )
+
+    return normalized_import_id
+
+
+# ---------------------------------------------------------
+# MONGODB STREAMING
+# ---------------------------------------------------------
+
 def _iter_document_batches(
     cursor,
     total_records: int,
@@ -107,22 +206,34 @@ def _iter_document_batches(
     """
     Lazily yield balanced batches from a MongoDB cursor.
 
-    The iterator never materializes the complete feedback collection.
-    It holds at most one batch of documents in memory.
+    Only one batch of feedback documents is held in memory
+    at a time.
     """
+
+    if batch_size < 2 or batch_size > 500:
+        raise ValueError(
+            "Batch size must be between 2 and 500."
+        )
 
     if total_records < 1:
         return
 
-    if batch_size < 2 or batch_size > 500:
-        raise ValueError("Batch size must be between 2 and 500.")
+    batch_count = ceil(
+        total_records / batch_size
+    )
 
-    batch_count = ceil(total_records / batch_size)
-    base_size, remainder = divmod(total_records, batch_count)
+    base_size, remainder = divmod(
+        total_records,
+        batch_count,
+    )
 
     iterator = iter(cursor)
 
-    for batch_index in range(1, batch_count + 1):
+    for batch_index in range(
+        1,
+        batch_count + 1,
+    ):
+
         current_size = base_size + (
             1 if batch_index <= remainder else 0
         )
@@ -132,23 +243,33 @@ def _iter_document_batches(
         for _ in range(current_size):
             try:
                 batch.append(next(iterator))
+
             except StopIteration:
                 raise RuntimeError(
-                    "MongoDB returned fewer feedback records than counted."
+                    "MongoDB returned fewer feedback records "
+                    "than counted."
                 ) from None
 
         yield batch_index, batch
 
 
-def _normalize_timestamp(value, feedback_id: str) -> str:
+# ---------------------------------------------------------
+# FEEDBACK NORMALIZATION
+# ---------------------------------------------------------
+
+def _normalize_timestamp(
+    value,
+    feedback_id: str,
+) -> str:
     """Convert MongoDB timestamps into timezone-aware ISO strings."""
 
     if isinstance(value, datetime):
         timestamp = value
 
-        # PyMongo can return BSON dates as naive UTC datetimes.
         if timestamp.tzinfo is None:
-            timestamp = timestamp.replace(tzinfo=timezone.utc)
+            timestamp = timestamp.replace(
+                tzinfo=timezone.utc
+            )
 
         return timestamp.isoformat()
 
@@ -162,33 +283,46 @@ def _normalize_timestamp(value, feedback_id: str) -> str:
                 timestamp.tzinfo is None
                 or timestamp.utcoffset() is None
             ):
-                raise ValueError("Timezone information is missing.")
+                raise ValueError(
+                    "Timezone information is missing."
+                )
 
             return timestamp.isoformat()
 
         except (ValueError, TypeError):
             raise ValueError(
-                f"Feedback record {feedback_id} has an invalid "
-                "createdAt timestamp."
+                f"Feedback record {feedback_id} has an "
+                "invalid createdAt timestamp."
             ) from None
 
     raise ValueError(
-        f"Feedback record {feedback_id} is missing a valid createdAt."
+        f"Feedback record {feedback_id} is missing "
+        "a valid createdAt."
     )
 
 
-def _normalize_feedback_document(document: dict) -> dict:
-    """Convert a MongoDB feedback document into the AI input format."""
+def _normalize_feedback_document(
+    document: dict,
+) -> dict:
+    """Convert a MongoDB document into the AI input format."""
 
-    feedback_id = str(document.get("id") or "").strip()
+    feedback_id = str(
+        document.get("id") or ""
+    ).strip()
 
     if not feedback_id:
         raise ValueError(
             "A MongoDB feedback record is missing its id."
         )
 
-    title = str(document.get("title") or "").strip()
-    message = str(document.get("message") or "").strip()
+    title = str(
+        document.get("title") or ""
+    ).strip()
+
+    message = str(
+        document.get("message") or ""
+    ).strip()
+
     raw_text = message or title
 
     if not raw_text:
@@ -217,11 +351,15 @@ def _normalize_feedback_document(document: dict) -> dict:
     }
 
 
+# ---------------------------------------------------------
+# FAILED BATCH RESPONSE
+# ---------------------------------------------------------
+
 def _failed_batch_response(
     records: list[dict],
     message: str,
 ) -> dict:
-    """Build a safe, persistable response when one AI request fails."""
+    """Build a persistable response when an AI request fails."""
 
     feedback_ids = [
         record["feedback_id"]
@@ -233,13 +371,16 @@ def _failed_batch_response(
         "status": "failed",
         "total_feedback_analyzed": len(records),
         "agent_status": {
-            key: "failed" for key in AGENT_KEYS
+            key: "failed"
+            for key in AGENT_KEYS
         },
         "errors": {
-            key: message for key in AGENT_KEYS
+            key: message
+            for key in AGENT_KEYS
         },
         "results": {
-            key: None for key in AGENT_KEYS
+            key: None
+            for key in AGENT_KEYS
         },
         "token_usage": {},
         "execution_order": [],
@@ -248,6 +389,10 @@ def _failed_batch_response(
     }
 
 
+# ---------------------------------------------------------
+# AI SERVICE COMMUNICATION
+# ---------------------------------------------------------
+
 def _call_ai_batch(
     records: list[dict],
     timeout: httpx.Timeout,
@@ -255,7 +400,8 @@ def _call_ai_batch(
     """Send one bounded batch to the AI module."""
 
     endpoint = (
-        f"{Config.AI_SERVICE_URL.rstrip('/')}/analysis/run-all"
+        f"{Config.AI_SERVICE_URL.rstrip('/')}"
+        "/analysis/run-all"
     )
 
     response = httpx.post(
@@ -268,30 +414,47 @@ def _call_ai_batch(
     )
 
     response.raise_for_status()
+
     payload = response.json()
 
     if not isinstance(payload, dict):
-        raise ValueError("AI service returned an invalid response.")
+        raise ValueError(
+            "AI service returned an invalid response."
+        )
 
     if not isinstance(payload.get("results"), dict):
-        raise ValueError("AI response is missing analysis results.")
+        raise ValueError(
+            "AI response is missing analysis results."
+        )
 
     if not isinstance(payload.get("agent_status"), dict):
-        raise ValueError("AI response is missing agent statuses.")
+        raise ValueError(
+            "AI response is missing agent statuses."
+        )
 
     if not isinstance(payload.get("success"), bool):
-        raise ValueError("AI response is missing its success status.")
+        raise ValueError(
+            "AI response is missing its success status."
+        )
 
     if not isinstance(payload.get("errors"), dict):
-        raise ValueError("AI response is missing its error details.")
+        raise ValueError(
+            "AI response is missing its error details."
+        )
 
     payload["total_feedback_analyzed"] = len(records)
+
     payload["_feedback_ids"] = [
-        record["feedback_id"] for record in records
+        record["feedback_id"]
+        for record in records
     ]
 
     return payload
 
+
+# ---------------------------------------------------------
+# SAVE INDIVIDUAL BATCH
+# ---------------------------------------------------------
 
 def _save_batch_document(
     *,
@@ -299,31 +462,55 @@ def _save_batch_document(
     run_id: str,
     user_id: str,
     workspace_id: str | None,
+    import_id: str | None,
     batch_index: int,
     response: dict,
 ) -> str:
-    """Persist one batch immediately using a stable idempotent key."""
+    """Persist one batch immediately using an idempotent key."""
 
     batch_id = f"{run_id}-batch-{batch_index}"
+    timestamp = now_iso()
 
     batch_document = {
         "id": batch_id,
         "run_id": run_id,
         "userId": user_id,
         "workspaceId": workspace_id,
+        "import_id": import_id,
         "batch_index": batch_index,
         "record_count": response.get(
-            "total_feedback_analyzed", 0
+            "total_feedback_analyzed",
+            0,
         ),
-        "feedback_ids": response.get("_feedback_ids", []),
-        "status": response.get("status", "failed"),
-        "success": bool(response.get("success", False)),
-        "agent_status": response.get("agent_status", {}),
-        "errors": response.get("errors", {}),
-        "results": response.get("results", {}),
-        "token_usage": response.get("token_usage", {}),
-        "createdAt": now_iso(),
-        "updatedAt": now_iso(),
+        "feedback_ids": response.get(
+            "_feedback_ids",
+            [],
+        ),
+        "status": response.get(
+            "status",
+            "failed",
+        ),
+        "success": bool(
+            response.get("success", False)
+        ),
+        "agent_status": response.get(
+            "agent_status",
+            {},
+        ),
+        "errors": response.get(
+            "errors",
+            {},
+        ),
+        "results": response.get(
+            "results",
+            {},
+        ),
+        "token_usage": response.get(
+            "token_usage",
+            {},
+        ),
+        "createdAt": timestamp,
+        "updatedAt": timestamp,
     }
 
     db["analysis_batches"].replace_one(
@@ -338,22 +525,55 @@ def _save_batch_document(
     return batch_id
 
 
-def _build_aggregation_response(response: dict) -> dict:
-    """Keep only the fields needed by the no-LLM aggregation endpoint."""
+# ---------------------------------------------------------
+# AGGREGATION HELPERS
+# ---------------------------------------------------------
+
+def _build_aggregation_response(
+    response: dict,
+) -> dict:
+    """Keep only fields required by the aggregation endpoint."""
 
     return {
-        "success": bool(response.get("success", False)),
-        "status": response.get("status", "failed"),
-        "total_feedback_analyzed": response.get(
-            "total_feedback_analyzed", 0
+        "success": bool(
+            response.get("success", False)
         ),
-        "agent_status": response.get("agent_status", {}),
-        "errors": response.get("errors", {}),
-        "results": response.get("results", {}),
-        "token_usage": response.get("token_usage", {}),
-        "execution_order": response.get("execution_order", []),
-        "data_flow": response.get("data_flow", {}),
-        "_feedback_ids": response.get("_feedback_ids", []),
+        "status": response.get(
+            "status",
+            "failed",
+        ),
+        "total_feedback_analyzed": response.get(
+            "total_feedback_analyzed",
+            0,
+        ),
+        "agent_status": response.get(
+            "agent_status",
+            {},
+        ),
+        "errors": response.get(
+            "errors",
+            {},
+        ),
+        "results": response.get(
+            "results",
+            {},
+        ),
+        "token_usage": response.get(
+            "token_usage",
+            {},
+        ),
+        "execution_order": response.get(
+            "execution_order",
+            [],
+        ),
+        "data_flow": response.get(
+            "data_flow",
+            {},
+        ),
+        "_feedback_ids": response.get(
+            "_feedback_ids",
+            [],
+        ),
     }
 
 
@@ -366,10 +586,10 @@ def _aggregate_saved_batches(
     timeout: httpx.Timeout,
 ) -> dict:
     """
-    Ask the AI module to merge already-completed batch outputs.
+    Merge completed batch outputs.
 
-    This endpoint performs deterministic Python aggregation only.
-    It does not invoke Gemini or any of the four AI agents.
+    This endpoint performs deterministic Python aggregation.
+    It does not invoke Gemini or the four AI agents again.
     """
 
     endpoint = (
@@ -392,40 +612,68 @@ def _aggregate_saved_batches(
     )
 
     response.raise_for_status()
+
     payload = response.json()
 
     if not isinstance(payload, dict):
-        raise ValueError("AI aggregation returned an invalid response.")
+        raise ValueError(
+            "AI aggregation returned an invalid response."
+        )
 
     if not isinstance(payload.get("results"), dict):
-        raise ValueError("AI aggregation is missing merged results.")
+        raise ValueError(
+            "AI aggregation is missing merged results."
+        )
 
     return payload
 
 
+# ---------------------------------------------------------
+# RUN AND SAVE ANALYSIS
+# ---------------------------------------------------------
+
 def run_and_save_analysis(
     user_id: str,
     workspace_id: str | None = None,
+    import_id: str | None = None,
 ) -> dict:
     """
-    Stream MongoDB feedback through the existing four-agent pipeline.
+    Stream MongoDB feedback through the four-agent pipeline.
 
-    Only one feedback batch is held in memory at a time. Each batch
-    is persisted before the next batch is fetched.
+    If import_id is provided, ONLY the matching uploaded
+    dataset belonging to this user is analysed.
+
+    If import_id is omitted, the legacy workspace-based
+    query is used for backward compatibility.
     """
 
+    # Normalize the identifier before using it anywhere.
+    import_id = _validate_import_id(import_id)
+
     db = get_db()
+
     run_collection = db["analysis_runs"]
 
     run_id = generate_id("analysis-")
     created_at = now_iso()
+
+    input_source = (
+        "uploaded_dataset"
+        if import_id is not None
+        else "mongodb"
+    )
+
+    # -----------------------------------------------------
+    # INITIAL ANALYSIS DOCUMENT
+    # -----------------------------------------------------
 
     initial_document = {
         "id": run_id,
         "run_id": run_id,
         "userId": user_id,
         "workspaceId": workspace_id,
-        "input_source": "mongodb",
+        "input_source": input_source,
+        "import_id": import_id,
         "input_record_count": 0,
         "batch_size": DEFAULT_ANALYSIS_BATCH_SIZE,
         "total_batches": 0,
@@ -446,15 +694,29 @@ def run_and_save_analysis(
     }
 
     try:
-        run_collection.insert_one(initial_document)
+        run_collection.insert_one(
+            initial_document
+        )
+
     except PyMongoError as exc:
-        logger.exception("Could not create analysis run.")
+        logger.exception(
+            "Could not create analysis run."
+        )
+
         raise AnalysisServiceError(
             "Could not create the analysis record.",
             503,
         ) from exc
 
-    query = _build_feedback_query(user_id, workspace_id)
+    # -----------------------------------------------------
+    # BUILD STRICT INPUT QUERY
+    # -----------------------------------------------------
+
+    query = _build_feedback_query(
+        user_id=user_id,
+        workspace_id=workspace_id,
+        import_id=import_id,
+    )
 
     projection = {
         "_id": 0,
@@ -464,31 +726,69 @@ def run_and_save_analysis(
         "source": 1,
         "createdAt": 1,
         "dataset": 1,
+        "import_id": 1,
     }
 
+    # -----------------------------------------------------
+    # COUNT AND OPEN MONGODB CURSOR
+    # -----------------------------------------------------
+
     try:
-        total_records = db["feedback"].count_documents(query)
-        _validate_feedback_count(total_records)
+        total_records = db["feedback"].count_documents(
+            query
+        )
+
+        _validate_feedback_count(
+            total_records
+        )
 
         cursor = (
             db["feedback"]
-            .find(query, projection)
+            .find(
+                query,
+                projection,
+            )
             .sort([
                 ("createdAt", ASCENDING),
                 ("id", ASCENDING),
             ])
-            .batch_size(DEFAULT_ANALYSIS_BATCH_SIZE)
+            .batch_size(
+                DEFAULT_ANALYSIS_BATCH_SIZE
+            )
         )
 
     except AnalysisServiceError as exc:
-        _mark_failed(run_collection, run_id, str(exc))
+        _mark_failed(
+            run_collection,
+            run_id,
+            str(exc),
+        )
+
         raise
 
     except PyMongoError as exc:
-        logger.exception("Could not count or read feedback records.")
-        message = "Could not retrieve feedback records from MongoDB."
-        _mark_failed(run_collection, run_id, message)
-        raise AnalysisServiceError(message, 503) from exc
+        logger.exception(
+            "Could not count or read feedback records."
+        )
+
+        message = (
+            "Could not retrieve feedback records from MongoDB."
+        )
+
+        _mark_failed(
+            run_collection,
+            run_id,
+            message,
+        )
+
+        raise AnalysisServiceError(
+            message,
+            503,
+        ) from exc
+
+    # -----------------------------------------------------
+    # UPDATE INPUT METADATA
+    # -----------------------------------------------------
 
     total_batches = ceil(
         total_records / DEFAULT_ANALYSIS_BATCH_SIZE
@@ -496,7 +796,10 @@ def run_and_save_analysis(
 
     try:
         run_collection.update_one(
-            {"run_id": run_id, "userId": user_id},
+            {
+                "run_id": run_id,
+                "userId": user_id,
+            },
             {
                 "$set": {
                     "input_record_count": total_records,
@@ -505,16 +808,22 @@ def run_and_save_analysis(
                 }
             },
         )
+
     except PyMongoError as exc:
         _mark_failed(
             run_collection,
             run_id,
             "Could not update analysis input metadata.",
         )
+
         raise AnalysisServiceError(
             "Could not update analysis input metadata.",
             503,
         ) from exc
+
+    # -----------------------------------------------------
+    # EXECUTION STATE
+    # -----------------------------------------------------
 
     timeout = httpx.Timeout(
         Config.AI_SERVICE_TIMEOUT_SECONDS,
@@ -522,11 +831,14 @@ def run_and_save_analysis(
     )
 
     source_counts = {}
+
     batch_responses = []
     batch_ids = []
+
     completed_batches = 0
     partial_or_failed_batches = 0
     processed_records = 0
+
     seen_feedback_ids = set()
 
     # -----------------------------------------------------
@@ -539,39 +851,58 @@ def run_and_save_analysis(
             total_records,
             DEFAULT_ANALYSIS_BATCH_SIZE,
         ):
+
+            # -------------------------------------------------
+            # NORMALIZE CURRENT BATCH
+            # -------------------------------------------------
+
             try:
                 batch_records = [
                     _normalize_feedback_document(doc)
                     for doc in documents
                 ]
 
+                # Detect duplicate IDs within the complete run.
                 for record in batch_records:
                     feedback_id = record["feedback_id"]
 
                     if feedback_id in seen_feedback_ids:
                         raise ValueError(
-                            f"Duplicate feedback ID found: {feedback_id}"
+                            f"Duplicate feedback ID found: "
+                            f"{feedback_id}"
                         )
 
-                    seen_feedback_ids.add(feedback_id)
+                    seen_feedback_ids.add(
+                        feedback_id
+                    )
 
-                response = _call_ai_batch(batch_records, timeout)
+                # -------------------------------------------------
+                # EXECUTE AI PIPELINE
+                # -------------------------------------------------
+
+                response = _call_ai_batch(
+                    batch_records,
+                    timeout,
+                )
 
             except httpx.TimeoutException:
                 logger.exception(
                     "AI batch %d timed out.",
                     batch_index,
                 )
+
                 response = _failed_batch_response(
                     [
                         {
                             "feedback_id": str(
-                                doc.get("id") or f"unknown-{batch_index}"
+                                doc.get("id")
+                                or f"unknown-{batch_index}"
                             )
                         }
                         for doc in documents
                     ],
-                    "The AI analysis service timed out for this batch.",
+                    "The AI analysis service timed out "
+                    "for this batch.",
                 )
 
             except httpx.HTTPStatusError as exc:
@@ -580,16 +911,19 @@ def run_and_save_analysis(
                     batch_index,
                     exc.response.status_code,
                 )
+
                 response = _failed_batch_response(
                     [
                         {
                             "feedback_id": str(
-                                doc.get("id") or f"unknown-{batch_index}"
+                                doc.get("id")
+                                or f"unknown-{batch_index}"
                             )
                         }
                         for doc in documents
                     ],
-                    "The AI analysis service returned an error for this batch.",
+                    "The AI analysis service returned "
+                    "an error for this batch.",
                 )
 
             except httpx.RequestError:
@@ -597,16 +931,19 @@ def run_and_save_analysis(
                     "Could not reach AI service for batch %d.",
                     batch_index,
                 )
+
                 response = _failed_batch_response(
                     [
                         {
                             "feedback_id": str(
-                                doc.get("id") or f"unknown-{batch_index}"
+                                doc.get("id")
+                                or f"unknown-{batch_index}"
                             )
                         }
                         for doc in documents
                     ],
-                    "The AI analysis service was unavailable for this batch.",
+                    "The AI analysis service was unavailable "
+                    "for this batch.",
                 )
 
             except (ValueError, TypeError) as exc:
@@ -614,11 +951,13 @@ def run_and_save_analysis(
                     "Invalid input or response in batch %d.",
                     batch_index,
                 )
+
                 response = _failed_batch_response(
                     [
                         {
                             "feedback_id": str(
-                                doc.get("id") or f"unknown-{batch_index}"
+                                doc.get("id")
+                                or f"unknown-{batch_index}"
                             )
                         }
                         for doc in documents
@@ -626,16 +965,27 @@ def run_and_save_analysis(
                     str(exc),
                 )
 
-            # Track source counts without retaining the full dataset.
+            # -------------------------------------------------
+            # TRACK SOURCE COUNTS
+            # -------------------------------------------------
+
             for document in documents:
                 dataset = str(
-                    document.get("dataset") or "user_feedback"
+                    document.get("dataset")
+                    or "user_feedback"
                 ).strip() or "user_feedback"
+
                 source_counts[dataset] = (
                     source_counts.get(dataset, 0) + 1
                 )
 
-            processed_records += len(documents)
+            processed_records += len(
+                documents
+            )
+
+            # -------------------------------------------------
+            # PERSIST CURRENT BATCH IMMEDIATELY
+            # -------------------------------------------------
 
             try:
                 batch_id = _save_batch_document(
@@ -643,53 +993,113 @@ def run_and_save_analysis(
                     run_id=run_id,
                     user_id=user_id,
                     workspace_id=workspace_id,
+                    import_id=import_id,
                     batch_index=batch_index,
                     response=response,
                 )
+
             except PyMongoError as exc:
                 logger.exception(
                     "Could not persist batch %d.",
                     batch_index,
                 )
-                message = (
-                    f"Could not persist analysis batch {batch_index}. "
-                    "Previously saved batches have been preserved."
-                )
-                _mark_failed(run_collection, run_id, message)
-                raise AnalysisServiceError(message, 503) from exc
 
-            batch_ids.append(batch_id)
-            batch_responses.append(response)
+                message = (
+                    f"Could not persist analysis batch "
+                    f"{batch_index}. Previously saved batches "
+                    "have been preserved."
+                )
+
+                _mark_failed(
+                    run_collection,
+                    run_id,
+                    message,
+                )
+
+                raise AnalysisServiceError(
+                    message,
+                    503,
+                ) from exc
+
+            batch_ids.append(
+                batch_id
+            )
+
+            batch_responses.append(
+                response
+            )
 
             if response.get("success"):
                 completed_batches += 1
+
             else:
                 partial_or_failed_batches += 1
 
             logger.info(
-                "Saved analysis batch %d/%d (%d records, status=%s).",
+                "Saved analysis batch %d/%d "
+                "(%d records, status=%s).",
                 batch_index,
                 total_batches,
                 len(documents),
                 response.get("status"),
             )
 
-    except (RuntimeError, AnalysisServiceError) as exc:
-        _mark_failed(run_collection, run_id, str(exc))
-        if isinstance(exc, AnalysisServiceError):
-            raise
-        raise AnalysisServiceError(str(exc), 503) from exc
+    except AnalysisServiceError:
+        _mark_failed(
+            run_collection,
+            run_id,
+            "Analysis execution or batch persistence failed.",
+        )
+
+        raise
+
+    except (RuntimeError, PyMongoError) as exc:
+        logger.exception(
+            "Streaming failed for analysis run %s.",
+            run_id,
+        )
+
+        message = (
+            str(exc)
+            if isinstance(exc, RuntimeError)
+            else "MongoDB failed while streaming feedback records."
+        )
+
+        _mark_failed(
+            run_collection,
+            run_id,
+            message,
+        )
+
+        raise AnalysisServiceError(
+            message,
+            503,
+        ) from exc
+
+    # -----------------------------------------------------
+    # VERIFY PROCESSED RECORD COUNT
+    # -----------------------------------------------------
 
     if processed_records != total_records:
         message = (
             "The feedback collection changed during analysis. "
-            "The number of processed records did not match the initial count."
+            "The number of processed records did not match "
+            "the initial count."
         )
-        _mark_failed(run_collection, run_id, message)
-        raise AnalysisServiceError(message, 409)
+
+        _mark_failed(
+            run_collection,
+            run_id,
+            message,
+        )
+
+        raise AnalysisServiceError(
+            message,
+            409,
+        )
 
     # -----------------------------------------------------
-    # MERGE THE SAVED BATCH OUTPUTS (NO GEMINI CALL)
+    # MERGE SAVED BATCH OUTPUTS
     # -----------------------------------------------------
 
     aggregation_error = None
@@ -703,6 +1113,7 @@ def run_and_save_analysis(
             batch_size=DEFAULT_ANALYSIS_BATCH_SIZE,
             timeout=timeout,
         )
+
     except (
         httpx.TimeoutException,
         httpx.HTTPStatusError,
@@ -714,6 +1125,7 @@ def run_and_save_analysis(
             "Could not merge batch outputs for run %s.",
             run_id,
         )
+
         aggregation_error = (
             "Batch outputs were saved, but aggregate results "
             "could not be generated."
@@ -732,7 +1144,10 @@ def run_and_save_analysis(
         aggregate_status = "partial_success"
         aggregate_success = False
 
-    errors = aggregate_payload.get("errors", {})
+    errors = aggregate_payload.get(
+        "errors",
+        {},
+    )
 
     if not isinstance(errors, dict):
         errors = {}
@@ -740,13 +1155,20 @@ def run_and_save_analysis(
     if aggregation_error:
         errors["aggregation"] = aggregation_error
 
+    # -----------------------------------------------------
+    # UPDATE PARENT ANALYSIS RUN
+    # -----------------------------------------------------
+
     analysis_fields = {
-        "input_source": "mongodb",
+        "input_source": input_source,
+        "import_id": import_id,
         "input_record_count": total_records,
         "batch_size": DEFAULT_ANALYSIS_BATCH_SIZE,
         "total_batches": total_batches,
         "completed_batches": completed_batches,
-        "partial_or_failed_batches": partial_or_failed_batches,
+        "partial_or_failed_batches": (
+            partial_or_failed_batches
+        ),
         "batch_ids": batch_ids,
         "status": aggregate_status,
         "success": aggregate_success,
@@ -760,18 +1182,32 @@ def run_and_save_analysis(
             "execution_order",
             [],
         ),
-        "data_flow": aggregate_payload.get("data_flow", {}),
-        "agent_status": aggregate_payload.get("agent_status", {}),
+        "data_flow": aggregate_payload.get(
+            "data_flow",
+            {},
+        ),
+        "agent_status": aggregate_payload.get(
+            "agent_status",
+            {},
+        ),
         "errors": errors,
-        "results": aggregate_payload.get("results", {}),
-        "token_usage": aggregate_payload.get("token_usage", {}),
+        "results": aggregate_payload.get(
+            "results",
+            {},
+        ),
+        "token_usage": aggregate_payload.get(
+            "token_usage",
+            {},
+        ),
         "batch_summary": aggregate_payload.get(
             "batch_summary",
             {
                 "batch_size": DEFAULT_ANALYSIS_BATCH_SIZE,
                 "total_batches": total_batches,
                 "completed_batches": completed_batches,
-                "partial_or_failed_batches": partial_or_failed_batches,
+                "partial_or_failed_batches": (
+                    partial_or_failed_batches
+                ),
             },
         ),
         "completedAt": now_iso(),
@@ -800,8 +1236,8 @@ def run_and_save_analysis(
             )
 
         logger.info(
-            "Streaming analysis %s finished: %d records, "
-            "%d/%d batches successful, status=%s.",
+            "Streaming analysis %s finished: "
+            "%d records, %d/%d batches successful, status=%s.",
             run_id,
             total_records,
             completed_batches,
@@ -809,28 +1245,47 @@ def run_and_save_analysis(
             aggregate_status,
         )
 
-        return mongo_doc_to_dict(saved_document)
+        return mongo_doc_to_dict(
+            saved_document
+        )
 
     except (PyMongoError, RuntimeError) as exc:
         logger.exception(
-            "Analysis batches were saved, but parent run update failed."
+            "Analysis batches were saved, but parent run "
+            "update failed."
         )
+
         message = (
             "Analysis batches were saved, but the parent run "
             "could not be updated."
         )
-        _mark_failed(run_collection, run_id, message)
-        raise AnalysisServiceError(message, 503) from exc
 
+        _mark_failed(
+            run_collection,
+            run_id,
+            message,
+        )
+
+        raise AnalysisServiceError(
+            message,
+            503,
+        ) from exc
+
+
+# ---------------------------------------------------------
+# ANALYSIS HISTORY
+# ---------------------------------------------------------
 
 def list_analysis_runs(
     user_id: str,
     workspace_id: str | None = None,
     limit: int = 20,
 ) -> list:
-    """Return compact analysis history for one authenticated user."""
+    """Return compact analysis history for one user."""
 
-    query = {"userId": user_id}
+    query = {
+        "userId": user_id,
+    }
 
     if workspace_id:
         query["workspaceId"] = workspace_id
@@ -845,11 +1300,16 @@ def list_analysis_runs(
                 "token_usage": 0,
             },
         )
-        .sort("createdAt", DESCENDING)
+        .sort(
+            "createdAt",
+            DESCENDING,
+        )
         .limit(limit)
     )
 
-    return mongo_docs_to_list(cursor)
+    return mongo_docs_to_list(
+        cursor
+    )
 
 
 def get_latest_analysis_run(
@@ -858,17 +1318,23 @@ def get_latest_analysis_run(
 ) -> dict | None:
     """Return the latest analysis document for a user."""
 
-    query = {"userId": user_id}
+    query = {
+        "userId": user_id,
+    }
 
     if workspace_id:
         query["workspaceId"] = workspace_id
 
     document = get_db()["analysis_runs"].find_one(
         query,
-        sort=[("createdAt", DESCENDING)],
+        sort=[
+            ("createdAt", DESCENDING),
+        ],
     )
 
-    return mongo_doc_to_dict(document)
+    return mongo_doc_to_dict(
+        document
+    )
 
 
 def get_analysis_run(
@@ -882,14 +1348,20 @@ def get_analysis_run(
         "userId": user_id,
     })
 
-    return mongo_doc_to_dict(document)
+    return mongo_doc_to_dict(
+        document
+    )
 
+
+# ---------------------------------------------------------
+# BATCH HISTORY
+# ---------------------------------------------------------
 
 def list_analysis_batches(
     user_id: str,
     run_id: str,
 ) -> list:
-    """Return batch records belonging to one user's analysis run."""
+    """Return batch records belonging to one user's run."""
 
     cursor = (
         get_db()["analysis_batches"]
@@ -897,7 +1369,12 @@ def list_analysis_batches(
             "userId": user_id,
             "run_id": run_id,
         })
-        .sort("batch_index", ASCENDING)
+        .sort(
+            "batch_index",
+            ASCENDING,
+        )
     )
 
-    return mongo_docs_to_list(cursor)
+    return mongo_docs_to_list(
+        cursor
+    )
