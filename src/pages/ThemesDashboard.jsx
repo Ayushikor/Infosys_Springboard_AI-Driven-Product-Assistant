@@ -29,7 +29,37 @@ export default function ThemesDashboard() {
   const [analyzing, setAnalyzing] = useState(false);
   const [lastRun, setLastRun] = useState(null);
 
-  const stats = useMemo(() => (raw ? analyzeThemes(raw.feedback, raw.themes) : []), [raw]);
+  const stats = useMemo(() => {
+  if (!raw) return [];
+
+  const aiThemes = analysis?.latest?.results?.themes?.themes;
+
+  if (!Array.isArray(aiThemes) || aiThemes.length === 0) {
+    return analyzeThemes(raw.feedback, raw.themes);
+  }
+
+  const themeByFeedbackId = new Map();
+
+  aiThemes.forEach((theme) => {
+    (theme.feedback_ids || []).forEach((id) => {
+      themeByFeedbackId.set(String(id), theme.name);
+    });
+  });
+
+  const mappedFeedback = raw.feedback.map((feedback) => ({
+    ...feedback,
+    theme: themeByFeedbackId.get(String(feedback.id)) || 'Uncategorized',
+  }));
+
+  const mappedThemes = aiThemes.map((theme, index) => ({
+    id: `ai-theme-${index}`,
+    name: theme.name,
+    description: theme.description || '',
+    keywords: theme.keywords || [],
+  }));
+
+  return analyzeThemes(mappedFeedback, mappedThemes);
+}, [raw, analysis?.latest]);
 
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -46,11 +76,18 @@ export default function ThemesDashboard() {
 
   // Re-runs the local analysis against current feedback and persists the run time.
   const onAnalyze = async () => {
-    setAnalyzing(true);
-    await refresh();
-    setLastRun(new Date());
+  setAnalyzing(true);
+
+  try {
+    const result = await runAnalysis();
+
+    if (result?.success) {
+      setLastRun(new Date());
+    }
+  } finally {
     setAnalyzing(false);
-  };
+  }
+};
 
   if (loading) return <div className="card h-64 animate-pulse" />;
   if (error) return <EmptyState title="Could not load themes" description={error} />;

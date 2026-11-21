@@ -146,8 +146,7 @@ const realApi = {
   // -------------------------------------------------------
 
   themes: {
-    getAll: notImplemented("Themes"),
-
+  getAll: () => realRequest("get", "/themes"),
     saveKeywords: (id, keywords) =>
       realRequest("put", `/themes/${id}/keywords`, {
         keywords,
