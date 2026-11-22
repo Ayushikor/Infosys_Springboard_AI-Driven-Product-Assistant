@@ -1,0 +1,4823 @@
+{
+  "backup_type": "post_ownership_migration",
+  "database": "product_assistant_db",
+  "created_at": "2026-11-22T07:25:05.525709+00:00",
+  "target_owner": "usr-b9b5794271",
+  "legacy_owner": "usr-671ffe7643",
+  "workspace_id": "ws-ab7d2a7c5b",
+  "analysis_run_id": "analysis-5d9d9c9706",
+  "total_records": 300,
+  "record_counts": {
+    "customer_feedback": 100,
+    "support_tickets": 100,
+    "user_reviews": 100
+  },
+  "collections": {
+    "customer_feedback": [
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53a3"
+        },
+        "createdAt": "2026-09-30T14:27:32Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-001",
+        "message": "Could the app support login with Microsoft accounts too? Half our company is on Microsoft 365.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Could the app support login with Microsoft accounts too",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53a5"
+        },
+        "createdAt": "2026-09-30T16:41:11Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-003",
+        "message": "On my 13 inch laptop the roadmap view cuts off the right column and there is no horizontal scroll. I literally can't see the status of the Q4 items.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "On my 13 inch laptop the roadmap view cuts off the right column and there is no...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53a9"
+        },
+        "createdAt": "2026-10-01T06:35:52Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-007",
+        "message": "Please add role based permissions. Right now everyone in the workspace can delete PRDs.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Please add role based permissions",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ac"
+        },
+        "createdAt": "2026-10-01T17:24:26Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-010",
+        "message": "Export is limited to PDF. We need Word or Markdown, nobody on my team edits PDFs.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Export is limited to PDF",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53a4"
+        },
+        "createdAt": "2026-09-30T14:49:03Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-002",
+        "message": "The PRD editor feels clean and focused. Honestly nicer than the doc tool we used before.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "The PRD editor feels clean and focused",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53a6"
+        },
+        "createdAt": "2026-09-30T20:46:49Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-004",
+        "message": "Password reset email arrives but the link seems to expire very quickly, maybe a few minutes.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Password reset email arrives but the link seems to expire very quickly, maybe a...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53aa"
+        },
+        "createdAt": "2026-10-01T09:23:40Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-008",
+        "message": "Modal windows don't close when I press escape and the close icon is tiny on mobile. Had to refresh the page to get out of one.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Modal windows don't close when I press escape and the close icon is tiny on...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53a7"
+        },
+        "createdAt": "2026-09-30T20:54:38Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-005",
+        "message": "Great product overall! A public API so we could push our own survey data in would be amazing.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Great product overall",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53a8"
+        },
+        "createdAt": "2026-10-01T04:49:55Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-006",
+        "message": "invited my colleague and the link says invalid when she clicks it. had to resend like 3 times",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "invited my colleague and the link says invalid when she clicks it",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ab"
+        },
+        "createdAt": "2026-10-01T13:03:59Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-009",
+        "message": "Can admins see a log of who logged in and when? Our security team asked about it.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Can admins see a log of who logged in and when",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b1"
+        },
+        "createdAt": "2026-10-03T14:37:25Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-015",
+        "message": "Login is smooth and the remember me option works properly across devices.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Login is smooth and the remember me option works properly across devices",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53af"
+        },
+        "createdAt": "2026-10-02T05:03:54Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-013",
+        "message": "Super helpful tool. A comparison view between two PRD versions would be the cherry on top.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Super helpful tool",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b2"
+        },
+        "createdAt": "2026-10-03T17:43:36Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-016",
+        "message": "The main dashboard takes around 20 seconds to load once we cross a few thousand feedback items. It was fine a month ago.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "The main dashboard takes around 20 seconds to load once we cross a few thousand...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b0"
+        },
+        "createdAt": "2026-10-03T00:16:50Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-014",
+        "message": "Dashboard charts never finish loading on our VPN connection. Everyone in the Berlin office has the same problem.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Dashboard charts never finish loading on our VPN connection",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b3"
+        },
+        "createdAt": "2026-10-03T23:45:11Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-017",
+        "message": "The AI generated stories are a lot more accurate after the update, haven't hit any weird output this week.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "The AI generated stories are a lot more accurate after the update, haven't hit...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ae"
+        },
+        "createdAt": "2026-10-01T23:38:50Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-012",
+        "message": "I can't figure out where the PRD export button went after the last update. Spent five minutes clicking around the toolbar.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "I can't figure out where the PRD export button went after the last update",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ad"
+        },
+        "createdAt": "2026-10-01T19:28:57Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-011",
+        "message": "Tables don't remember my column widths. I resize them every single time I open the feedback list.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "Tables don't remember my column widths",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b4"
+        },
+        "createdAt": "2026-10-05T03:53:50Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-018",
+        "message": "Sentiment shows negative for clearly positive comments. I checked a few and the AI got them wrong.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Sentiment shows negative for clearly positive comments",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53bb"
+        },
+        "createdAt": "2026-10-07T12:35:27Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-025",
+        "message": "Haven't run into any bugs in a month of daily use. Rock solid for us so far.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Haven't run into any bugs in a month of daily use",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ba"
+        },
+        "createdAt": "2026-10-07T05:34:31Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-024",
+        "message": "Locked out of my account after too many attempts and there's no clear way to unlock it myself.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Locked out of my account after too many attempts and there's no clear way to...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b9"
+        },
+        "createdAt": "2026-10-07T00:25:13Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-023",
+        "message": "Really happy with it. Adding GitHub issue links to roadmap items would be a nice bonus.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "Really happy with it",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b5"
+        },
+        "createdAt": "2026-10-05T06:04:11Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-019",
+        "message": "Switched from Chrome to Safari and had to log in again even though I ticked stay signed in.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Switched from Chrome to Safari and had to log in again even though I ticked...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b7"
+        },
+        "createdAt": "2026-10-05T14:26:46Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-021",
+        "message": "Our whole team is stuck. Importing a 5k row CSV froze the app and now every page in the workspace times out.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Our whole team is stuck",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b6"
+        },
+        "createdAt": "2026-10-05T07:10:36Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-020",
+        "message": "Really like how the sentiment colours are consistent across the dashboard and the feedback list. Easy to scan.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Really like how the sentiment colours are consistent across the dashboard and...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53b8"
+        },
+        "createdAt": "2026-10-05T15:35:00Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-022",
+        "message": "The layout is fine overall, but the tag filters take up a lot of room on a laptop screen. Maybe make them collapsible?",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "The layout is fine overall, but the tag filters take up a lot of room on a...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c1"
+        },
+        "createdAt": "2026-10-10T01:47:04Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-031",
+        "message": "Really enjoying the tool. Custom fields on feedback items, like account tier and region, would make it perfect for us.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Really enjoying the tool",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53bf"
+        },
+        "createdAt": "2026-10-08T12:56:23Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-029",
+        "message": "The sidebar keeps collapsing every time I switch workspaces. I have to reopen it again and again, super annoying.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "The sidebar keeps collapsing every time I switch workspaces",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c0"
+        },
+        "createdAt": "2026-10-08T20:42:56Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-030",
+        "message": "The automated user story generator sometimes returns the same story twice with different titles.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "The automated user story generator sometimes returns the same story twice with...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c5"
+        },
+        "createdAt": "2026-10-11T06:26:25Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-035",
+        "message": "Drag and drop on the roadmap board is jumpy. Cards snap back to their old column about half the time.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Drag and drop on the roadmap board is jumpy",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53bd"
+        },
+        "createdAt": "2026-10-07T22:18:21Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-027",
+        "message": "Notification bell opens instantly now, nice improvement over last month.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "Notification bell opens instantly now, nice improvement over last month",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c2"
+        },
+        "createdAt": "2026-10-10T05:58:53Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-032",
+        "message": "Uploading a CSV with more than 10 columns fails silently, no error, nothing imported.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Uploading a CSV with more than 10 columns fails silently, no error, nothing...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53be"
+        },
+        "createdAt": "2026-10-07T23:28:38Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-028",
+        "message": "Navigation is mostly intuitive. I only got lost looking for workspace settings, they're hidden under the profile menu.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Navigation is mostly intuitive",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53bc"
+        },
+        "createdAt": "2026-10-07T21:28:43Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-026",
+        "message": "Love the new theme board. Seeing feedback clusters as cards makes it so much easier to explain pain points to my team.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Love the new theme board",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c4"
+        },
+        "createdAt": "2026-10-11T04:58:02Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-034",
+        "message": "Filtering feedback by sentiment is super snappy even with a huge list. Good job.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Filtering feedback by sentiment is super snappy even with a huge list",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c3"
+        },
+        "createdAt": "2026-10-10T14:15:22Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-033",
+        "message": "The AI summary of a theme came back in a couple of seconds. That's impressive compared to other tools we tried.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "The AI summary of a theme came back in a couple of seconds",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c6"
+        },
+        "createdAt": "2026-10-11T08:38:13Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-036",
+        "message": "Love the automated user stories. It would be perfect if I could set a template for the acceptance criteria format.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Love the automated user stories",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d0"
+        },
+        "createdAt": "2026-10-15T09:24:53Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-046",
+        "message": "Switching between workspaces takes ages, the spinner just hangs for a while.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Switching between workspaces takes ages, the spinner just hangs for a while",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53cb"
+        },
+        "createdAt": "2026-10-12T14:20:03Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-041",
+        "message": "Reported a bug with the CSV import last week and it was fixed in two days. Impressive turnaround.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Reported a bug with the CSV import last week and it was fixed in two days",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53cc"
+        },
+        "createdAt": "2026-10-13T03:30:54Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-042",
+        "message": "The latest release fixed the duplicate notifications. Thanks for sorting that out so quickly.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "The latest release fixed the duplicate notifications",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53cd"
+        },
+        "createdAt": "2026-10-13T21:59:27Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-043",
+        "message": "Comments on PRDs sometimes post twice if I click the button quickly.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Comments on PRDs sometimes post twice if I click the button quickly",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c7"
+        },
+        "createdAt": "2026-10-11T11:44:25Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-037",
+        "message": "Logging in drops me straight into the workspace I used last, which is exactly what I want.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Logging in drops me straight into the workspace I used last, which is exactly...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ca"
+        },
+        "createdAt": "2026-10-12T10:56:01Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-040",
+        "message": "Cannot bulk export feedback to CSV with the theme tags included, and I need that for our monthly report.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Cannot bulk export feedback to CSV with the theme tags included, and I need...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d2"
+        },
+        "createdAt": "2026-10-15T09:52:43Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-048",
+        "message": "Nobody on our team of 25 can sign in since this morning, the login page just spins and returns an error.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Nobody on our team of 25 can sign in since this morning, the login page just...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53cf"
+        },
+        "createdAt": "2026-10-15T04:40:32Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-045",
+        "message": "Dashboard loads noticeably faster since the last release. Used to wait a while, now it's basically instant.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "Dashboard loads noticeably faster since the last release",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c9"
+        },
+        "createdAt": "2026-10-11T20:53:49Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-039",
+        "message": "Great product so far. Only thing I'd add is a Notion export so we can share PRDs with the wider company.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Great product so far",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53c8"
+        },
+        "createdAt": "2026-10-11T15:42:10Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-038",
+        "message": "We'd like to enforce 2FA for all members of our workspace. I only see it as optional per user.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "We'd like to enforce 2FA for all members of our workspace",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ce"
+        },
+        "createdAt": "2026-10-14T10:23:53Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-044",
+        "message": "Imported feedback shows up with weird characters, the apostrophes turn into question marks. Not sure if it's our file.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Imported feedback shows up with weird characters, the apostrophes turn into...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d1"
+        },
+        "createdAt": "2026-10-15T09:35:07Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-047",
+        "message": "Tooltip on the priority score is showing the wrong formula description I think.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Tooltip on the priority score is showing the wrong formula description I think",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d3"
+        },
+        "createdAt": "2026-10-16T02:45:24Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-049",
+        "message": "We can't adopt this across the company without an SSO integration with Okta, procurement told us this is a blocker.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "We can't adopt this across the company without an SSO integration with Okta...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d4"
+        },
+        "createdAt": "2026-10-16T05:17:19Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-050",
+        "message": "The empty states are confusing, I thought my import had failed but it was just still processing with no loading indicator.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "The empty states are confusing, I thought my import had failed but it was just...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d9"
+        },
+        "createdAt": "2026-10-17T23:05:06Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-055",
+        "message": "The roadmap is awesome. Adding a quarter view with swimlanes by team would make it complete.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "The roadmap is awesome",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d8"
+        },
+        "createdAt": "2026-10-17T09:41:20Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-054",
+        "message": "Speed is fine overall. The only slow part is the sync with the shared drive, but that might be on our side.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Speed is fine overall",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d6"
+        },
+        "createdAt": "2026-10-16T21:31:15Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-052",
+        "message": "The session expired message shows up, but the page doesn't redirect to login. Minor, but worth fixing.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "The session expired message shows up, but the page doesn't redirect to login",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d7"
+        },
+        "createdAt": "2026-10-16T23:55:01Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-053",
+        "message": "The roadmap timeline view is really easy on the eyes, our execs actually understood it without me explaining.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "The roadmap timeline view is really easy on the eyes, our execs actually...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53d5"
+        },
+        "createdAt": "2026-10-16T09:04:25Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-051",
+        "message": "Theme clustering ran in seconds on our 800 records, much quicker than I expected.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Theme clustering ran in seconds on our 800 records, much quicker than I expected",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53da"
+        },
+        "createdAt": "2026-10-18T02:41:44Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-056",
+        "message": "Appreciate that you support magic link login. Really handy for our contractors.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Appreciate that you support magic link login",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ec"
+        },
+        "createdAt": "2026-10-25T06:15:22Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-074",
+        "message": "Generating a PRD takes almost two minutes. By the time it finishes I've lost my train of thought.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Generating a PRD takes almost two minutes",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e6"
+        },
+        "createdAt": "2026-10-23T21:51:14Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-068",
+        "message": "I keep getting logged out every 10 minutes. Lost my unsaved PRD draft twice this week.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "I keep getting logged out every 10 minutes",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53df"
+        },
+        "createdAt": "2026-10-21T08:30:55Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-061",
+        "message": "Our dashboard times out whenever we filter by a date range longer than 90 days. We need that for quarterly reviews.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Our dashboard times out whenever we filter by a date range longer than 90 days",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e8"
+        },
+        "createdAt": "2026-10-24T03:24:45Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-070",
+        "message": "still no slack integration lol. we all live in slack so i copy paste summaries over every week, kinda painful",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "still no slack integration lol",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53dd"
+        },
+        "createdAt": "2026-10-21T06:23:29Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-059",
+        "message": "The new filter bar is great, saved me a lot of time when prepping for the sprint review.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "The new filter bar is great, saved me a lot of time when prepping for the...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e5"
+        },
+        "createdAt": "2026-10-23T18:44:34Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-067",
+        "message": "Seeing a small console error on the theme page, nothing seems broken but wanted to flag it.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Seeing a small console error on the theme page, nothing seems broken but wanted...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e7"
+        },
+        "createdAt": "2026-10-24T02:42:00Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-069",
+        "message": "We lost a whole afternoon of edits on our roadmap, the page refreshed and everything reverted to the last version from Monday.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "We lost a whole afternoon of edits on our roadmap, the page refreshed and...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e9"
+        },
+        "createdAt": "2026-10-24T05:04:12Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-071",
+        "message": "Got an unexpected error banner once when generating a roadmap, tried again and it worked.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "Got an unexpected error banner once when generating a roadmap, tried again and...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53dc"
+        },
+        "createdAt": "2026-10-21T05:50:12Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-058",
+        "message": "We really need a two way Jira integration so approved stories show up in our sprint backlog automatically.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "We really need a two way Jira integration so approved stories show up in our...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e0"
+        },
+        "createdAt": "2026-10-21T14:59:25Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-062",
+        "message": "SSO setup with Google Workspace took five minutes, no support needed. Nice.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "SSO setup with Google Workspace took five minutes, no support needed",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e3"
+        },
+        "createdAt": "2026-10-23T14:47:49Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-065",
+        "message": "Dark mode text on the dashboard cards is too faint, the grey on dark blue is hard to read.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Dark mode text on the dashboard cards is too faint, the grey on dark blue is...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53db"
+        },
+        "createdAt": "2026-10-20T14:20:51Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-057",
+        "message": "Single sign on worked on the first try with Okta. Smooth experience, thanks!",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "Single sign on worked on the first try with Okta",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e1"
+        },
+        "createdAt": "2026-10-21T20:59:24Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-063",
+        "message": "Imports are way faster after the update. 2k rows done before I finished my coffee.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Imports are way faster after the update",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e4"
+        },
+        "createdAt": "2026-10-23T16:29:02Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-066",
+        "message": "Not sure if it's a bug but the count on the dashboard says 120 feedback items while the list shows 118.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Not sure if it's a bug but the count on the dashboard says 120 feedback items...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53eb"
+        },
+        "createdAt": "2026-10-24T18:31:48Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-073",
+        "message": "Typing in the PRD editor has a slight delay on long documents. Not a big deal but I noticed it.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Typing in the PRD editor has a slight delay on long documents",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53de"
+        },
+        "createdAt": "2026-10-21T06:51:59Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-060",
+        "message": "The 2FA code from the authenticator app is often rejected the first time and works on the second try.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "The 2FA code from the authenticator app is often rejected the first time and...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ea"
+        },
+        "createdAt": "2026-10-24T07:46:37Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-072",
+        "message": "Could we get a mobile app or at least a better mobile layout for reviewing PRDs on the go?",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Could we get a mobile app or at least a better mobile layout for reviewing PRDs...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53e2"
+        },
+        "createdAt": "2026-10-23T09:28:48Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-064",
+        "message": "Would love scheduled weekly digests of new feedback themes sent by email.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Would love scheduled weekly digests of new feedback themes sent by email",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ed"
+        },
+        "createdAt": "2026-10-25T14:16:22Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-075",
+        "message": "Bulk tagging 200 items works but it takes a while. Could it run in the background?",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Bulk tagging 200 items works but it takes a while",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ee"
+        },
+        "createdAt": "2026-10-25T15:06:14Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-076",
+        "message": "No way to link feedback to a Linear issue. We track engineering work there so this is a big gap for us.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "No way to link feedback to a Linear issue",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f6"
+        },
+        "createdAt": "2026-10-27T03:25:46Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-084",
+        "message": "I'd like longer sessions for our internal kiosk dashboard, being logged out every few hours is a pain.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "I'd like longer sessions for our internal kiosk dashboard, being logged out...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f9"
+        },
+        "createdAt": "2026-10-27T23:02:24Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-087",
+        "message": "first load every morning is sooo slow, then it's fine after that. caching maybe??",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "first load every morning is sooo slow, then it's fine after that",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f5"
+        },
+        "createdAt": "2026-10-27T02:11:02Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-083",
+        "message": "Page loads are acceptable for us right now, but I worry about how it will scale when we add the support team's data.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Page loads are acceptable for us right now, but I worry about how it will scale...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f8"
+        },
+        "createdAt": "2026-10-27T10:24:28Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-086",
+        "message": "Not sure if this is intended, but the date pickers use US format and our team works with day first dates.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Not sure if this is intended, but the date pickers use US format and our team...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f1"
+        },
+        "createdAt": "2026-10-26T11:03:40Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-079",
+        "message": "Searching the feedback list lags badly. I type a keyword and nothing happens for a good five seconds.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Searching the feedback list lags badly",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f7"
+        },
+        "createdAt": "2026-10-27T03:52:13Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-085",
+        "message": "Role assignment on invite is easy to understand, I was able to onboard the whole team in an afternoon.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Role assignment on invite is easy to understand, I was able to onboard the...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f4"
+        },
+        "createdAt": "2026-10-26T23:36:38Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-082",
+        "message": "The Jira link keeps failing with 'Something went wrong' and there's no detail about what happened.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "The Jira link keeps failing with 'Something went wrong' and there's no detail...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f2"
+        },
+        "createdAt": "2026-10-26T20:48:45Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-080",
+        "message": "Deleting a theme doesn't remove it from the filter dropdown until I refresh.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Deleting a theme doesn't remove it from the filter dropdown until I refresh",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f0"
+        },
+        "createdAt": "2026-10-26T08:58:52Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-078",
+        "message": "Would be nice to have keyboard shortcuts for common actions like new PRD or switch workspace.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Would be nice to have keyboard shortcuts for common actions like new PRD or...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53f3"
+        },
+        "createdAt": "2026-10-26T21:27:23Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-081",
+        "message": "Would be great to attach screenshots or recordings to a feedback item.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Would be great to attach screenshots or recordings to a feedback item",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ef"
+        },
+        "createdAt": "2026-10-25T22:20:18Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-077",
+        "message": "Onboarding checklist was really clear. I had my first feedback import done within ten minutes without reading any docs.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Onboarding checklist was really clear",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5405"
+        },
+        "createdAt": "2026-10-30T11:21:55Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-099",
+        "message": "Exporting to PDF is slow for long PRDs. Not a blocker but I wish there was a progress bar so I know it's working.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Exporting to PDF is slow for long PRDs",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5400"
+        },
+        "createdAt": "2026-10-29T13:07:43Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-094",
+        "message": "A Confluence integration would make our documentation process much easier.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "A Confluence integration would make our documentation process much easier",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5402"
+        },
+        "createdAt": "2026-10-29T16:19:17Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-096",
+        "message": "The roadmap page gets really sluggish when there are more than 40 items, scrolling stutters.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "The roadmap page gets really sluggish when there are more than 40 items...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53fc"
+        },
+        "createdAt": "2026-10-28T08:11:41Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-090",
+        "message": "Pagination on the feedback list goes back to page 1 when I return from an item. Minor annoyance.",
+        "sentiment": "neutral",
+        "source": "Community Forum",
+        "theme": "Uncategorized",
+        "title": "Pagination on the feedback list goes back to page 1 when I return from an item",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5403"
+        },
+        "createdAt": "2026-10-29T17:55:51Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-097",
+        "message": "Can the AI suggest priority scores based on how many customers mentioned something? That would save a lot of manual work.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "Can the AI suggest priority scores based on how many customers mentioned...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5404"
+        },
+        "createdAt": "2026-10-29T18:31:23Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-098",
+        "message": "Too many clicks to get from a theme to the raw feedback behind it. It would be nice to see quotes right on the theme page.",
+        "sentiment": "neutral",
+        "source": "User Interview Notes",
+        "theme": "Uncategorized",
+        "title": "Too many clicks to get from a theme to the raw feedback behind it",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5401"
+        },
+        "createdAt": "2026-10-29T15:09:07Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-095",
+        "message": "Error 500 whenever I try to export a PRD that contains a table. Plain text PRDs export fine.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "Error 500 whenever I try to export a PRD that contains a table",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53fb"
+        },
+        "createdAt": "2026-10-28T05:42:34Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-089",
+        "message": "Clicking save on a PRD shows a success toast but when I reopen it my changes are gone.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Clicking save on a PRD shows a success toast but when I reopen it my changes...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53fd"
+        },
+        "createdAt": "2026-10-28T11:12:22Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-091",
+        "message": "It would help if the priority labels used different colours. Right now high and medium look almost the same to me.",
+        "sentiment": "neutral",
+        "source": "Customer Success Call",
+        "theme": "Uncategorized",
+        "title": "It would help if the priority labels used different colours",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53ff"
+        },
+        "createdAt": "2026-10-28T20:55:16Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-093",
+        "message": "Spotted a typo in the roadmap empty state, it says 'No items yets'. Cosmetic only.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "Spotted a typo in the roadmap empty state, it says 'No items yets'",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53fe"
+        },
+        "createdAt": "2026-10-28T14:54:56Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-092",
+        "message": "SAML login fails with a vague error for half of our users. Others from the same company can sign in fine.",
+        "sentiment": "neutral",
+        "source": "NPS Survey Response",
+        "theme": "Uncategorized",
+        "title": "SAML login fails with a vague error for half of our users",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b53fa"
+        },
+        "createdAt": "2026-10-28T04:46:24Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-088",
+        "message": "The password rules aren't shown until after you submit. Would be better to list them up front.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "The password rules aren't shown until after you submit",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5406"
+        },
+        "createdAt": "2026-10-30T11:27:05Z",
+        "customer": "Unknown",
+        "dataset": "customer_feedback",
+        "id": "FB-100",
+        "message": "It would be really useful to merge duplicate themes. Right now we have three themes that are basically the same thing.",
+        "sentiment": "neutral",
+        "source": "In-App Widget",
+        "theme": "Uncategorized",
+        "title": "It would be really useful to merge duplicate themes",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      }
+    ],
+    "support_tickets": [
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b546b"
+        },
+        "createdAt": "2026-09-30T13:00:23Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-001",
+        "message": "After the update our roadmap page shows overlapping text and half the buttons don't respond. Our planning meeting is in an hour, please escalate.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "After the update our roadmap page shows overlapping text and half the buttons...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b546f"
+        },
+        "createdAt": "2026-10-01T09:54:06Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-005",
+        "message": "Roadmap sometimes loads empty on first visit and fills in after a refresh. Cannot reproduce reliably.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Roadmap sometimes loads empty on first visit and fills in after a refresh",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5472"
+        },
+        "createdAt": "2026-10-02T04:19:22Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-008",
+        "message": "Password reset email isn't arriving. Checked spam, tried with two email addresses.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Password reset email isn't arriving",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5470"
+        },
+        "createdAt": "2026-10-01T21:01:55Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-006",
+        "message": "Thanks for the guidance on batching imports. Imports now finish in minutes instead of hours.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Thanks for the guidance on batching imports",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5473"
+        },
+        "createdAt": "2026-10-02T19:31:10Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-009",
+        "message": "Hi team, how do I change the default view of the roadmap from timeline to board? I can't find the setting anywhere.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Hi team, how do I change the default view of the roadmap from timeline to board",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b546d"
+        },
+        "createdAt": "2026-09-30T18:39:45Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-003",
+        "message": "Exporting feedback only gives raw text, with no sentiment or theme columns, which makes the export useless for our report. Is there a setting?",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Exporting feedback only gives raw text, with no sentiment or theme columns...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b546e"
+        },
+        "createdAt": "2026-09-30T22:30:55Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-004",
+        "message": "Our new hire cannot accept the workspace invite, the link says expired though it was sent an hour ago.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Our new hire cannot accept the workspace invite, the link says expired though...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b546c"
+        },
+        "createdAt": "2026-09-30T16:18:40Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-002",
+        "message": "PRD version history shows the wrong author for edits made by our contractor account.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "PRD version history shows the wrong author for edits made by our contractor...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5471"
+        },
+        "createdAt": "2026-10-02T00:30:38Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-007",
+        "message": "Can we choose which sections to include when exporting a PRD to PDF? Sometimes we only need the requirements.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Can we choose which sections to include when exporting a PRD to PDF",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5474"
+        },
+        "createdAt": "2026-10-03T07:57:30Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-010",
+        "message": "PRD generation keeps timing out when the linked theme has more than 500 feedback items.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "PRD generation keeps timing out when the linked theme has more than 500...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5475"
+        },
+        "createdAt": "2026-10-03T12:40:12Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-011",
+        "message": "Just wanted to say the new priority colour scheme is much clearer, thanks for listening to our feedback.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Just wanted to say the new priority colour scheme is much clearer, thanks for...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5477"
+        },
+        "createdAt": "2026-10-04T04:14:55Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-013",
+        "message": "Is there a way to integrate with Jira? We want approved user stories to create tickets automatically.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Is there a way to integrate with Jira",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5479"
+        },
+        "createdAt": "2026-10-04T20:31:31Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-015",
+        "message": "Dark mode toggle doesn't persist, it goes back to light every time I log in.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Dark mode toggle doesn't persist, it goes back to light every time I log in",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b547c"
+        },
+        "createdAt": "2026-10-06T06:24:47Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-018",
+        "message": "Appreciate the help with the SAML attribute mapping, everything works as expected.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Appreciate the help with the SAML attribute mapping, everything works as...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b547d"
+        },
+        "createdAt": "2026-10-06T08:15:13Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-019",
+        "message": "Data loss: our saved PRD from yesterday is blank when opened. Please restore from backup urgently.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Data loss: our saved PRD from yesterday is blank when opened",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b547b"
+        },
+        "createdAt": "2026-10-05T00:41:58Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-017",
+        "message": "Production workspace is completely unresponsive. Pages time out after 60 seconds and our quarterly planning is blocked.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Production workspace is completely unresponsive",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b547a"
+        },
+        "createdAt": "2026-10-04T20:41:15Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-016",
+        "message": "Can you confirm the session timeout duration for our workspace?",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Can you confirm the session timeout duration for our workspace",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5478"
+        },
+        "createdAt": "2026-10-04T15:23:17Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-014",
+        "message": "Dropdown menus on the feedback page are cut off at the bottom of the screen so I can't select the last options.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "Dropdown menus on the feedback page are cut off at the bottom of the screen so...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5476"
+        },
+        "createdAt": "2026-10-03T13:19:24Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-012",
+        "message": "Loading speed is back to normal after your fix, thank you for the quick response.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Loading speed is back to normal after your fix, thank you for the quick response",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b547e"
+        },
+        "createdAt": "2026-10-06T10:26:42Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-020",
+        "message": "Bug confirmed fixed in the latest build, thanks for the fast fix. Please close this ticket.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Bug confirmed fixed in the latest build, thanks for the fast fix",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5483"
+        },
+        "createdAt": "2026-10-09T10:23:21Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-025",
+        "message": "Security review failed because there's no audit log export. We need this feature to complete our procurement.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "Security review failed because there's no audit log export",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5480"
+        },
+        "createdAt": "2026-10-07T03:20:11Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-022",
+        "message": "Console shows a failed network request on the dashboard, but everything still works.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Console shows a failed network request on the dashboard, but everything still...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5485"
+        },
+        "createdAt": "2026-10-10T00:15:43Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-027",
+        "message": "Still no option to bulk assign owners on the roadmap. This is a very repetitive task for us.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "Still no option to bulk assign owners on the roadmap",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5481"
+        },
+        "createdAt": "2026-10-07T12:21:20Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-023",
+        "message": "Notification panel opens instantly now, thanks for the performance fix.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Notification panel opens instantly now, thanks for the performance fix",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5484"
+        },
+        "createdAt": "2026-10-09T19:30:32Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-026",
+        "message": "The Spanish labels in the export dialog look correct now, thanks for the quick correction.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "The Spanish labels in the export dialog look correct now, thanks for the quick...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5486"
+        },
+        "createdAt": "2026-10-10T18:31:27Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-028",
+        "message": "Does the platform support webhooks? We want to trigger our internal workflow when a PRD is approved.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Does the platform support webhooks",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5482"
+        },
+        "createdAt": "2026-10-08T03:57:24Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-024",
+        "message": "Jira sync marks all issues as 'to do' even when they're done in Jira. Our roadmap is now inaccurate.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Jira sync marks all issues as 'to do' even when they're done in Jira",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b547f"
+        },
+        "createdAt": "2026-10-07T02:32:21Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-021",
+        "message": "Would it be possible to add a second reviewer step in the PRD approval flow?",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Would it be possible to add a second reviewer step in the PRD approval flow",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5487"
+        },
+        "createdAt": "2026-10-11T05:20:04Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-029",
+        "message": "Our team needs Okta group sync for role assignment. Without it we have to manage permissions manually.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Our team needs Okta group sync for role assignment",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b548f"
+        },
+        "createdAt": "2026-10-14T06:12:36Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-037",
+        "message": "Do you support passwordless login for contractors?",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Do you support passwordless login for contractors",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5490"
+        },
+        "createdAt": "2026-10-14T12:44:43Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-038",
+        "message": "Error 500 when exporting PRD to PDF. Reproduced on two different PRDs. Steps and screenshot attached.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Error 500 when exporting PRD to PDF",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5489"
+        },
+        "createdAt": "2026-10-12T02:14:11Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-031",
+        "message": "Page switches between roadmap and dashboard are noticeably lagging since the last update.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Page switches between roadmap and dashboard are noticeably lagging since the...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b548b"
+        },
+        "createdAt": "2026-10-12T22:46:20Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-033",
+        "message": "Is it normal for the AI summary to take about 15 seconds on long threads?",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Is it normal for the AI summary to take about 15 seconds on long threads",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b548c"
+        },
+        "createdAt": "2026-10-13T08:02:32Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-034",
+        "message": "Any plans for Microsoft Teams integration? Our company doesn't use Slack.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Any plans for Microsoft Teams integration",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5488"
+        },
+        "createdAt": "2026-10-11T15:18:30Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-030",
+        "message": "Search function freezes the browser when I type quickly. Seen in Chrome and Edge.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Search function freezes the browser when I type quickly",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5491"
+        },
+        "createdAt": "2026-10-14T17:24:03Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-039",
+        "message": "Feature request: attach files and screenshots directly to feedback items.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Feature request: attach files and screenshots directly to feedback items",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5492"
+        },
+        "createdAt": "2026-10-14T22:00:49Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-040",
+        "message": "Question about the layout: can I hide the sidebar permanently? It takes up too much room on my laptop.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "Question about the layout: can I hide the sidebar permanently",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b548a"
+        },
+        "createdAt": "2026-10-12T14:55:16Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-032",
+        "message": "The Jira sync feature saved us hours this sprint. Just wanted to say thank you.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "The Jira sync feature saved us hours this sprint",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b548e"
+        },
+        "createdAt": "2026-10-14T05:53:39Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-036",
+        "message": "Can the AI user story generator follow our company's own template? Currently the format is fixed.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "Can the AI user story generator follow our company's own template",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b548d"
+        },
+        "createdAt": "2026-10-14T03:09:37Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-035",
+        "message": "Wanted to report that the tooltip for RICE score shows 'undefined' in one place.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Wanted to report that the tooltip for RICE score shows 'undefined' in one place",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5493"
+        },
+        "createdAt": "2026-10-14T23:02:53Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-041",
+        "message": "Is there a known performance issue today? Pages feel slower than usual.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Is there a known performance issue today",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a1"
+        },
+        "createdAt": "2026-10-18T05:42:43Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-055",
+        "message": "Thanks, the stale theme tags are gone after your data fix.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Thanks, the stale theme tags are gone after your data fix",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b549b"
+        },
+        "createdAt": "2026-10-16T19:23:37Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-049",
+        "message": "Roadmap dates appear one day earlier for us in IST. Is that timezone handling expected?",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "Roadmap dates appear one day earlier for us in IST",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b549f"
+        },
+        "createdAt": "2026-10-17T03:07:51Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-053",
+        "message": "Roadmap export has been running for 25 minutes. We need the file for a board meeting this afternoon.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Roadmap export has been running for 25 minutes",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a2"
+        },
+        "createdAt": "2026-10-18T13:50:00Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-056",
+        "message": "Cursor jumps to the beginning of the line while typing in the PRD editor. Happens in Firefox only.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Cursor jumps to the beginning of the line while typing in the PRD editor",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5499"
+        },
+        "createdAt": "2026-10-16T16:36:12Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-047",
+        "message": "The 'Generate user stories' button is greyed out for all our users after the last release. Blocking sprint planning.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "The 'Generate user stories' button is greyed out for all our users after the...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b549e"
+        },
+        "createdAt": "2026-10-17T00:55:58Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-052",
+        "message": "Thanks for the walkthrough, the new filters make sense now. Closing this ticket.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Thanks for the walkthrough, the new filters make sense now",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b549a"
+        },
+        "createdAt": "2026-10-16T19:12:29Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-048",
+        "message": "The tip you sent about collapsing the filter panel worked perfectly. Thank you!",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "The tip you sent about collapsing the filter panel worked perfectly",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a0"
+        },
+        "createdAt": "2026-10-17T08:03:29Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-054",
+        "message": "The user story generator returns an empty result when the theme name has an ampersand in it.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "The user story generator returns an empty result when the theme name has an...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5497"
+        },
+        "createdAt": "2026-10-15T13:08:47Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-045",
+        "message": "We plan to onboard 200 more users next month. Can you confirm the platform can handle that load?",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "We plan to onboard 200 more users next month",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5495"
+        },
+        "createdAt": "2026-10-15T04:36:46Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-043",
+        "message": "Feature request: Slack notifications when a new theme crosses a threshold of feedback items.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Feature request: Slack notifications when a new theme crosses a threshold of...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a3"
+        },
+        "createdAt": "2026-10-18T15:57:52Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-057",
+        "message": "Noticing a brief pause in the PRD editor every few seconds when autosave runs. Is that expected?",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Noticing a brief pause in the PRD editor every few seconds when autosave runs",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5498"
+        },
+        "createdAt": "2026-10-16T14:35:35Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-046",
+        "message": "I'd like to add custom fields for customer tier, but the option isn't available on our plan. Can that be changed?",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "I'd like to add custom fields for customer tier, but the option isn't available...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5496"
+        },
+        "createdAt": "2026-10-15T11:41:12Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-044",
+        "message": "Can someone explain what the coloured dots next to each theme mean? I couldn't find it in the help centre.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Can someone explain what the coloured dots next to each theme mean",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b549d"
+        },
+        "createdAt": "2026-10-16T21:12:53Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-051",
+        "message": "Requesting guidance on setting up a saved view of high priority feedback only. The UI doesn't make it obvious.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "Requesting guidance on setting up a saved view of high priority feedback only",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b549c"
+        },
+        "createdAt": "2026-10-16T19:46:06Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-050",
+        "message": "Request to allow custom statuses on roadmap items, beyond planned, in progress and completed.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Request to allow custom statuses on roadmap items, beyond planned, in progress...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5494"
+        },
+        "createdAt": "2026-10-14T23:30:37Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-042",
+        "message": "Importing Intercom conversations is manual for us right now, we copy and paste each one. That is a lot of wasted time.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Importing Intercom conversations is manual for us right now, we copy and paste...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54ae"
+        },
+        "createdAt": "2026-10-22T01:50:56Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-068",
+        "message": "Filter by date range ignores the end date. Items after it still appear.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Filter by date range ignores the end date",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a7"
+        },
+        "createdAt": "2026-10-19T10:20:14Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-061",
+        "message": "Single sign on redirect loop on Safari, users can't get past the login screen.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Single sign on redirect loop on Safari, users can't get past the login screen",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a4"
+        },
+        "createdAt": "2026-10-18T17:15:34Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-058",
+        "message": "Dashboard takes more than 40 seconds to load for everyone in our workspace since yesterday. Tickets from three users already.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Dashboard takes more than 40 seconds to load for everyone in our workspace...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54ab"
+        },
+        "createdAt": "2026-10-21T10:41:50Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-065",
+        "message": "Is there a way to resize the columns in the prioritisation table? Everything is squeezed.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "Is there a way to resize the columns in the prioritisation table",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b0"
+        },
+        "createdAt": "2026-10-22T13:50:43Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-070",
+        "message": "We were told during the sales demo that Confluence export was coming soon. It's been months, do you have an ETA?",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "We were told during the sales demo that Confluence export was coming soon",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a8"
+        },
+        "createdAt": "2026-10-20T07:29:07Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-062",
+        "message": "How can I change the email address linked to my login? I changed jobs.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "How can I change the email address linked to my login",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a9"
+        },
+        "createdAt": "2026-10-21T03:19:38Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-063",
+        "message": "Do you have a CDN? Our users in Australia notice slow loading of assets.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Do you have a CDN",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b2"
+        },
+        "createdAt": "2026-10-23T19:06:01Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-072",
+        "message": "Remember me finally works after clearing cookies as you suggested. Thanks!",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Remember me finally works after clearing cookies as you suggested",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b4"
+        },
+        "createdAt": "2026-10-24T06:35:32Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-074",
+        "message": "Slack integration posts duplicate messages, five copies for every new theme. Our channel is flooded.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Slack integration posts duplicate messages, five copies for every new theme",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a5"
+        },
+        "createdAt": "2026-10-19T02:20:03Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-059",
+        "message": "Thanks for the quick patch on the CSV encoding problem. Special characters now show up correctly.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Thanks for the quick patch on the CSV encoding problem",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54ac"
+        },
+        "createdAt": "2026-10-21T11:57:05Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-066",
+        "message": "CSV import of 8,000 rows has been stuck at 'processing' for over an hour.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "CSV import of 8,000 rows has been stuck at 'processing' for over an hour",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54af"
+        },
+        "createdAt": "2026-10-22T03:02:27Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-069",
+        "message": "Please consider adding an API endpoint to fetch roadmap items. We want to show them on our internal portal.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Please consider adding an API endpoint to fetch roadmap items",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b1"
+        },
+        "createdAt": "2026-10-22T22:36:32Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-071",
+        "message": "SSO is working correctly after your configuration steps. Thank you for the quick help.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "SSO is working correctly after your configuration steps",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54aa"
+        },
+        "createdAt": "2026-10-21T08:15:40Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-064",
+        "message": "We want to enforce SSO only for our domain. Where can I configure that?",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "We want to enforce SSO only for our domain",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54a6"
+        },
+        "createdAt": "2026-10-19T04:16:55Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-060",
+        "message": "The save button on the PRD page is hidden behind the footer on my screen resolution. Attaching a screenshot, please fix.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "The save button on the PRD page is hidden behind the footer on my screen...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54ad"
+        },
+        "createdAt": "2026-10-21T12:09:13Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-067",
+        "message": "The new Slack integration works great. One extra idea: allow posting to different channels per theme.",
+        "sentiment": "neutral",
+        "source": "Jira Service Management",
+        "theme": "Uncategorized",
+        "title": "The new Slack integration works great",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b3"
+        },
+        "createdAt": "2026-10-24T04:23:11Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-073",
+        "message": "Comment notifications are sent to the wrong user, our PM got comments meant for the design lead.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Comment notifications are sent to the wrong user, our PM got comments meant for...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54ba"
+        },
+        "createdAt": "2026-10-26T00:35:50Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-080",
+        "message": "How do I enable two factor authentication for my account?",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "How do I enable two factor authentication for my account",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b8"
+        },
+        "createdAt": "2026-10-24T19:12:27Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-078",
+        "message": "Thanks, the password reset worked now. I can log in again.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Thanks, the password reset worked now",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c2"
+        },
+        "createdAt": "2026-10-27T22:43:08Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-088",
+        "message": "Mobile view of the dashboard is broken on iPhone, charts overflow the screen and I can't scroll.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Mobile view of the dashboard is broken on iPhone, charts overflow the screen...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54be"
+        },
+        "createdAt": "2026-10-27T01:32:39Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-084",
+        "message": "Tooltip text is cut off on the theme cards and unreadable. Using Chrome on Windows.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Tooltip text is cut off on the theme cards and unreadable",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c4"
+        },
+        "createdAt": "2026-10-28T21:39:07Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-090",
+        "message": "What are the recommended limits for the number of feedback items per workspace before things slow down?",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "What are the recommended limits for the number of feedback items per workspace...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54ca"
+        },
+        "createdAt": "2026-10-29T23:09:29Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-096",
+        "message": "Getting logged out repeatedly every 15 minutes while working. Using Chrome, cookies enabled.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Getting logged out repeatedly every 15 minutes while working",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b6"
+        },
+        "createdAt": "2026-10-24T12:28:54Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-076",
+        "message": "Pop up for the onboarding tour keeps coming back every time I log in even though I dismissed it.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Pop up for the onboarding tour keeps coming back every time I log in even...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b9"
+        },
+        "createdAt": "2026-10-25T17:58:03Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-079",
+        "message": "Imported CSV shows duplicate rows for each feedback item. Happens every time with our Zendesk export.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Imported CSV shows duplicate rows for each feedback item",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54bf"
+        },
+        "createdAt": "2026-10-27T06:50:20Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-085",
+        "message": "Thanks for fixing the sidebar issue so quickly. Everything looks right now.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Thanks for fixing the sidebar issue so quickly",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b5"
+        },
+        "createdAt": "2026-10-24T06:37:34Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-075",
+        "message": "Seeing a minor visual glitch with the sentiment chart legend overlapping on small screens.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Seeing a minor visual glitch with the sentiment chart legend overlapping on...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54b7"
+        },
+        "createdAt": "2026-10-24T16:35:40Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-077",
+        "message": "Could you check the server status? Our team in India sees slow response times in the afternoons.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Could you check the server status",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54bb"
+        },
+        "createdAt": "2026-10-26T04:06:50Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-081",
+        "message": "Is Azure AD supported for SSO? Our IT team needs to know before we commit.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Is Azure AD supported for SSO",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54bc"
+        },
+        "createdAt": "2026-10-26T06:05:39Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-082",
+        "message": "Thanks for adding the Markdown export, exactly what we asked for. Please close the ticket.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Thanks for adding the Markdown export, exactly what we asked for",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c0"
+        },
+        "createdAt": "2026-10-27T10:13:23Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-086",
+        "message": "The feedback list takes a few seconds to apply filters. Can you check if something is off with our account?",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "The feedback list takes a few seconds to apply filters",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c1"
+        },
+        "createdAt": "2026-10-27T18:43:57Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-087",
+        "message": "How do I rename a theme? I clicked around but nothing seems editable.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "How do I rename a theme",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c6"
+        },
+        "createdAt": "2026-10-29T08:31:49Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-092",
+        "message": "AI summary contains information that isn't in our feedback. Looks like a hallucination, ticket reference attached.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "AI summary contains information that isn't in our feedback",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c7"
+        },
+        "createdAt": "2026-10-29T11:44:19Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-093",
+        "message": "2FA codes from Google Authenticator are rejected, time sync on my phone is correct.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "2FA codes from Google Authenticator are rejected, time sync on my phone is...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c9"
+        },
+        "createdAt": "2026-10-29T21:00:45Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-095",
+        "message": "Locked out after entering the wrong password several times. Please unlock account for my email.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Locked out after entering the wrong password several times",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54bd"
+        },
+        "createdAt": "2026-10-26T12:24:02Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-083",
+        "message": "Not sure if this is a bug: the roadmap shows a completed item as 'in progress' after a refresh.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Not sure if this is a bug: the roadmap shows a completed item as 'in progress'...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c3"
+        },
+        "createdAt": "2026-10-28T19:24:41Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-089",
+        "message": "None of our 40 users can log in via SSO since 9 AM. Error: 'SAML assertion invalid'. Please escalate immediately.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "None of our 40 users can log in via SSO since 9 AM",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c5"
+        },
+        "createdAt": "2026-10-28T23:51:04Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-091",
+        "message": "Error message on login says 'something went wrong' with no further details. Hard to know what to fix.",
+        "sentiment": "neutral",
+        "source": "Email Support",
+        "theme": "Uncategorized",
+        "title": "Error message on login says 'something went wrong' with no further details",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54c8"
+        },
+        "createdAt": "2026-10-29T16:55:22Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-094",
+        "message": "Invited users get a 'user already exists' error although they've never signed up.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Invited users get a 'user already exists' error although they've never signed up",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54ce"
+        },
+        "createdAt": "2026-10-30T08:27:35Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-100",
+        "message": "Confirming the speed improvements from last week's release. Our dashboard loads in under three seconds now.",
+        "sentiment": "neutral",
+        "source": "Zendesk Support",
+        "theme": "Uncategorized",
+        "title": "Confirming the speed improvements from last week's release",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54cb"
+        },
+        "createdAt": "2026-10-30T00:42:12Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-097",
+        "message": "Theme clustering job fails after 10 minutes with a timeout error. We have tried three times with the same dataset.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Theme clustering job fails after 10 minutes with a timeout error",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54cc"
+        },
+        "createdAt": "2026-10-30T01:56:39Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-098",
+        "message": "Login works but dashboard shows a blank white page for admins only. Console reports a TypeError.",
+        "sentiment": "neutral",
+        "source": "Intercom Chat",
+        "theme": "Uncategorized",
+        "title": "Login works but dashboard shows a blank white page for admins only",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b54cd"
+        },
+        "createdAt": "2026-10-30T04:06:01Z",
+        "customer": "Unknown",
+        "dataset": "support_tickets",
+        "id": "TKT-099",
+        "message": "Admin account compromised? We see login attempts from unknown locations in the audit log and need help securing the workspace right now.",
+        "sentiment": "neutral",
+        "source": "Freshdesk",
+        "theme": "Uncategorized",
+        "title": "Admin account compromised",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      }
+    ],
+    "user_reviews": [
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5407"
+        },
+        "createdAt": "2026-09-30T17:42:08Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-001",
+        "message": "Interface looks nice but is cluttered once you have more than a handful of themes. Needs better grouping.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Interface looks nice but is cluttered once you have more than a handful of...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b540c"
+        },
+        "createdAt": "2026-10-01T14:02:08Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-006",
+        "message": "Every time we run theme clustering the whole workspace becomes unusable for a few minutes. Not great during working hours.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Every time we run theme clustering the whole workspace becomes unusable for a...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5413"
+        },
+        "createdAt": "2026-10-04T21:50:36Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-013",
+        "message": "Loads quickly on both desktop and tablet. No complaints.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Loads quickly on both desktop and tablet",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5414"
+        },
+        "createdAt": "2026-10-05T00:35:50Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-014",
+        "message": "Logging in with Google takes one click. No issues in six months.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "Logging in with Google takes one click",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5415"
+        },
+        "createdAt": "2026-10-05T01:32:52Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-015",
+        "message": "Would like competitor tracking features, so we can compare our feedback themes against market trends.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Would like competitor tracking features, so we can compare our feedback themes...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5412"
+        },
+        "createdAt": "2026-10-04T20:33:18Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-012",
+        "message": "Exports of big roadmaps take so long that the browser tab sometimes crashes.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Exports of big roadmaps take so long that the browser tab sometimes crashes",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5416"
+        },
+        "createdAt": "2026-10-05T09:17:18Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-016",
+        "message": "AI generated PRDs appear in under a minute, a huge time saver compared to writing them manually.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "AI generated PRDs appear in under a minute, a huge time saver compared to...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5411"
+        },
+        "createdAt": "2026-10-03T17:34:28Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-011",
+        "message": "Very few issues. Release notes are clear and updates don't break anything.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Very few issues",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b540f"
+        },
+        "createdAt": "2026-10-03T00:28:24Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-009",
+        "message": "Really smooth sign in experience, even on mobile.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Really smooth sign in experience, even on mobile",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5410"
+        },
+        "createdAt": "2026-10-03T16:52:32Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-010",
+        "message": "Good design overall, though dark mode has some contrast problems in the sidebar.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "Good design overall, though dark mode has some contrast problems in the sidebar",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5408"
+        },
+        "createdAt": "2026-09-30T23:09:13Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-002",
+        "message": "Needs a better way to merge duplicate feedback automatically. Doing it by hand takes a while.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Needs a better way to merge duplicate feedback automatically",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5409"
+        },
+        "createdAt": "2026-09-30T23:13:36Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-003",
+        "message": "Sentiment analysis mislabels sarcasm and mixed comments, which skews our reports.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Sentiment analysis mislabels sarcasm and mixed comments, which skews our reports",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b540a"
+        },
+        "createdAt": "2026-10-01T07:37:07Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-004",
+        "message": "Too many settings spread across different menus. I always have to hunt for things.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Too many settings spread across different menus",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b540b"
+        },
+        "createdAt": "2026-10-01T12:34:12Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-005",
+        "message": "Account got locked and support took two days to respond. Our entire product team couldn't work. Unacceptable for a business tool.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Account got locked and support took two days to respond",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b540e"
+        },
+        "createdAt": "2026-10-03T00:11:52Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-008",
+        "message": "The way themes are visualised as clusters is genuinely helpful for presentations.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "The way themes are visualised as clusters is genuinely helpful for presentations",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b540d"
+        },
+        "createdAt": "2026-10-02T04:57:40Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-007",
+        "message": "After the latest redesign I can't find half the features. The new navigation is a step backward, please bring back the old layout option.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "After the latest redesign I can't find half the features",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5418"
+        },
+        "createdAt": "2026-10-05T14:30:35Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-018",
+        "message": "Duplicate feedback items appear after every sync with our helpdesk. Cleaning them up wastes time.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Duplicate feedback items appear after every sync with our helpdesk",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b541f"
+        },
+        "createdAt": "2026-10-06T21:01:42Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-025",
+        "message": "Password reset emails never arrive. I've tried three times and checked spam, finally had to contact support.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "Password reset emails never arrive",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5423"
+        },
+        "createdAt": "2026-10-08T12:16:03Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-029",
+        "message": "AI sometimes hallucinates feedback quotes that don't exist in my data. Have to double check everything.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "AI sometimes hallucinates feedback quotes that don't exist in my data",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b541b"
+        },
+        "createdAt": "2026-10-06T05:36:03Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-021",
+        "message": "Comments vanish on PRDs when two people edit at the same time.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "Comments vanish on PRDs when two people edit at the same time",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5422"
+        },
+        "createdAt": "2026-10-08T05:15:00Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-028",
+        "message": "Not the fastest app I've used but not the slowest. Acceptable for the price.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Not the fastest app I've used but not the slowest",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5419"
+        },
+        "createdAt": "2026-10-05T17:57:58Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-019",
+        "message": "Integration with Slack keeps disconnecting silently, so we miss alerts. Had to reconnect it three times this month.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Integration with Slack keeps disconnecting silently, so we miss alerts",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b541e"
+        },
+        "createdAt": "2026-10-06T20:55:02Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-024",
+        "message": "Few minor bugs here and there, nothing that stops me from working.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "Few minor bugs here and there, nothing that stops me from working",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b541d"
+        },
+        "createdAt": "2026-10-06T17:07:08Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-023",
+        "message": "Never had a login problem. Solid and secure.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Never had a login problem",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b541a"
+        },
+        "createdAt": "2026-10-06T05:26:53Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-020",
+        "message": "Version history for PRDs is basic. I'd like to see who changed what, line by line.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Version history for PRDs is basic",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b541c"
+        },
+        "createdAt": "2026-10-06T06:54:15Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-022",
+        "message": "Rarely encounter bugs, and the team patches issues fast. Great support.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Rarely encounter bugs, and the team patches issues fast",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5420"
+        },
+        "createdAt": "2026-10-07T12:52:17Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-026",
+        "message": "Roadmap sharing is limited. There's no way to publish a read only view for customers.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Roadmap sharing is limited",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5421"
+        },
+        "createdAt": "2026-10-08T03:23:25Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-027",
+        "message": "Love it. Adding a calendar sync for roadmap milestones would be awesome.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Love it",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5417"
+        },
+        "createdAt": "2026-10-05T11:38:32Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-017",
+        "message": "Tables are hard to read on large monitors, text is tiny and cannot be zoomed without breaking the layout.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Tables are hard to read on large monitors, text is tiny and cannot be zoomed...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5425"
+        },
+        "createdAt": "2026-10-09T15:14:51Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-031",
+        "message": "Notification badges don't clear after reading. Cosmetic but annoying.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Notification badges don't clear after reading",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5427"
+        },
+        "createdAt": "2026-10-10T13:26:44Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-033",
+        "message": "No way to bulk edit feedback tags. Doing it one by one is tedious.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "No way to bulk edit feedback tags",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5424"
+        },
+        "createdAt": "2026-10-09T15:00:04Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-030",
+        "message": "Five stars for usability. Onboarding walked me through importing feedback and generating my first PRD in minutes.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "Five stars for usability",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5426"
+        },
+        "createdAt": "2026-10-10T03:23:12Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-032",
+        "message": "Login page doesn't show a clear error when the password is wrong, just reloads.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Login page doesn't show a clear error when the password is wrong, just reloads",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b542a"
+        },
+        "createdAt": "2026-10-11T05:08:48Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-036",
+        "message": "The app freezes when I open large feedback imports. Have to reload the browser to continue.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "The app freezes when I open large feedback imports",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b542d"
+        },
+        "createdAt": "2026-10-12T08:31:00Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-039",
+        "message": "No lag at all in our team of 40. Very smooth experience.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "No lag at all in our team of 40",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b542e"
+        },
+        "createdAt": "2026-10-13T05:34:48Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-040",
+        "message": "Impressive speed for AI features, summaries and user stories generate faster than the competitor we trialled.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Impressive speed for AI features, summaries and user stories generate faster...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b542b"
+        },
+        "createdAt": "2026-10-11T09:54:52Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-037",
+        "message": "Clear visual hierarchy, nice typography, and the colour coding for priority is spot on.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Clear visual hierarchy, nice typography, and the colour coding for priority is...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5429"
+        },
+        "createdAt": "2026-10-11T01:11:55Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-035",
+        "message": "Quick and snappy. Syncing with our feedback source was done in minutes.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Quick and snappy",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b542c"
+        },
+        "createdAt": "2026-10-12T05:37:50Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-038",
+        "message": "Really responsive, even on our slow office wifi. Good engineering.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Really responsive, even on our slow office wifi",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5430"
+        },
+        "createdAt": "2026-10-13T09:33:55Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-042",
+        "message": "Login works fine, but I wish there was an option for biometric login on mobile.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "Login works fine, but I wish there was an option for biometric login on mobile",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5432"
+        },
+        "createdAt": "2026-10-13T21:03:14Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-044",
+        "message": "Fast, even with thousands of feedback entries. Searching and filtering feel instant.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Fast, even with thousands of feedback entries",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5434"
+        },
+        "createdAt": "2026-10-14T13:31:01Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-046",
+        "message": "Solid product but missing a native Jira integration. We use a workaround with CSV exports which is clunky.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Solid product but missing a native Jira integration",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b542f"
+        },
+        "createdAt": "2026-10-13T07:49:28Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-041",
+        "message": "This is the best feedback tool I've tried. Please add GitHub integration and it would be unbeatable.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "This is the best feedback tool I've tried",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5431"
+        },
+        "createdAt": "2026-10-13T17:17:41Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-043",
+        "message": "Decent UI, a bit of a learning curve at the start. After a week it clicked.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "Decent UI, a bit of a learning curve at the start",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5428"
+        },
+        "createdAt": "2026-10-10T22:42:02Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-034",
+        "message": "Initial page load feels heavy, probably too many scripts. Subsequent pages are fine.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Initial page load feels heavy, probably too many scripts",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5433"
+        },
+        "createdAt": "2026-10-13T21:12:12Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-045",
+        "message": "Stable and reliable. We have used it daily for months without a crash.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Stable and reliable",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5435"
+        },
+        "createdAt": "2026-10-14T15:40:38Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-047",
+        "message": "Page layout shifts while loading so I often click the wrong button. Annoying.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Page layout shifts while loading so I often click the wrong button",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b543c"
+        },
+        "createdAt": "2026-10-17T08:43:26Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-054",
+        "message": "Slick and responsive design. Our stakeholders were impressed when I shared the roadmap view.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "Slick and responsive design",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b543d"
+        },
+        "createdAt": "2026-10-17T10:35:47Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-055",
+        "message": "SSO integration was painless. IT approved it quickly and we rolled it out to 60 people in a day.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "SSO integration was painless",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b543a"
+        },
+        "createdAt": "2026-10-16T23:06:26Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-052",
+        "message": "Search sometimes returns no results even for words I know exist.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "Search sometimes returns no results even for words I know exist",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5440"
+        },
+        "createdAt": "2026-10-18T06:52:58Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-058",
+        "message": "Performance is generally good, with occasional lag during peak hours.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Performance is generally good, with occasional lag during peak hours",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b543b"
+        },
+        "createdAt": "2026-10-17T01:11:04Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-053",
+        "message": "Lost a full PRD after an error message popped up while saving. There was no autosave or recovery. Very frustrating.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "Lost a full PRD after an error message popped up while saving",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5441"
+        },
+        "createdAt": "2026-10-18T09:52:23Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-059",
+        "message": "Magic links and SSO make onboarding contractors a breeze.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Magic links and SSO make onboarding contractors a breeze",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5438"
+        },
+        "createdAt": "2026-10-16T16:52:40Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-050",
+        "message": "Really useful so far. My main wish is the ability to add attachments to feedback items.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Really useful so far",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b543f"
+        },
+        "createdAt": "2026-10-17T22:55:47Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-057",
+        "message": "Would give 5 stars if the UI were more customisable, but the defaults are decent.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Would give 5 stars if the UI were more customisable, but the defaults are decent",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5436"
+        },
+        "createdAt": "2026-10-15T00:31:36Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-048",
+        "message": "Buggy after the last update. User stories disappear from my backlog until I refresh the page.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Buggy after the last update",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5439"
+        },
+        "createdAt": "2026-10-16T21:45:25Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-051",
+        "message": "The CSV import fails on files with commas inside quotes. Had to clean everything manually.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "The CSV import fails on files with commas inside quotes",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b543e"
+        },
+        "createdAt": "2026-10-17T21:57:12Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-056",
+        "message": "Great stability, and when something does go wrong the error messages actually help.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Great stability, and when something does go wrong the error messages actually...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5437"
+        },
+        "createdAt": "2026-10-15T10:01:49Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-049",
+        "message": "Super easy to use, I'm not technical and had no problems at all.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Super easy to use, I'm not technical and had no problems at all",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5442"
+        },
+        "createdAt": "2026-10-19T04:09:46Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-060",
+        "message": "The product is stable most of the time but occasionally gives vague error messages.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "The product is stable most of the time but occasionally gives vague error...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5443"
+        },
+        "createdAt": "2026-10-19T23:56:15Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-061",
+        "message": "Secure and simple. Two factor authentication was easy to set up.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Secure and simple",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5445"
+        },
+        "createdAt": "2026-10-20T17:13:37Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-063",
+        "message": "Needs more export options. PDF is fine but we'd like Word and Markdown too.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "Needs more export options",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b544c"
+        },
+        "createdAt": "2026-10-21T17:39:58Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-070",
+        "message": "UI is okay but nothing special. Does the job.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "UI is okay but nothing special",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b544e"
+        },
+        "createdAt": "2026-10-22T04:18:34Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-072",
+        "message": "Dashboard timed out three times during our quarterly planning session. Very embarrassing in front of leadership.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Dashboard timed out three times during our quarterly planning session",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5446"
+        },
+        "createdAt": "2026-10-20T22:32:26Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-064",
+        "message": "Notifications and the activity feed lag behind by several minutes, so we get outdated information.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Notifications and the activity feed lag behind by several minutes, so we get...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b544a"
+        },
+        "createdAt": "2026-10-21T13:19:45Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-068",
+        "message": "The dashboard gives me everything I need in one view. Clean, modern, and not overwhelming.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "The dashboard gives me everything I need in one view",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5447"
+        },
+        "createdAt": "2026-10-21T05:09:57Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-065",
+        "message": "Great for turning feedback into requirements. Slack notifications would make it a perfect 5 stars.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Great for turning feedback into requirements",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5449"
+        },
+        "createdAt": "2026-10-21T12:37:30Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-067",
+        "message": "Loading times have gotten worse over the last few releases. Hope they address it.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Loading times have gotten worse over the last few releases",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b544b"
+        },
+        "createdAt": "2026-10-21T17:31:25Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-069",
+        "message": "Invite flow is confusing, new teammates get an error unless they use the exact email I invited.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Invite flow is confusing, new teammates get an error unless they use the exact...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5448"
+        },
+        "createdAt": "2026-10-21T12:25:35Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-066",
+        "message": "Dashboard is painfully slow with our data volume. Takes up to 30 seconds to load, which is unacceptable for a daily tool.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Dashboard is painfully slow with our data volume",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b544f"
+        },
+        "createdAt": "2026-10-22T04:19:46Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-073",
+        "message": "Cannot export feedback with theme tags to our BI tool. That limits how much we can do with the data.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Cannot export feedback with theme tags to our BI tool",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b544d"
+        },
+        "createdAt": "2026-10-21T23:32:52Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-071",
+        "message": "Mostly bug free, though the Safari experience has some rendering glitches.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "Mostly bug free, though the Safari experience has some rendering glitches",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5444"
+        },
+        "createdAt": "2026-10-20T09:59:48Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-062",
+        "message": "Authentication is okay. Session timeout is a bit short for my taste.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Authentication is okay",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5462"
+        },
+        "createdAt": "2026-10-28T02:45:10Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-092",
+        "message": "2FA lockout with no recovery codes provided. Had to wait for support to reset it, lost half a day.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "2FA lockout with no recovery codes provided",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5456"
+        },
+        "createdAt": "2026-10-25T00:51:51Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-080",
+        "message": "Standard auth, nothing special but nothing broken.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Standard auth, nothing special but nothing broken",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5457"
+        },
+        "createdAt": "2026-10-25T02:56:17Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-081",
+        "message": "Disappointed that there is no Zapier or webhook support. Automation options are very limited.",
+        "sentiment": "neutral",
+        "source": "Google Play Store",
+        "theme": "Uncategorized",
+        "title": "Disappointed that there is no Zapier or webhook support",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5468"
+        },
+        "createdAt": "2026-10-29T11:09:44Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-098",
+        "message": "Icons aren't labelled and some of them are really not obvious. Hovering for tooltips every time gets old.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Icons aren't labelled and some of them are really not obvious",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b545b"
+        },
+        "createdAt": "2026-10-26T15:11:33Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-085",
+        "message": "Mobile experience is poor. Buttons overlap on my phone and I can't review PRDs on the go.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Mobile experience is poor",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5460"
+        },
+        "createdAt": "2026-10-27T10:48:40Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-090",
+        "message": "Lacks integrations with the tools we actually use. No Slack, no Linear, no Confluence. Hard to justify for our team.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Lacks integrations with the tools we actually use",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b545c"
+        },
+        "createdAt": "2026-10-26T18:56:43Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-086",
+        "message": "Forced logouts are frequent, I lose my work if I don't save constantly.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Forced logouts are frequent, I lose my work if I don't save constantly",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b545d"
+        },
+        "createdAt": "2026-10-27T07:15:47Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-087",
+        "message": "A multi language option would help our international teams.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "A multi language option would help our international teams",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5451"
+        },
+        "createdAt": "2026-10-23T08:04:16Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-075",
+        "message": "Good tool, would like to see a public API for custom integrations.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Good tool, would like to see a public API for custom integrations",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5459"
+        },
+        "createdAt": "2026-10-25T18:34:27Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-083",
+        "message": "Good security features, SAML support and audit logs gave our compliance team confidence.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "Good security features, SAML support and audit logs gave our compliance team...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b545a"
+        },
+        "createdAt": "2026-10-26T02:28:49Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-084",
+        "message": "Speed is decent. Could be better when switching between workspaces.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Speed is decent",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5466"
+        },
+        "createdAt": "2026-10-28T22:24:34Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-096",
+        "message": "Report generation is slow and sometimes times out. Support told us to try smaller date ranges.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Report generation is slow and sometimes times out",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b545f"
+        },
+        "createdAt": "2026-10-27T09:22:38Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-089",
+        "message": "Decent feature set for an early product, but advanced analytics are missing.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Decent feature set for an early product, but advanced analytics are missing",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5465"
+        },
+        "createdAt": "2026-10-28T21:35:04Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-095",
+        "message": "Would prefer more granular permissions, but login itself is reliable.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Would prefer more granular permissions, but login itself is reliable",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b546a"
+        },
+        "createdAt": "2026-10-30T07:15:34Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-100",
+        "message": "Found a bug and support had it fixed in 24 hours. Fantastic service.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Found a bug and support had it fixed in 24 hours",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5452"
+        },
+        "createdAt": "2026-10-23T16:27:32Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-076",
+        "message": "Beautiful interface, our designers and PMs both picked it up instantly. Feels like the tool was made by people who actually do product work.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Beautiful interface, our designers and PMs both picked it up instantly",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5469"
+        },
+        "createdAt": "2026-10-30T01:23:57Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-099",
+        "message": "Roadmap export generates a corrupted file about half the time. We have to retry multiple times.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "Roadmap export generates a corrupted file about half the time",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5467"
+        },
+        "createdAt": "2026-10-29T06:38:11Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-097",
+        "message": "It's fine for small teams but I'm not sure it would hold up for enterprise volumes.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "It's fine for small teams but I'm not sure it would hold up for enterprise...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5450"
+        },
+        "createdAt": "2026-10-22T18:36:09Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-074",
+        "message": "Had one error with exports, retried and it worked. Fine overall.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Had one error with exports, retried and it worked",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5464"
+        },
+        "createdAt": "2026-10-28T15:23:54Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-094",
+        "message": "Okta SSO setup docs are outdated and our admin spent hours figuring out the right settings.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Okta SSO setup docs are outdated and our admin spent hours figuring out the...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5455"
+        },
+        "createdAt": "2026-10-24T19:03:02Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-079",
+        "message": "Can't stay logged in on my phone, it asks me to sign in every time I open the app.",
+        "sentiment": "neutral",
+        "source": "Product Hunt",
+        "theme": "Uncategorized",
+        "title": "Can't stay logged in on my phone, it asks me to sign in every time I open the...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5453"
+        },
+        "createdAt": "2026-10-24T16:06:49Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-077",
+        "message": "Missing role based access control, which is a dealbreaker for our security team.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Missing role based access control, which is a dealbreaker for our security team",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5458"
+        },
+        "createdAt": "2026-10-25T14:19:41Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-082",
+        "message": "The automated user story feature is fantastic. I'd love to see support for custom story templates in the future.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "The automated user story feature is fantastic",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b545e"
+        },
+        "createdAt": "2026-10-27T08:01:47Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-088",
+        "message": "Switching between accounts is awkward. I have to log out fully to use a second workspace login.",
+        "sentiment": "neutral",
+        "source": "Apple App Store",
+        "theme": "Uncategorized",
+        "title": "Switching between accounts is awkward",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5454"
+        },
+        "createdAt": "2026-10-24T16:47:37Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-078",
+        "message": "Very good value. Adding scheduled reports would be the cherry on top.",
+        "sentiment": "neutral",
+        "source": "G2 Crowd",
+        "theme": "Uncategorized",
+        "title": "Very good value",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5461"
+        },
+        "createdAt": "2026-10-28T02:08:26Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-091",
+        "message": "Love the drag and drop roadmap, way more intuitive than the spreadsheet we were using.",
+        "sentiment": "neutral",
+        "source": "Capterra",
+        "theme": "Uncategorized",
+        "title": "Love the drag and drop roadmap, way more intuitive than the spreadsheet we were...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      },
+      {
+        "_id": {
+          "$oid": "6aea428f5fdeded2a81b5463"
+        },
+        "createdAt": "2026-10-28T03:33:47Z",
+        "customer": "Unknown",
+        "dataset": "user_reviews",
+        "id": "REV-093",
+        "message": "The editor feels cramped, and there's no focus mode for writing long requirements.",
+        "sentiment": "neutral",
+        "source": "Trustpilot",
+        "theme": "Uncategorized",
+        "title": "The editor feels cramped, and there's no focus mode for writing long...",
+        "userId": "usr-b9b5794271",
+        "votes": 0
+      }
+    ]
+  }
+}

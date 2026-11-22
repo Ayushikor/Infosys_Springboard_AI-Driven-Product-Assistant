@@ -1,0 +1,348 @@
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\chat.py
+LINE: 123
+CODE: pain_points: list[dict[str, Any]] = Field(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\feature_prioritization.py
+LINE: 60
+CODE: pain_points: list[dict[str, Any]] = Field(default_factory=list)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\feedback.py
+LINE: 21
+CODE: pain_points: list[str]
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 178
+CODE: pain_points: list[IdentifiedPainPoint] = Field(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 190
+CODE: uncertain_feedback_ids: list[str] = Field(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 210
+CODE: "uncertain_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 252
+CODE: pain_points: list[IdentifiedPainPoint] = Field(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 261
+CODE: uncertain_feedback_ids: list[str] = Field(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 266
+CODE: unclassified_feedback_ids: list[str] = Field(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 278
+CODE: Keep uncertain_feedback_ids and unclassified_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 284
+CODE: self.uncertain_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 285
+CODE: + self.unclassified_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 289
+CODE: self.uncertain_feedback_ids = combined
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 290
+CODE: self.unclassified_feedback_ids = combined.copy()
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 296
+CODE: "uncertain_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\schemas\pain_point.py
+LINE: 297
+CODE: "unclassified_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 26
+CODE: "pain_points",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 205
+CODE: def _merge_pain_points(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 218
+CODE: pain_points = _merge_named_items(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 220
+CODE: list(item.get("pain_points") or [])
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 234
+CODE: "pain_points": pain_points,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 240
+CODE: "uncertain_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 241
+CODE: "unclassified_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 589
+CODE: pain_points = _merge_pain_points(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 590
+CODE: results_by_key["pain_points"],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 628
+CODE: "pain_points": pain_points,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 699
+CODE: db_pain_points = _extract_records(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 700
+CODE: latest_results.get("pain_points"),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 701
+CODE: ("pain_points",),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 712
+CODE: "pain_points": db_pain_points,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 841
+CODE: "pain_points": analysis["pain_points"],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1373
+CODE: "pain_points": [],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1389
+CODE: "pain_points": _serialize(context.pain_points),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2113
+CODE: analysis.get("pain_points", []),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2449
+CODE: pain_points=analysis["pain_points"],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 147
+CODE: pain_points = _serialize_context(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 158
+CODE: pain_points,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feedback_analyzer.py
+LINE: 69
+CODE: "or neutral), category, pain_points (array of strings), "
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 261
+CODE: for point in pain_result.pain_points:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 301
+CODE: for point in pain_result.pain_points
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 488
+CODE: "pain_points": None,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 576
+CODE: "pain_points",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 608
+CODE: pain_point_agent.identify_pain_points(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 614
+CODE: pain_points = _require_list_field(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 616
+CODE: "pain_points",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 628
+CODE: "uncertain_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 632
+CODE: results["pain_points"] = _serialize_result(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 636
+CODE: agent_status["pain_points"] = "completed"
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 642
+CODE: len(pain_points),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 656
+CODE: "pain_points",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 695
+CODE: | set(pain_result.uncertain_feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 217
+CODE: for pain_point in result.pain_points:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 233
+CODE: result.uncertain_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 284
+CODE: name="Other / Unclassified - Review Required",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 305
+CODE: for index, point in enumerate(result.pain_points)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 306
+CODE: if point.name == "Other / Unclassified - Review Required"
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 313
+CODE: result.pain_points[first_index] = fallback_point
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 316
+CODE: result.pain_points.pop(index)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 319
+CODE: result.pain_points.append(fallback_point)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 321
+CODE: result.uncertain_feedback_ids = review_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 331
+CODE: result.uncertain_feedback_ids = []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 465
+CODE: uncertain_feedback_ids: do not include the ID.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 466
+CODE: pain_points: do not include the ID.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 471
+CODE: Add feedback IDs to uncertain_feedback_ids when:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 480
+CODE: and feature_request_feedback_ids, not uncertain_feedback_ids.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 519
+CODE: pain_points, non_pain_feedback_ids and uncertain_feedback_ids.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 551
+CODE: def identify_pain_points(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 713
+CODE: extraction.uncertain_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 719
+CODE: pain_points=extraction.pain_points,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 725
+CODE: uncertain_feedback_ids=uncertain_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 727
+CODE: unclassified_feedback_ids=uncertain_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 743
+CODE: len(final_result.pain_points),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 745
+CODE: len(final_result.uncertain_feedback_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 116
+CODE: relevant_pain_points = []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 122
+CODE: relevant_pain_points.append(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 145
+CODE: relevant_pain_points,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\main.py
+LINE: 212
+CODE: def identify_pain_points(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\main.py
+LINE: 217
+CODE: return pain_point_agent.identify_pain_points(request)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\src\pages\Chat.jsx
+LINE: 202
+CODE: latestResults.pain_points,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\src\pages\Chat.jsx
+LINE: 203
+CODE: ['pain_points', 'painPoints']
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\src\pages\Chat.jsx
+LINE: 247
+CODE: pain_points: painPoints,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\src\pages\Dashboard.jsx
+LINE: 203
+CODE: aiResults.pain_points?.pain_points?.length ?? 0,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\src\pages\Dashboard.jsx
+LINE: 779
+CODE: ["pain_points", "Agent 2 · Pain Point Identification"],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\backend\routes\feedback_routes.py
+LINE: 653
+CODE: def identify_pain_points(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\backend\routes\feedback_routes.py
+LINE: 737
+CODE: "pain_points": result.get("pain_points", []),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\backend\services\analysis_service.py
+LINE: 43
+CODE: "pain_points",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\backend\tests\test_api.py
+LINE: 506
+CODE: "pain_points": "completed",
