@@ -32,15 +32,10 @@ class Config:
     )
 
     # Application debug mode
-    DEBUG = os.getenv(
-        "DEBUG",
-        "0",
-    ) == "1"
+    DEBUG = os.getenv("DEBUG", "0") == "1"
 
     # Main FastAPI backend port
-    PORT = int(
-        os.getenv("PORT", "8000")
-    )
+    PORT = int(os.getenv("PORT", "8000"))
 
     # Automatically create MongoDB indexes
     ENSURE_INDEXES = os.getenv(
@@ -50,7 +45,7 @@ class Config:
 
     # AI Module FastAPI service URL
     AI_SERVICE_URL = os.getenv(
-        "AT_SERVICE_URL",
+        "AI_SERVICE_URL",
         "http://127.0.0.1:8001",
     ).rstrip("/")
 
@@ -61,3 +56,8 @@ class Config:
             "300",
         )
     )
+
+
+# Module-level exports for direct imports
+AI_SERVICE_URL = Config.AI_SERVICE_URL
+AI_SERVICE_TIMEOUT_SECONDS = Config.AI_SERVICE_TIMEOUT_SECONDS

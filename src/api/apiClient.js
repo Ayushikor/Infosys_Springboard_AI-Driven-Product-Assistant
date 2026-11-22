@@ -81,7 +81,6 @@ const realApi = {
     logout: () =>
       realRequest("post", "/auth/logout"),
 
-    // Restore the current session after browser refresh.
     currentUser: () =>
       realRequest("get", "/auth/me"),
   },
@@ -111,11 +110,9 @@ const realApi = {
     remove: (id) =>
       realRequest("delete", `/feedback/${id}`),
 
-    // Retrieve uploaded datasets belonging to the user.
     getDatasets: () =>
       realRequest("get", "/feedback/datasets"),
 
-    // Import feedback records with their original filename.
     importMany: (rows, fileName = "Uploaded dataset") =>
       realRequest("post", "/feedback/import", {
         records: rows,
@@ -222,10 +219,6 @@ const realApi = {
 
   analysis: {
 
-    // Execute the four-agent pipeline.
-    // If importId is provided, only that uploaded dataset
-    // will be analysed by the backend.
-
     run: (workspaceId = null, importId = null) =>
       realRequest(
         "post",
@@ -244,7 +237,6 @@ const realApi = {
         }
       ),
 
-    // Retrieve previous analysis runs.
     getRuns: (workspaceId = null, limit = 20) =>
       realRequest(
         "get",
@@ -258,7 +250,6 @@ const realApi = {
         }
       ),
 
-    // Retrieve the latest analysis.
     getLatest: (workspaceId = null) =>
       realRequest(
         "get",
@@ -271,7 +262,6 @@ const realApi = {
         }
       ),
 
-    // Retrieve a particular analysis run.
     getById: (runId) =>
       realRequest(
         "get",
@@ -289,17 +279,38 @@ const realApi = {
   },
 
   // -------------------------------------------------------
-  // CHAT
+  // AI PRODUCT ASSISTANT CHAT
   // -------------------------------------------------------
 
   chat: {
+
+    // Send a message to the unified AI chatbot.
+    // Supports automatic intent detection and explicit
+    // agent selection through the request payload.
+
+    sendMessage: (payload) =>
+      realRequest(
+        "post",
+        "/chat",
+        payload,
+        {
+          timeout: 130000,
+        }
+      ),
+
+    // Retrieve saved conversation history.
+
     getHistory: () =>
       realRequest("get", "/chat"),
+
+    // Save conversation history.
 
     saveHistory: (messages) =>
       realRequest("put", "/chat", {
         messages,
       }),
+
+    // Clear conversation history.
 
     clear: () =>
       realRequest("delete", "/chat"),

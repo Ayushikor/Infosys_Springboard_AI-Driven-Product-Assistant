@@ -23,14 +23,46 @@ from app.schemas.trend_analysis import (
     TrendAnalysisResult,
 )
 
+from app.schemas.prd import (
+    PRDGenerationRequest,
+    PRDGenerationResult,
+)
+
+from app.schemas.prd import (
+    PRDGenerationRequest,
+    PRDGenerationResult,
+)
+
+from app.schemas.user_story import (
+    UserStoryGenerationRequest,
+    UserStoryGenerationResult,
+)
+
+from app.schemas.feature_prioritization import (
+    FeaturePrioritizationRequest,
+    FeaturePrioritizationResult,
+)
+
+from app.schemas.chat import (
+    ChatRequest,
+    ChatResponse,
+)
+
+from app.services.chat_orchestrator import (
+    ChatOrchestrationError,
+    process_chat,
+)
+
 from app.services import (
     feedback_analyzer,
     theme_extraction_agent,
     pain_point_agent,
     feature_clustering_agent,
     trend_analysis_agent,
+    prd_generation_agent,
+    user_story_agent,
+    feature_prioritization_agent,
 )
-
 from app.services.orchestrator import (
     OrchestrationError,
     run_all_analyses,
@@ -238,6 +270,156 @@ def analyze_trends(
             detail="Trend analysis is temporarily unavailable.",
         ) from None
 
+# =========================================================
+# AGENT 5: PRD GENERATION
+# =========================================================
+
+
+@app.post(
+    "/prd/generate",
+    response_model=PRDGenerationResult,
+)
+def generate_product_requirements(
+    request: PRDGenerationRequest,
+) -> PRDGenerationResult:
+    """
+    Generate a Product Requirements Document.
+
+    Consumes:
+        Selected feature cluster from Agent 3.
+        Original customer feedback.
+        Theme context from Agent 1.
+        Pain-point context from Agent 2.
+
+    Returns:
+        A structured and validated Product Requirements Document.
+    """
+
+    try:
+        return prd_generation_agent.generate_prd(request)
+
+    except prd_generation_agent.PRDGenerationError:
+        logger.exception(
+            "PRD generation failed."
+        )
+
+        raise HTTPException(
+            status_code=503,
+            detail="PRD generation is temporarily unavailable.",
+        ) from None
+
+    except Exception:
+        logger.exception(
+            "Unexpected error during PRD generation."
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail="An unexpected error occurred during PRD generation.",
+        ) from None
+
+# =========================================================
+# AGENT 6: USER STORY AND ACCEPTANCE CRITERIA GENERATION
+# =========================================================
+
+@app.post(
+    "/user-stories/generate",
+    response_model=UserStoryGenerationResult,
+)
+def generate_user_stories(
+    request: UserStoryGenerationRequest,
+) -> UserStoryGenerationResult:
+
+    try:
+        return user_story_agent.generate_user_stories(request)
+
+    except user_story_agent.UserStoryGenerationError:
+        logger.exception("User story generation failed.")
+
+        raise HTTPException(
+            status_code=503,
+            detail="User story generation is temporarily unavailable.",
+        ) from None
+
+    except Exception:
+        logger.exception(
+            "Unexpected error during user story generation."
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail="An unexpected error occurred during user story generation.",
+        ) from None
+
+# =========================================================
+# AGENT 7: FEATURE PRIORITIZATION
+# =========================================================
+
+@app.post(
+    "/features/prioritize",
+    response_model=FeaturePrioritizationResult,
+)
+def prioritize_product_features(
+    request: FeaturePrioritizationRequest,
+) -> FeaturePrioritizationResult:
+
+    try:
+        return feature_prioritization_agent.prioritize_features(
+            request
+        )
+
+    except feature_prioritization_agent.FeaturePrioritizationError:
+        logger.exception("Feature prioritization failed.")
+
+        raise HTTPException(
+            status_code=503,
+            detail="Feature prioritization is temporarily unavailable.",
+        ) from None
+
+    except Exception:
+        logger.exception(
+            "Unexpected error during feature prioritization."
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail="An unexpected error occurred during feature prioritization.",
+        ) from None
+
+# =========================================================
+# UNIFIED PRODUCT ASSISTANT CHATBOT
+# =========================================================
+
+@app.post(
+    "/chat",
+    response_model=ChatResponse,
+)
+def unified_product_assistant(
+    request: ChatRequest,
+) -> ChatResponse:
+
+    try:
+        return process_chat(request)
+
+    except ChatOrchestrationError:
+        logger.exception(
+            "Unified Product Assistant request failed."
+        )
+
+        raise HTTPException(
+            status_code=503,
+            detail="The Product Assistant is temporarily unavailable.",
+        ) from None
+
+    except Exception:
+        logger.exception(
+            "Unexpected unified chatbot error."
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail="An unexpected chatbot error occurred.",
+        ) from None
 
 # =========================================================
 # COMPLETE FOUR-AGENT PIPELINE
