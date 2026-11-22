@@ -88,7 +88,7 @@ def test_valid_pain_point_assignments():
     )
 
 
-def test_missing_feedback_added_to_unclassified_group():
+def test_missing_feedback_added_to_uncertain_classification():
     result = PainPointExtractionOutput(
         pain_points=[
             create_pain_point("FB-001")
@@ -106,17 +106,21 @@ def test_missing_feedback_added_to_unclassified_group():
         input_evidence,
     )
 
-    fallback = next(
-        point
-        for point in result.pain_points
-        if point.name == "Other / Unclassified - Review Required"
-    )
+    assert "FB-002" in result.uncertain_feedback_ids
 
-    assert fallback.feedback_ids == ["FB-002"]
-    assert fallback.category == "Other"
-    assert fallback.severity == "Unknown"
-    assert "FB-002" in fallback.evidence[0]
-    assert "The interface looks great." in fallback.evidence[0]
+    pain_point_ids = {
+        feedback_id
+        for point in result.pain_points
+        for feedback_id in point.feedback_ids
+    }
+
+    assert "FB-001" in pain_point_ids
+    assert "FB-002" not in pain_point_ids
+
+    assert not any(
+        point.name == "Other / Unclassified - Review Required"
+        for point in result.pain_points
+    )
 
 
 def test_unknown_feedback_id_rejected():

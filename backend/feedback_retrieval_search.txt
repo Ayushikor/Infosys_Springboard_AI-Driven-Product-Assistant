@@ -1,0 +1,840 @@
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 158
+CODE: "feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 165
+CODE: if "mention_count" in item and "feedback_ids" in item:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 166
+CODE: item["mention_count"] = len(item["feedback_ids"])
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 194
+CODE: "feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 226
+CODE: "feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 238
+CODE: "feature_request_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 239
+CODE: "non_pain_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 240
+CODE: "uncertain_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 241
+CODE: "unclassified_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 274
+CODE: "feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 285
+CODE: item.get("unclustered_feedback_ids") or []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 302
+CODE: "unclustered_feedback_ids": _unique(unclustered),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 357
+CODE: merge_list_fields=("feedback_ids",),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 403
+CODE: trend.get("feedback_ids") or []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 673
+CODE: "feedback_ids": response.get(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 674
+CODE: "_feedback_ids", []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 776
+CODE: feedback_id = str(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 777
+CODE: record.get("feedback_id") or ""
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 780
+CODE: if not feedback_id:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 782
+CODE: f"Feedback record {index} is missing feedback_id."
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 785
+CODE: if feedback_id in seen_ids:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 787
+CODE: f"Duplicate feedback ID found: {feedback_id}"
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 790
+CODE: seen_ids.add(feedback_id)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 822
+CODE: response["_feedback_ids"] = [
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 823
+CODE: record["feedback_id"]
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 856
+CODE: "_feedback_ids": [
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 857
+CODE: record["feedback_id"]
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 970
+CODE: normalized["_feedback_ids"] = batch.get(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 971
+CODE: "_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\batch_orchestrator.py
+LINE: 972
+CODE: batch.get("feedback_ids", []),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1531
+CODE: feedback_ids=[
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1539
+CODE: "feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1743
+CODE: selected_feedback_ids: list[str],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1754
+CODE: "feedback_id", "feedbackId", "id", "_id",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1774
+CODE: feedback_id = _first_non_empty(record, id_keys)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1776
+CODE: if feedback_id is None or raw_text is None:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1779
+CODE: feedback_id = str(feedback_id).strip()
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1781
+CODE: if not feedback_id or not raw_text:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1785
+CODE: normalized_id = feedback_id.casefold()
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1787
+CODE: "feedback_id": feedback_id,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1794
+CODE: for value in selected_feedback_ids:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1795
+CODE: feedback_id = str(value).strip()
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1796
+CODE: normalized_id = feedback_id.casefold()
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1798
+CODE: normalized_ids.append(by_id[normalized_id]["feedback_id"])
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1809
+CODE: valid_feedback_ids: set[str],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1824
+CODE: feedback_ids = record.get("feedback_ids", [])
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1828
+CODE: if not isinstance(feedback_ids, list):
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1829
+CODE: feedback_ids = []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1833
+CODE: for value in feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1834
+CODE: if str(value).strip() in valid_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1841
+CODE: "feedback_ids": filtered_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1849
+CODE: valid_feedback_ids: set[str],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1880
+CODE: feedback_ids = record.get("feedback_ids", [])
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1882
+CODE: if not isinstance(feedback_ids, list):
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1883
+CODE: feedback_ids = []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1887
+CODE: for value in feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1888
+CODE: if str(value).strip() in valid_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 1896
+CODE: "feedback_ids": filtered_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2041
+CODE: raw_feature_feedback_ids = feature.get("feedback_ids", [])
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2042
+CODE: if not isinstance(raw_feature_feedback_ids, list):
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2043
+CODE: raw_feature_feedback_ids = []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2045
+CODE: feedback, valid_feature_feedback_ids = _normalize_feedback_for_prd(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2047
+CODE: raw_feature_feedback_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2054
+CODE: "selected_feedback_ids=%s | "
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2058
+CODE: raw_feature_feedback_ids[:15],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2064
+CODE: or record.get("feedback_id")
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2077
+CODE: "Check that its feedback_ids match the feedback collection IDs "
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2092
+CODE: "mention_count": len(valid_feature_feedback_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2093
+CODE: "feedback_ids": valid_feature_feedback_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2101
+CODE: valid_feedback_id_set = set(valid_feature_feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2110
+CODE: valid_feedback_id_set,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\chat_orchestrator.py
+LINE: 2114
+CODE: valid_feedback_id_set,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 131
+CODE: feedback_id = _required_text(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 133
+CODE: "feedback_id",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 167
+CODE: "feedback_id": feedback_id,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 168
+CODE: "id": feedback_id,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 227
+CODE: feedback_id = record["feedback_id"]
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 229
+CODE: existing = records_by_id.get(feedback_id)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 248
+CODE: feedback_id,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 255
+CODE: f"'{feedback_id}'."
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\dataset_loader.py
+LINE: 258
+CODE: records_by_id[feedback_id] = record
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 60
+CODE: feedback_ids: list[str] = Field(..., min_length=1)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 72
+CODE: unclustered_feedback_ids: list[str] = Field(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 239
+CODE: for feedback_id in set(cluster.feedback_ids):
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 242
+CODE: feedback_id,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 247
+CODE: raw_output.unclustered_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 252
+CODE: feedback_id
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 253
+CODE: for feedback_id, owners in cluster_owners.items()
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 273
+CODE: dict.fromkeys(cluster.feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 278
+CODE: feedback_id
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 279
+CODE: for feedback_id in unique_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 280
+CODE: if feedback_id not in ambiguous_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 292
+CODE: feedback_ids=retained_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 298
+CODE: raw_output.unclustered_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 321
+CODE: unclustered_feedback_ids=cleaned_unclustered,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 374
+CODE: item.feedback_id
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 382
+CODE: cluster.feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 386
+CODE: output.unclustered_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 636
+CODE: - feedback_ids: original IDs supporting the request.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 650
+CODE: 2. unclustered_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 657
+CODE: unclustered_feedback_ids.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 658
+CODE: - An ID in unclustered_feedback_ids must not appear in any cluster.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 661
+CODE: - Do not repeat an ID within unclustered_feedback_ids.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 665
+CODE: Use unclustered_feedback_ids when a record:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 689
+CODE: 6. Put all remaining candidate IDs in unclustered_feedback_ids.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 697
+CODE: "feature_clusters and unclustered_feedback_ids. "
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 745
+CODE: "feedback_id": item.feedback_id,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\feature_clustering_agent.py
+LINE: 830
+CODE: len(final_result.unclustered_feedback_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 143
+CODE: id=record["feedback_id"],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 229
+CODE: feedback_id
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 230
+CODE: for feedback_id in theme.feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 231
+CODE: if feedback_id in allowed_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 242
+CODE: "feedback_ids": relevant_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 263
+CODE: feedback_id
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 264
+CODE: for feedback_id in point.feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 265
+CODE: if feedback_id in allowed_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 277
+CODE: "feedback_ids": relevant_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 299
+CODE: "feedback_ids": point.feedback_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 337
+CODE: "feedback_ids": _get_value(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 339
+CODE: "feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 437
+CODE: feedback_id = record.get("feedback_id")
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 439
+CODE: if not feedback_id:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 441
+CODE: "A feedback record is missing feedback_id."
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 446
+CODE: f"Feedback record {feedback_id} is missing "
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 452
+CODE: f"Feedback record {feedback_id} is missing "
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 456
+CODE: feedback_by_id[feedback_id] = record
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 622
+CODE: "feature_request_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 628
+CODE: "uncertain_feedback_ids",
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 694
+CODE: set(pain_result.feature_request_feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 695
+CODE: | set(pain_result.uncertain_feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 714
+CODE: if record["feedback_id"] in candidate_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 718
+CODE: record["feedback_id"]
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 730
+CODE: "unclustered_feedback_ids": [],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 748
+CODE: feedback_id=record["feedback_id"],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 872
+CODE: "feedback_ids": theme.feedback_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 889
+CODE: if not theme["feedback_ids"]:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\orchestrator.py
+LINE: 896
+CODE: feedback_id=record["feedback_id"],
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 225
+CODE: pain_point.feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 229
+CODE: result.non_pain_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 233
+CODE: result.uncertain_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 259
+CODE: result.feature_request_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 292
+CODE: feedback_ids=review_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 295
+CODE: f"{feedback_id}: "
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 296
+CODE: f"{evidence_map.get(feedback_id) or 'Original feedback unavailable; manual review required.'}"
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 298
+CODE: for feedback_id in review_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 321
+CODE: result.uncertain_feedback_ids = review_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 331
+CODE: result.uncertain_feedback_ids = []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 436
+CODE: Add feedback IDs to non_pain_feedback_ids when the
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 447
+CODE: Add feedback IDs to uncertain_feedback_ids when:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 464
+CODE: Place their original IDs in feature_request_feedback_ids.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 488
+CODE: pain_points, non_pain_feedback_ids and uncertain_feedback_ids.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 545
+CODE: feedback_ids = {
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 650
+CODE: feedback_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 682
+CODE: extraction.uncertain_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 690
+CODE: non_pain_feedback_ids=(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 691
+CODE: extraction.non_pain_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 694
+CODE: uncertain_feedback_ids=uncertain_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 696
+CODE: unclassified_feedback_ids=uncertain_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 698
+CODE: feature_request_feedback_ids=(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 699
+CODE: extraction.feature_request_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 713
+CODE: len(final_result.feature_request_feedback_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\pain_point_agent.py
+LINE: 714
+CODE: len(final_result.uncertain_feedback_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 98
+CODE: selected_feedback_ids = set(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 99
+CODE: request.feature.feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 105
+CODE: if item.feedback_id in selected_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 111
+CODE: if selected_feedback_ids.intersection(theme.feedback_ids):
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 119
+CODE: if selected_feedback_ids.intersection(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 120
+CODE: pain_point.feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 426
+CODE: - source_feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 443
+CODE: Every source_feedback_id must match an ID from the supplied
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 550
+CODE: 10. Every functional requirement must include source_feedback_ids.
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\prd_generation_agent.py
+LINE: 707
+CODE: len(request.feature.feedback_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 79
+CODE: if len(theme.feedback_ids) != len(set(theme.feedback_ids)):
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 84
+CODE: assigned_ids.extend(theme.feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 117
+CODE: fallback_theme.feedback_ids.extend(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 133
+CODE: feedback_ids=sorted(missing_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 225
+CODE: feedback_ids = {
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 344
+CODE: feedback_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 364
+CODE: feedback_id
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 366
+CODE: for feedback_id in theme.feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 393
+CODE: feedback_ids: set[str] | None = None,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 398
+CODE: If feedback_ids are supplied, only include the overlapping
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 406
+CODE: set(feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 407
+CODE: if feedback_ids is not None
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 416
+CODE: feedback_id
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 417
+CODE: for feedback_id in theme.feedback_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 418
+CODE: if allowed_ids is None or feedback_id in allowed_ids
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\theme_extraction_agent.py
+LINE: 428
+CODE: "feedback_ids": relevant_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 336
+CODE: feedback_ids = list(
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 338
+CODE: item.get("feedback_ids") or []
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 342
+CODE: if not feedback_ids:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 346
+CODE: set(feedback_ids) - set(feedback_by_id)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 358
+CODE: for feedback_id in feedback_ids:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 360
+CODE: feedback = feedback_by_id[feedback_id]
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 394
+CODE: "total_mentions": len(feedback_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 395
+CODE: "feedback_ids": feedback_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 420
+CODE: item.feedback_id: item
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 425
+CODE: item.feedback_id: _normalize_datetime(item.timestamp)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 494
+CODE: "feedback_id": item.feedback_id,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 498
+CODE: normalized_timestamps[item.feedback_id].isoformat()
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 581
+CODE: item.feedback_id: item
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 604
+CODE: len(trend.feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 605
+CODE: != len(set(trend.feedback_ids))
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 613
+CODE: set(trend.feedback_ids)
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 623
+CODE: if trend.total_mentions != len(trend.feedback_ids):
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 631
+CODE: for feedback_id in trend.feedback_ids:
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 634
+CODE: feedback_by_id[feedback_id].timestamp
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 660
+CODE: total_mentions=len(trend.feedback_ids),
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 662
+CODE: feedback_ids=trend.feedback_ids,
+
+FILE: C:\Users\praju\OneDrive\Desktop\AI Product Assistant\Infosys_Springboard_AI-Driven-Product-Assistant\ai_module\app\services\trend_analysis_agent.py
+LINE: 818
+CODE: - feedback_ids
