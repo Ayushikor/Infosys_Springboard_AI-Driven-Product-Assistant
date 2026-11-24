@@ -47,6 +47,26 @@ export function ProtectedRoute({ children }) {
 // PUBLIC-ONLY ROUTE
 // ---------------------------------------------------------
 
+export function RoleGuard({ allowedRoles = [], children }) {
+  const { user, isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" role="status" aria-live="polite">
+        <p className="text-gray-500">Checking your permissions...</p>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (!allowedRoles.includes(user?.role)) return <Navigate to="/dashboard" replace />;
+  return children;
+}
+
+// ---------------------------------------------------------
+// PUBLIC-ONLY ROUTE
+// ---------------------------------------------------------
+
 export function PublicOnlyRoute({ children }) {
   const {
     isAuthenticated,
