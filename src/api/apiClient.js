@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import { apiConfig } from "./apiConfig";
 import { mockApi } from "./mockApi";
@@ -17,12 +16,7 @@ const http = axios.create({
 // REQUEST HANDLER
 // ---------------------------------------------------------
 
-const realRequest = async (
-  method,
-  url,
-  body,
-  requestConfig = {}
-) => {
+const realRequest = async (method, url, body, requestConfig = {}) => {
   try {
     const response = await http.request({
       method,
@@ -32,7 +26,6 @@ const realRequest = async (
     });
 
     return response.data;
-
   } catch (err) {
     const message = err.response
       ? err.response.data?.message ||
@@ -48,176 +41,82 @@ const realRequest = async (
 };
 
 // ---------------------------------------------------------
-// UNIMPLEMENTED ENDPOINT HANDLER
-// ---------------------------------------------------------
-
-const notImplemented = (name) => () =>
-  Promise.resolve({
-    success: false,
-    data: null,
-    message: `${name} is not implemented on the backend yet.`,
-  });
-
-// ---------------------------------------------------------
 // REAL API
 // ---------------------------------------------------------
 
 const realApi = {
-
-  // -------------------------------------------------------
-  // AUTHENTICATION
-  // -------------------------------------------------------
-
   auth: {
     login: (email, password) =>
-      realRequest("post", "/auth/login", {
-        email,
-        password,
-      }),
-
-    register: (payload) =>
-      realRequest("post", "/auth/register", payload),
-
-    logout: () =>
-      realRequest("post", "/auth/logout"),
-
-    currentUser: () =>
-      realRequest("get", "/auth/me"),
+      realRequest("post", "/auth/login", { email, password }),
+    register: (payload) => realRequest("post", "/auth/register", payload),
+    logout: () => realRequest("post", "/auth/logout"),
+    currentUser: () => realRequest("get", "/auth/me"),
   },
-
-  // -------------------------------------------------------
-  // APPLICATION STATE
-  // -------------------------------------------------------
 
   loadState: () =>
-  realRequest("get", "/state", undefined, { timeout: 30000 }),
-  // -------------------------------------------------------
-  // FEEDBACK
-  // -------------------------------------------------------
+    realRequest("get", "/state", undefined, { timeout: 30000 }),
 
   feedback: {
-
-    getAll: () =>
-      realRequest("get", "/feedback"),
-
-    create: (data) =>
-      realRequest("post", "/feedback", data),
-
+    getAll: () => realRequest("get", "/feedback"),
+    create: (data) => realRequest("post", "/feedback", data),
     update: (id, data) =>
-      realRequest("put", `/feedback/${id}`, data),
-
+      realRequest("put", `/feedback/${encodeURIComponent(id)}`, data),
     remove: (id) =>
-      realRequest("delete", `/feedback/${id}`),
-
-    getDatasets: () =>
-      realRequest("get", "/feedback/datasets"),
-
+      realRequest("delete", `/feedback/${encodeURIComponent(id)}`),
+    getDatasets: () => realRequest("get", "/feedback/datasets"),
     importMany: (rows, fileName = "Uploaded dataset") =>
-      realRequest("post", "/feedback/import", {
-        records: rows,
-        fileName,
-      }),
+      realRequest("post", "/feedback/import", { records: rows, fileName }),
   },
-
-  // -------------------------------------------------------
-  // WORKSPACES
-  // -------------------------------------------------------
 
   workspaces: {
-    getAll: () =>
-      realRequest("get", "/workspaces"),
-
-    create: (data) =>
-      realRequest("post", "/workspaces", data),
-
+    getAll: () => realRequest("get", "/workspaces"),
+    create: (data) => realRequest("post", "/workspaces", data),
     update: (id, data) =>
-      realRequest("put", `/workspaces/${id}`, data),
-
+      realRequest("put", `/workspaces/${encodeURIComponent(id)}`, data),
     switchTo: (id) =>
-      realRequest("post", `/workspaces/${id}/switch`),
+      realRequest("post", `/workspaces/${encodeURIComponent(id)}/switch`),
   },
 
-  // -------------------------------------------------------
-  // THEMES
-  // -------------------------------------------------------
-
   themes: {
-  getAll: () => realRequest("get", "/themes"),
+    getAll: () => realRequest("get", "/themes"),
     saveKeywords: (id, keywords) =>
-      realRequest("put", `/themes/${id}/keywords`, {
+      realRequest("put", `/themes/${encodeURIComponent(id)}/keywords`, {
         keywords,
       }),
   },
 
-  // -------------------------------------------------------
-  // FEATURE PRIORITIZATION
-  // -------------------------------------------------------
-
   prioritization: {
-    getAll: () =>
-      realRequest("get", "/features"),
-
-    create: (data) =>
-      realRequest("post", "/features", data),
-
+    getAll: () => realRequest("get", "/features"),
+    create: (data) => realRequest("post", "/features", data),
     update: (id, data) =>
-      realRequest("put", `/features/${id}`, data),
-
+      realRequest("put", `/features/${encodeURIComponent(id)}`, data),
     remove: (id) =>
-      realRequest("delete", `/features/${id}`),
+      realRequest("delete", `/features/${encodeURIComponent(id)}`),
   },
-
-  // -------------------------------------------------------
-  // PRODUCT REQUIREMENT DOCUMENTS
-  // -------------------------------------------------------
 
   prds: {
-    getAll: () =>
-      realRequest("get", "/prds"),
-
-    create: (data) =>
-      realRequest("post", "/prds", data),
-
+    getAll: () => realRequest("get", "/prds"),
+    create: (data) => realRequest("post", "/prds", data),
     update: (id, data) =>
-      realRequest("put", `/prds/${id}`, data),
-
+      realRequest("put", `/prds/${encodeURIComponent(id)}`, data),
     remove: (id) =>
-      realRequest("delete", `/prds/${id}`),
+      realRequest("delete", `/prds/${encodeURIComponent(id)}`),
   },
-
-  // -------------------------------------------------------
-  // ROADMAP
-  // -------------------------------------------------------
 
   roadmap: {
-    getAll: () =>
-      realRequest("get", "/roadmap"),
-
-    create: (data) =>
-      realRequest("post", "/roadmap", data),
-
+    getAll: () => realRequest("get", "/roadmap"),
+    create: (data) => realRequest("post", "/roadmap", data),
     update: (id, data) =>
-      realRequest("put", `/roadmap/${id}`, data),
-
+      realRequest("put", `/roadmap/${encodeURIComponent(id)}`, data),
     remove: (id) =>
-      realRequest("delete", `/roadmap/${id}`),
+      realRequest("delete", `/roadmap/${encodeURIComponent(id)}`),
   },
-
-  // -------------------------------------------------------
-  // DASHBOARD
-  // -------------------------------------------------------
 
   dashboard: {
-    getActivity: () =>
-      realRequest("get", "/activity"),
+    getActivity: () => realRequest("get", "/activity"),
   },
 
-  // -------------------------------------------------------
-  // AI ANALYSIS - FOUR AGENT PIPELINE
-  // -------------------------------------------------------
-
   analysis: {
-
     run: (workspaceId = null, importId = null) =>
       realRequest(
         "post",
@@ -226,40 +125,25 @@ const realApi = {
           ...(workspaceId !== null && workspaceId !== undefined
             ? { workspaceId }
             : {}),
-
           ...(importId !== null && importId !== undefined
             ? { importId }
             : {}),
         },
-        {
-          timeout: 330000,
-        }
+        { timeout: 330000 }
       ),
 
     getRuns: (workspaceId = null, limit = 20) =>
-      realRequest(
-        "get",
-        "/analysis/runs",
-        undefined,
-        {
-          params: {
-            ...(workspaceId ? { workspaceId } : {}),
-            limit,
-          },
-        }
-      ),
+      realRequest("get", "/analysis/runs", undefined, {
+        params: {
+          ...(workspaceId ? { workspaceId } : {}),
+          limit,
+        },
+      }),
 
     getLatest: (workspaceId = null) =>
-      realRequest(
-        "get",
-        "/analysis/runs/latest",
-        undefined,
-        {
-          params: workspaceId
-            ? { workspaceId }
-            : {},
-        }
-      ),
+      realRequest("get", "/analysis/runs/latest", undefined, {
+        params: workspaceId ? { workspaceId } : {},
+      }),
 
     getById: (runId) =>
       realRequest(
@@ -268,60 +152,52 @@ const realApi = {
       ),
   },
 
-  // -------------------------------------------------------
-  // USER PREFERENCES
-  // -------------------------------------------------------
-
   preferences: {
-    update: (data) =>
-      realRequest("put", "/preferences", data),
+    update: (data) => realRequest("put", "/preferences", data),
   },
 
   // -------------------------------------------------------
-  // AI PRODUCT ASSISTANT CHAT
+  // CHAT: conversations are individually addressed.
+  // Never call clear() to create a new conversation.
   // -------------------------------------------------------
 
   chat: {
-
-    // Send a message to the unified AI chatbot.
-    // Supports automatic intent detection and explicit
-    // agent selection through the request payload.
-
     sendMessage: (payload) =>
+      realRequest("post", "/chat", payload, { timeout: 130000 }),
+
+    getConversations: () =>
+      realRequest("get", "/chat/conversations"),
+
+    getConversation: (conversationId) =>
       realRequest(
-        "post",
-        "/chat",
-        payload,
-        {
-          timeout: 130000,
-        }
+        "get",
+        `/chat/conversations/${encodeURIComponent(conversationId)}`
       ),
 
-    // Retrieve saved conversation history.
+    saveConversation: (conversationId, payload) =>
+      realRequest(
+        "put",
+        `/chat/conversations/${encodeURIComponent(conversationId)}`,
+        payload,
+        { timeout: 30000 }
+      ),
 
-    getHistory: () =>
-      realRequest("get", "/chat"),
+    deleteConversation: (conversationId) =>
+      realRequest(
+        "delete",
+        `/chat/conversations/${encodeURIComponent(conversationId)}`
+      ),
 
-    // Save conversation history.
-
+    // Legacy endpoints retained for migration/compatibility only.
+    getHistory: () => realRequest("get", "/chat"),
     saveHistory: (messages) =>
-      realRequest("put", "/chat", {
-        messages,
-      }),
+      realRequest("put", "/chat", { messages }),
 
-    // Clear conversation history.
-
-    clear: () =>
-      realRequest("delete", "/chat"),
+    // WARNING: this deletes all chat history for the authenticated user.
+    // It is not used by New Chat.
+    clear: () => realRequest("delete", "/chat"),
   },
 };
 
-// ---------------------------------------------------------
-// EXPORT
-// ---------------------------------------------------------
-
-export const apiClient = apiConfig.isMock
-  ? mockApi
-  : realApi;
-
+export const apiClient = apiConfig.isMock ? mockApi : realApi;
 export const isMockMode = apiConfig.isMock;

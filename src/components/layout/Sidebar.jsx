@@ -14,7 +14,7 @@ export const NAV_ITEMS = [
   { to: '/prioritization', label: 'Prioritization', icon: ListOrdered },
   { to: '/prd', label: 'PRD Viewer', icon: FileText },
   { to: '/roadmap', label: 'Roadmap', icon: Map },
-  { to: '/chat', label: 'AI Copilot Chat', icon: Bot },
+  { to: '/chat', label: 'ChatBot', icon: Bot },
   { to: '/settings', label: 'Settings', icon: Settings },
 ];
 
