@@ -35,10 +35,12 @@ if PROJECT_ROOT not in sys.path:
 # ---------------------------------------------------------
 
 from config import Config
+from role_permissions import RoleAccessMiddleware
 from db import init_db, get_client, get_db, close_client
 from database import create_indexes
 
 from routes.auth_routes import router as auth_router
+from routes.admin_routes import router as admin_router
 from routes.state_routes import router as state_router
 from routes.feedback_routes import router as feedback_router
 from routes.workspace_routes import router as workspace_router
@@ -149,8 +151,11 @@ def create_app(test_config=None):
 
     # -----------------------------------------------------
     # SESSION MIDDLEWARE
+    # SessionMiddleware must wrap RoleAccessMiddleware so the latter can
+    # inspect the authenticated session before dispatching API writes.
     # -----------------------------------------------------
 
+    application.add_middleware(RoleAccessMiddleware)
     application.add_middleware(
         SessionMiddleware,
         secret_key=settings["SECRET_KEY"],
@@ -163,6 +168,7 @@ def create_app(test_config=None):
     # -----------------------------------------------------
 
     application.include_router(auth_router)
+    application.include_router(admin_router)
     application.include_router(state_router)
     application.include_router(feedback_router)
     application.include_router(workspace_router)

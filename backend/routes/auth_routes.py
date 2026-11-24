@@ -1,3 +1,4 @@
+
 """Authentication routes using FastAPI and session-based authentication."""
 
 import re
@@ -8,8 +9,21 @@ from fastapi.responses import JSONResponse
 
 from db import get_db
 from helpers import ok, fail, generate_id, now_iso
+from role_permissions import normalize_role
+
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
+
+
+# Users can select a professional designation during public registration.
+# System access roles are assigned separately by an administrator.
+ALLOWED_DESIGNATIONS = {
+    "Product Manager",
+    "Associate Product Manager",
+    "Senior Product Manager",
+    "Product Lead",
+    "Head of Product",
+}
 
 
 def _error_response(message, data=None, status_code=400):
@@ -25,7 +39,9 @@ def _sanitize_user(doc):
         "username": doc["username"],
         "email": doc["email"],
         "name": doc["name"],
-        "role": doc.get("role", "Product Manager"),
+        "role": normalize_role(doc.get("role")),
+        "designation": doc.get("designation", "Product Manager"),
+        "isActive": doc.get("isActive", True),
         "createdAt": doc.get("createdAt", ""),
     }
 
@@ -245,6 +261,12 @@ def login(
             "No account found with that email. Please register first."
         )
 
+    if user.get("isActive", True) is False:
+        return _error_response(
+            "This account has been deactivated. Contact an administrator.",
+            status_code=403,
+        )
+
     password_hash = user.get("passwordHash", "")
 
     try:
@@ -258,6 +280,7 @@ def login(
     if not password_matches:
         return _error_response("Incorrect password.")
 
+    request.session.clear()
     request.session["user_id"] = user["id"]
 
     return ok(
@@ -279,15 +302,22 @@ def register(
     email = body.get("email") or ""
     password = body.get("password") or ""
     confirm = body.get("confirmPassword") or ""
-    role = body.get("role") or "Product Manager"
+    designation = body.get("designation") or ""
+
+    # Public registration never accepts a system role from the client.
+    # Every public registration receives the Product Manager role.
+    # Administrators can assign elevated roles through the protected API.
+    role = "Product Manager"
 
     errors = {}
 
+    # Validate name
     if not isinstance(name, str) or len(name.strip()) < 2:
         errors["name"] = "Full name must be at least 2 characters."
     else:
         name = name.strip()
 
+    # Validate username
     if not isinstance(username, str):
         username = ""
 
@@ -298,6 +328,7 @@ def register(
             "Username: 3-20 letters, numbers or underscores."
         )
 
+    # Validate email
     if not isinstance(email, str):
         email = ""
 
@@ -306,6 +337,18 @@ def register(
     if not _validate_email(email):
         errors["email"] = "Enter a valid email address."
 
+    # Validate professional designation
+    if not isinstance(designation, str):
+        designation = ""
+
+    designation = designation.strip()
+
+    if designation not in ALLOWED_DESIGNATIONS:
+        errors["designation"] = (
+            "Please select a valid professional designation."
+        )
+
+    # Validate password
     if not isinstance(password, str):
         password = ""
 
@@ -328,12 +371,14 @@ def register(
 
     users = get_db()["users"]
 
+    # Check duplicate email
     if users.find_one({"email": email}):
         return _error_response(
             "Email already registered.",
             {"errors": {"email": "This email is already registered."}},
         )
 
+    # Check duplicate username, case-insensitively
     existing_username = users.find_one(
         {
             "username": {
@@ -349,6 +394,7 @@ def register(
             {"errors": {"username": "This username is taken."}},
         )
 
+    # Hash password
     hashed_password = bcrypt.hashpw(
         password.encode("utf-8"),
         bcrypt.gensalt(),
@@ -356,18 +402,22 @@ def register(
 
     user_id = generate_id("usr-")
 
+    # Create MongoDB user document
     user_doc = {
         "id": user_id,
         "username": username,
         "email": email,
         "name": name,
-        "role": role if isinstance(role, str) else "Product Manager",
+        "role": role,
+        "designation": designation,
+        "isActive": True,
         "createdAt": now_iso(),
         "passwordHash": hashed_password,
     }
 
     users.insert_one(user_doc)
 
+    # Create the user's default workspace, preferences and themes
     _seed_empty_user_data(user_id, name)
 
     return ok(
@@ -396,9 +446,11 @@ def current_user(request: Request):
             status_code=401,
         )
 
-    user = get_db()["users"].find_one({
-        "id": uid,
-    })
+    user = get_db()["users"].find_one(
+        {
+            "id": uid,
+        }
+    )
 
     if not user:
         request.session.pop("user_id", None)

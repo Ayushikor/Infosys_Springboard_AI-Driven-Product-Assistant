@@ -1,4 +1,3 @@
-
 """AI analysis execution and retrieval routes."""
 
 from fastapi import APIRouter, Request, Body, Query
@@ -128,11 +127,9 @@ def run_analysis(
     """
     Execute AI analysis.
 
-    When importId is provided, only feedback records belonging
-    to that uploaded dataset are analysed.
-
-    When importId is omitted, the legacy workspace-based
-    analysis behaviour is retained.
+    A request may select one imported dataset by importId or one
+    historical dataset by datasetName. Omitting both preserves the
+    existing workspace-based analysis behaviour.
     """
 
     uid = _user_id(request)
@@ -146,41 +143,52 @@ def run_analysis(
     body = body or {}
 
     # -----------------------------------------------------
-    # 1. VALIDATE THE SELECTED IMPORT ID
+    # 1. VALIDATE SELECTED DATASET AND OWNERSHIP
     # -----------------------------------------------------
-
     import_id = body.get("importId")
+    dataset_name = body.get("datasetName")
 
-    if import_id is not None:
-
-        if not isinstance(import_id, str):
-            return _error_response(
-                "Invalid import ID.",
-                400,
-            )
-
-        import_id = import_id.strip()
-
-        if not import_id:
-            return _error_response(
-                "Import ID cannot be empty.",
-                400,
-            )
-
-        # Verify dataset ownership before starting analysis.
-        dataset = get_db()["feedback"].find_one(
-            {
-                "userId": uid,
-                "import_id": import_id,
-            },
-            {
-                "_id": 1,
-            },
+    if import_id is not None and dataset_name is not None:
+        return _error_response(
+            "Select either an uploaded or historical dataset, not both.",
+            400,
         )
 
-        if not dataset:
+    if import_id is not None:
+        if not isinstance(import_id, str) or not import_id.strip():
+            return _error_response("Invalid import ID.", 400)
+        import_id = import_id.strip()
+
+        owned_dataset = get_db()["feedback"].find_one(
+            {"userId": uid, "import_id": import_id},
+            {"_id": 1},
+        )
+        if not owned_dataset:
             return _error_response(
                 "Uploaded dataset not found or does not belong to you.",
+                404,
+            )
+
+    if dataset_name is not None:
+        if not isinstance(dataset_name, str) or not dataset_name.strip():
+            return _error_response("Invalid historical dataset name.", 400)
+        dataset_name = dataset_name.strip()
+
+        owned_dataset = get_db()["feedback"].find_one(
+            {
+                "userId": uid,
+                "dataset": dataset_name,
+                "$or": [
+                    {"import_id": {"$exists": False}},
+                    {"import_id": None},
+                    {"import_id": ""},
+                ],
+            },
+            {"_id": 1},
+        )
+        if not owned_dataset:
+            return _error_response(
+                "Historical dataset not found or does not belong to you.",
                 404,
             )
 
@@ -208,6 +216,7 @@ def run_analysis(
             user_id=uid,
             workspace_id=workspace_id,
             import_id=import_id,
+            dataset_name=dataset_name,
         )
 
         message = (
