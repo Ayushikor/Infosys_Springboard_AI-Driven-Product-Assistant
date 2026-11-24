@@ -18,6 +18,7 @@ const PRDViewer = lazy(() => import('./pages/PRDViewer'));
 const Roadmap = lazy(() => import('./pages/Roadmap'));
 const Chat = lazy(() => import('./pages/Chat'));
 const Settings = lazy(() => import('./pages/Settings'));
+const StrategyReport = lazy(() => import('./pages/StrategyReport'));
 
 const Loader = () => (
   <div className="flex h-64 items-center justify-center">
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/prioritization" element={<Prioritization />} />
           <Route path="/prd" element={<PRDViewer />} />
           <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/strategy-report" element={<StrategyReport />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/settings" element={<Settings />} />
         </Route>

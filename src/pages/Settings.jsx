@@ -60,7 +60,7 @@ export default function Settings() {
       <section className="card p-6">
         <div className="flex items-center gap-2 text-sm font-semibold"><Info size={15} />Application information</div>
         <dl className="mt-4 space-y-2 text-sm">
-          <div className="flex justify-between"><dt className="text-navy-500">Application</dt><dd>AI Product Manager Copilot</dd></div>
+          <div className="flex justify-between"><dt className="text-navy-500">Application</dt><dd>Stratov</dd></div>
           <div className="flex justify-between"><dt className="text-navy-500">Version</dt><dd>1.0.0</dd></div>
           <div className="flex justify-between"><dt className="text-navy-500">Storage</dt><dd>Browser LocalStorage</dd></div>
           <div className="flex justify-between"><dt className="text-navy-500">Current API mode</dt><dd><span className={`rounded-full px-2 py-0.5 text-xs font-medium ${isMockMode ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}`}>{apiConfig.mode.toUpperCase()}</span></dd></div>

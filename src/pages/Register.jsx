@@ -54,7 +54,7 @@ export default function Register() {
       <div className="w-full max-w-md">
         <div className="mb-6 flex items-center gap-2">
           <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500 text-white"><Sparkles size={18} /></div>
-          <span className="font-semibold">AI Product Manager Copilot</span>
+          <span className="font-semibold">Stratov</span>
         </div>
 
         <div className="card p-6 sm:p-8">
