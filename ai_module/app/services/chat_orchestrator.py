@@ -2276,140 +2276,65 @@ def _generate_prd(
 
 # =========================================================
 
-def _generate_user_stories(
-
-    request: ChatRequest,
-
-) -> ChatResponse:
-
-    """Execute the User Story and Acceptance Criteria Agent."""
-
+def _generate_user_stories(request: ChatRequest) -> ChatResponse:
+    """Generate stories, merge them into the PRD artifact, and return the full PRD."""
     generated_artifacts = _get_value(request, "generated_artifacts", {}) or {}
     stored_prd = _get_value(generated_artifacts, "prd")
-
     if not stored_prd:
-
         return build_chat_response(
-
             product_name=request.product_name,
-
             user_message=request.message,
-
-            assistant_message=(
-
-                "I need a generated PRD before creating user stories. "
-
-                "Generate a PRD first, then I can derive user stories "
-
-                "and Given-When-Then acceptance criteria from it."
-
-            ),
-
+            assistant_message=("I need a generated PRD before creating user stories. Generate a PRD first, then I can derive user stories and Given-When-Then acceptance criteria from it."),
             intent=ChatIntent.USER_STORY_GENERATION,
-
             agent_used=ProductAgent.USER_STORY_GENERATION,
-
             conversation_id=_get_conversation_id(request),
-
             requires_more_information=True,
-
             suggested_next_action="Generate the PRD first.",
-
         )
-
     try:
-
-        # PRDGenerationResult wraps the actual PRD document under `document`.
-        # Validate the document itself, not the result metadata envelope.
-        prd_data = _extract_prd_document(stored_prd)
-
+        prd_envelope = _serialize(stored_prd)
+        prd_data = _extract_prd_document(prd_envelope)
         prd = PRDGenerationOutput.model_validate(prd_data)
+        story_request = UserStoryGenerationRequest(product_name=request.product_name, prd=prd)
+        story_result = user_story_agent.generate_user_stories(story_request)
+        story_artifact = _serialize(story_result)
 
-        story_request = UserStoryGenerationRequest(
-
-            product_name=request.product_name,
-
-            prd=prd,
-
+        # Preserve outer metadata and the core document. The backend route
+        # publishes this merged artifact to the PRD Viewer and stores stories
+        # separately for subsequent chat turns.
+        merged_artifact = dict(prd_envelope) if isinstance(prd_envelope, dict) else {}
+        merged_artifact["document"] = prd.model_dump(mode="json")
+        merged_artifact["user_stories"] = story_artifact.get("user_stories", [])
+        merged_artifact["story_generation_notes"] = story_artifact.get("generation_notes", [])
+        merged_artifact["total_user_stories"] = story_artifact.get("total_user_stories", len(merged_artifact["user_stories"]))
+        merged_artifact["total_acceptance_criteria"] = story_artifact.get(
+            "total_acceptance_criteria",
+            sum(len(item.get("acceptance_criteria", [])) for item in merged_artifact["user_stories"]),
         )
-
-        result = user_story_agent.generate_user_stories(
-
-            story_request
-
-        )
-
-        artifact = _serialize(result)
 
         return build_chat_response(
-
             product_name=request.product_name,
-
             user_message=request.message,
-
             assistant_message=(
-
-                "User stories and acceptance criteria have been "
-
-                "generated from the PRD. Each story includes its "
-
-                "description, acceptance criteria, priority, and "
-
-                "requirement references."
-
+                f"Generated {merged_artifact['total_user_stories']} user stories and "
+                f"{merged_artifact['total_acceptance_criteria']} Given-When-Then acceptance criteria. "
+                "They have been merged into the PRD, with each story linked to its functional requirements and supporting feedback."
             ),
-
             intent=ChatIntent.USER_STORY_GENERATION,
-
             agent_used=ProductAgent.USER_STORY_GENERATION,
-
             conversation_id=_get_conversation_id(request),
-
-            agent_execution=[
-
-                AgentExecution(
-
-                    agent=ProductAgent.USER_STORY_GENERATION,
-
-                    status=AgentExecutionStatus.COMPLETED,
-
-                    description=(
-
-                        "Generated user stories and acceptance criteria "
-
-                        "from the supplied PRD."
-
-                    ),
-
-                )
-
-            ],
-
-            artifact_type="user_stories",
-
-            artifact=artifact,
-
-            suggested_next_action=(
-
-                "Prioritize the feature set to help plan the roadmap."
-
-            ),
-
+            agent_execution=[AgentExecution(
+                agent=ProductAgent.USER_STORY_GENERATION,
+                status=AgentExecutionStatus.COMPLETED,
+                description="Generated and validated user stories, acceptance criteria, and feedback traceability.",
+            )],
+            artifact_type="prd",
+            artifact=merged_artifact,
+            suggested_next_action="Review the updated PRD and prioritize the feature set for roadmap planning.",
         )
-
     except Exception as exc:
-
-        logger.exception(
-
-            "User story generation through chat failed."
-
-        )
-
-        raise ChatOrchestrationError(
-
-            "User stories could not be generated."
-
-        ) from exc
+        logger.exception("User story generation through chat failed.")
+        raise ChatOrchestrationError("User stories could not be generated or merged into the PRD.") from exc
 
 # =========================================================
 

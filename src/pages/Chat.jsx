@@ -1,5 +1,3 @@
-
-
 import { useEffect, useRef, useState } from 'react';
 
 import {
@@ -63,110 +61,198 @@ const getArray = (...values) => {
 };
 
 const unwrapArtifact = (artifact) => {
+
   if (!artifact || typeof artifact !== 'object') return artifact;
 
   // Support common API wrappers without changing the actual PRD payload.
+
   if (artifact.artifact && typeof artifact.artifact === 'object') {
+
     return artifact.artifact;
+
   }
+
   if (
+
     artifact.data &&
+
     typeof artifact.data === 'object' &&
+
     !Array.isArray(artifact.data)
+
   ) {
+
     const data = artifact.data;
+
     if (
+
       data.functional_requirements ||
+
       data.requirements ||
+
       data.problem_statement ||
+
       data.prd
+
     ) {
+
       return data.prd && typeof data.prd === 'object' ? data.prd : data;
+
     }
+
   }
+
   if (artifact.prd && typeof artifact.prd === 'object') {
+
     return artifact.prd;
+
   }
+
   return artifact;
+
 };
 
 const getLatestArtifacts = (messages = []) => {
+
   const artifacts = {
+
     prd: null,
+
     user_stories: null,
+
     feature_prioritization: null,
+
   };
 
   messages.forEach((message) => {
+
     if (!message) return;
 
     const artifact = unwrapArtifact(
+
       message.artifact ??
+
       message.generatedArtifact ??
+
       message.generated_artifact
+
     );
 
     const type = String(
+
       message.artifactType ??
+
       message.artifact_type ??
+
       message.type ??
+
       ''
+
     ).toLowerCase();
 
     if (!artifact) return;
 
     if (
+
       type.includes('prd') ||
+
       (!type && (
+
         artifact.functional_requirements ||
+
         artifact.problem_statement
+
       ))
+
     ) {
+
       artifacts.prd = artifact;
+
     } else if (
+
       type.includes('user_story') ||
+
       type.includes('user-stor') ||
+
       type.includes('user stor')
+
     ) {
+
       artifacts.user_stories = artifact;
+
     } else if (type.includes('priorit')) {
+
       artifacts.feature_prioritization = artifact;
+
     }
+
   });
 
   return artifacts;
+
 };
 
-const normalizeSavedMessage = (message, index) => {
+const normalizeSavedMessages = (message, index) => {
+  const baseId = message?.id ?? message?._id ?? `saved-${index}`;
+  const at =
+    message?.at ??
+    message?.generated_at ??
+    message?.created_at ??
+    new Date().toISOString();
+  const conversationId =
+    message?.conversationId ?? message?.conversation_id ?? null;
   const artifactType =
     message?.artifactType ??
     message?.artifact_type ??
     message?.artifact_type_name ??
     null;
+  const artifact = unwrapArtifact(
+    message?.artifact ??
+    message?.generatedArtifact ??
+    message?.generated_artifact
+  );
+  const agentUsed = message?.agentUsed ?? message?.agent_used ?? null;
+  const common = { at, conversationId };
 
-  return {
+  // Older records sometimes store the user's prompt and AI reply together.
+  // Expand them into two messages so neither side disappears in the UI.
+  if (message?.user_message || message?.assistant_message) {
+    const normalized = [];
+
+    if (message.user_message) {
+      normalized.push({
+        ...common,
+        id: `${baseId}-user`,
+        role: 'user',
+        text: String(message.user_message),
+      });
+    }
+
+    if (message.assistant_message) {
+      normalized.push({
+        ...common,
+        id: `${baseId}-assistant`,
+        role: 'assistant',
+        text: String(message.assistant_message),
+        artifactType,
+        artifact,
+        agentUsed,
+      });
+    }
+
+    return normalized;
+  }
+
+  return [{
     ...message,
-    id: message?.id ?? message?._id ?? `saved-${index}`,
+    ...common,
+    id: baseId,
     role: message?.role ?? 'assistant',
-    text:
-      message?.text ??
-      message?.content ??
-      message?.assistant_message ??
-      message?.user_message ??
-      '',
-    at:
-      message?.at ??
-      message?.generated_at ??
-      message?.created_at ??
-      new Date().toISOString(),
+    text: String(message?.text ?? message?.content ?? ''),
     artifactType,
-    artifact: unwrapArtifact(
-      message?.artifact ??
-      message?.generatedArtifact ??
-      message?.generated_artifact
-    ),
-    agentUsed: message?.agentUsed ?? message?.agent_used ?? null,
-  };
+    artifact,
+    agentUsed,
+  }];
 };
 
 // ---------------------------------------------------------
@@ -175,11 +261,57 @@ const normalizeSavedMessage = (message, index) => {
 
 // ---------------------------------------------------------
 
+
+const buildLegacyConversationSummaries = (messages = []) => {
+  const groups = new Map();
+
+  messages.forEach((rawMessage, index) => {
+    const normalizedMessages = normalizeSavedMessages(rawMessage, index);
+    normalizedMessages.forEach((message) => {
+      const conversationId =
+        message.conversationId ||
+        message.conversation_id ||
+        'legacy-conversation';
+
+      message.conversationId = conversationId;
+      if (!groups.has(conversationId)) groups.set(conversationId, []);
+      groups.get(conversationId).push(message);
+    });
+  });
+
+  return Array.from(groups.entries())
+    .map(([conversationId, items]) => {
+      const firstUserMessage = items.find((item) => item.role === 'user');
+      const latest = items[items.length - 1];
+      const title = (firstUserMessage?.text || 'Saved conversation')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 72);
+
+      return {
+        conversationId,
+        title: title || 'Saved conversation',
+        createdAt: items[0]?.at || new Date().toISOString(),
+        updatedAt: latest?.at || items[0]?.at || new Date().toISOString(),
+        messageCount: items.length,
+        preview: latest?.text || '',
+        messages: items,
+      };
+    })
+    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+};
+
 export default function Chat() {
 
   const { raw, derived, analysis, refresh } = useAppData();
 
   const [messages, setMessages] = useState([WELCOME]);
+
+  const [conversations, setConversations] = useState([]);
+
+  const [activeConversationTitle, setActiveConversationTitle] = useState('New chat');
+
+  const [historyLoading, setHistoryLoading] = useState(true);
 
   const [input, setInput] = useState('');
 
@@ -196,80 +328,125 @@ export default function Chat() {
   );
 
   // -------------------------------------------------------
-
-  // RESTORE SAVED CONVERSATION
-
+  // RESTORE CONVERSATION LIST AND MOST RECENT CHAT
   // -------------------------------------------------------
 
-  useEffect(() => {
+  const unwrapResponseData = (response) =>
+    response?.data?.data ?? response?.data ?? [];
 
+  const loadConversations = async () => {
+    if (typeof apiClient.chat.getConversations !== 'function') return [];
+    const response = await apiClient.chat.getConversations();
+    if (!response?.success) {
+      throw new Error(response?.message || 'Could not load chat history.');
+    }
+    const data = unwrapResponseData(response);
+    const items = Array.isArray(data) ? data : data?.items || data?.conversations || [];
+    setConversations(items);
+    return items;
+  };
+
+  const selectConversation = async (conversation) => {
+    if (!conversation?.conversationId || thinking) return;
+    setError('');
+    setHistoryLoading(true);
+    try {
+      let savedMessages = Array.isArray(conversation.messages)
+        ? conversation.messages
+        : null;
+
+      if (!savedMessages) {
+        const response = await apiClient.chat.getConversation(conversation.conversationId);
+        if (!response?.success) {
+          throw new Error(response?.message || 'Could not open conversation.');
+        }
+        const data = unwrapResponseData(response);
+        savedMessages = Array.isArray(data)
+          ? data
+          : data?.messages || data?.conversation?.messages || [];
+      }
+
+      // A legacy DB record can contain both user_message and assistant_message.
+      // flatMap restores both as separate chat bubbles.
+      const restored = savedMessages.flatMap(normalizeSavedMessages);
+      conversationIdRef.current = conversation.conversationId;
+      setActiveConversationTitle(conversation.title || 'New chat');
+      setMessages([WELCOME, ...restored]);
+    } catch (loadError) {
+      setError(loadError.message || 'Could not open this conversation.');
+    } finally {
+      setHistoryLoading(false);
+    }
+  };
+
+  useEffect(() => {
     let active = true;
 
     const restoreHistory = async () => {
+      setHistoryLoading(true);
+      setError('');
+
+      let listedConversations = [];
 
       try {
-
-        const response = await apiClient.chat.getHistory();
-
-        if (!active || !response?.success) {
-
-          return;
-
-        }
-
-        // The backend may return either a direct payload or a wrapped payload.
-        const historyData = response.data?.data ?? response.data;
-        const savedMessages = Array.isArray(historyData)
-          ? historyData
-          : Array.isArray(historyData?.messages)
-            ? historyData.messages
-            : Array.isArray(historyData?.items)
-              ? historyData.items
-              : [];
-
-        if (savedMessages.length > 0) {
-          const restored = savedMessages.map(normalizeSavedMessage);
-          const lastMessage = restored[restored.length - 1];
-
-          // Restore the same backend conversation so its saved PRD artifacts
-          // remain available after a page refresh.
-          const restoredConversationId =
-            lastMessage?.conversationId ??
-            lastMessage?.conversation_id;
-
-          if (restoredConversationId) {
-            conversationIdRef.current = restoredConversationId;
-          }
-
-          setMessages([WELCOME, ...restored]);
-        }
-      } catch (err) {
-
-        console.error(
-
-          'Could not restore chat history:',
-
-          err
-
-        );
-
+        listedConversations = await loadConversations();
+      } catch (listError) {
+        // Older deployments may not expose the conversation index endpoint.
+        console.warn('Conversation index unavailable; checking legacy history:', listError);
       }
 
+      if (!active) return;
+
+      if (listedConversations.length > 0) {
+        await selectConversation(listedConversations[0]);
+        return;
+      }
+
+      try {
+        const legacy = await apiClient.chat.getHistory();
+        if (!legacy?.success) {
+          throw new Error(legacy?.message || 'Could not load saved messages.');
+        }
+
+        const legacyData = unwrapResponseData(legacy);
+        const savedMessages = Array.isArray(legacyData)
+          ? legacyData
+          : legacyData?.messages || legacyData?.items || [];
+
+        if (!active) return;
+
+        if (savedMessages.length > 0) {
+          const summaries = buildLegacyConversationSummaries(savedMessages);
+          setConversations(summaries);
+
+          const latestConversation = summaries[0];
+          if (latestConversation) {
+            conversationIdRef.current = latestConversation.conversationId;
+            setActiveConversationTitle(latestConversation.title);
+            setMessages([WELCOME, ...latestConversation.messages]);
+          }
+        } else {
+          setConversations([]);
+          setMessages([WELCOME]);
+        }
+      } catch (legacyError) {
+        console.error('Could not restore chat history:', legacyError);
+        if (active) {
+          setError(legacyError.message || 'Could not load chat history.');
+        }
+      } finally {
+        if (active) setHistoryLoading(false);
+      }
     };
 
     restoreHistory();
 
     return () => {
-
       active = false;
-
     };
-
   }, []);
 
-  // -------------------------------------------------------
-
-  // AUTO SCROLL
+    // AUTO SCROLL
 
   // -------------------------------------------------------
 
@@ -290,31 +467,45 @@ export default function Chat() {
   // -------------------------------------------------------
 
   const persist = async (nextMessages) => {
+    const saveable = nextMessages
+      .filter((message) => message.id !== 'welcome')
+      .map((message) => ({
+        ...message,
+        conversationId: conversationIdRef.current,
+      }));
 
-    const saveable = nextMessages.filter(
+    const firstUserMessage = saveable.find((message) => message.role === 'user');
+    const title = activeConversationTitle === 'New chat'
+      ? (firstUserMessage?.text || 'New chat').trim().slice(0, 72)
+      : activeConversationTitle;
 
-      (message) => message.id !== 'welcome'
+    const response = typeof apiClient.chat.saveConversation === 'function'
+      ? await apiClient.chat.saveConversation(
+          conversationIdRef.current,
+          { title, messages: saveable }
+        )
+      : await apiClient.chat.saveHistory(saveable);
 
-    );
-
-    const response = await apiClient.chat.saveHistory(
-
-      saveable
-
-    );
-
-    if (response && response.success === false) {
-
-      console.error(
-
-        'Could not save chat history:',
-
-        response.message
-
-      );
-
+    if (response?.success === false) {
+      console.error('Could not save chat history:', response.message);
+      setError(response.message || 'Your conversation could not be saved.');
+      return false;
     }
 
+    setActiveConversationTitle(title);
+    setConversations((current) => {
+      const existing = current.filter(
+        (item) => item.conversationId !== conversationIdRef.current
+      );
+      return [{
+        conversationId: conversationIdRef.current,
+        title,
+        updatedAt: new Date().toISOString(),
+        messageCount: saveable.length,
+        preview: saveable[saveable.length - 1]?.text || '',
+      }, ...existing];
+    });
+    return true;
   };
 
   // ---------------------------------------------------------
@@ -464,9 +655,13 @@ const buildAIRequest = (message, conversationMessages) => {
     },
 
     generated_artifacts: {
+
       prd: generatedArtifacts.prd,
+
       user_stories: generatedArtifacts.user_stories,
+
       feature_prioritization: generatedArtifacts.feature_prioritization,
+
     },
 
   };
@@ -590,11 +785,17 @@ const buildAIRequest = (message, conversationMessages) => {
         const aiData = response.data;
 
         // The backend may assign/normalize the conversation ID. Keep it
+
         // for all following turns and persist it with the chat messages.
+
         if (aiData.conversation_id || aiData.conversationId) {
+
           conversationIdRef.current =
+
             aiData.conversation_id || aiData.conversationId;
+
           userMsg.conversationId = conversationIdRef.current;
+
         }
 
         const assistantText =
@@ -622,16 +823,25 @@ const buildAIRequest = (message, conversationMessages) => {
           // Preserve generated artifacts for later turns.
 
           artifactType:
+
             aiData.artifact_type ??
+
             aiData.artifactType ??
+
             aiData.generated_artifact_type ??
+
             null,
 
           artifact: unwrapArtifact(
+
             aiData.artifact ??
+
             aiData.generated_artifact ??
+
             aiData.result?.artifact ??
+
             null
+
           ),
 
           agentUsed: aiData.agent_used || null,
@@ -642,6 +852,7 @@ const buildAIRequest = (message, conversationMessages) => {
 
       }
 
+      reply.conversationId = conversationIdRef.current;
       const finalMessages = [...withUser, reply];
 
       setMessages(finalMessages);
@@ -696,27 +907,51 @@ const buildAIRequest = (message, conversationMessages) => {
 
   // -------------------------------------------------------
 
-  const newConversation = async () => {
-
+  const newConversation = () => {
     if (thinking) return;
-
+    conversationIdRef.current = `conversation-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    setActiveConversationTitle('New chat');
     setMessages([WELCOME]);
-
     setInput('');
-
     setError('');
-
-    conversationIdRef.current =
-
-      `conversation-${Date.now()}`;
-
-    await apiClient.chat.clear();
-
-    await refresh();
-
   };
 
-  // -------------------------------------------------------
+  const deleteConversation = async (conversationId) => {
+    if (thinking || !conversationId) return;
+
+    const confirmed = window.confirm('Delete this conversation permanently?');
+    if (!confirmed) return;
+
+    try {
+      const response = await apiClient.chat.deleteConversation(conversationId);
+
+      if (!response?.success) {
+        setError(response?.message || 'Could not delete this conversation.');
+        return;
+      }
+
+      // Remove only the selected conversation. Do not reload the whole index here.
+      setConversations((current) =>
+        current.filter((item) => item.conversationId !== conversationId)
+      );
+
+      // If the deleted conversation was open, reset only the chat view.
+      if (conversationIdRef.current === conversationId) {
+        conversationIdRef.current = `conversation-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        setActiveConversationTitle('New chat');
+        setMessages([WELCOME]);
+        setInput('');
+        setError('');
+      }
+    } catch (err) {
+      console.error('Delete conversation failed:', err);
+      setError(
+        err.response?.data?.message ||
+        err.message ||
+        'Could not delete this conversation.'
+      );
+    }
+  };
 
   // UI
 
@@ -724,89 +959,106 @@ const buildAIRequest = (message, conversationMessages) => {
 
   return (
 
-    <div className="grid h-[calc(100vh-10rem)] gap-4 lg:grid-cols-[260px_1fr]">
+    <div className="grid h-[calc(100dvh-7rem)] min-h-[22rem] min-w-0 grid-cols-1 grid-rows-[12rem_minmax(0,1fr)] gap-4 sm:grid-rows-[13rem_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)] lg:grid-rows-1">
 
       {/* SIDEBAR */}
-
-      <aside className="card hidden flex-col gap-4 overflow-hidden p-4 lg:flex">
-
+      <aside className="card flex min-h-0 max-h-48 min-w-0 flex-col gap-3 overflow-hidden p-3 sm:max-h-52 lg:max-h-none">
         <Button
-
           onClick={newConversation}
-
           variant="outline"
-
-          className="w-full"
-
+          className="w-full justify-start"
           disabled={thinking}
-
         >
-
           <Plus size={16} />
-
-          New conversation
-
+          New chat
         </Button>
 
-        <div>
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <div className="mb-2 flex items-center justify-between px-1">
+            <p className="text-xs font-semibold uppercase tracking-wide text-navy-500">
+              Recent conversations
+            </p>
+            {historyLoading && (
+              <span className="text-[10px] text-navy-400">Loading…</span>
+            )}
+          </div>
 
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-navy-500">
+          {conversations.length === 0 && !historyLoading ? (
+            <p className="px-2 py-3 text-xs text-navy-500">
+              Your saved chats will appear here.
+            </p>
+          ) : (
+            <ul className="space-y-1">
+              {conversations.map((conversation) => {
+                const active = conversation.conversationId === conversationIdRef.current;
+                return (
+                  <li key={conversation.conversationId} className="group flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => selectConversation(conversation)}
+                      disabled={thinking}
+                      className={`min-w-0 flex-1 rounded-lg px-2.5 py-2 text-left text-xs transition ${
+                        active
+                          ? 'bg-indigo-50 text-accent-700 dark:bg-indigo-500/15 dark:text-indigo-200'
+                          : 'hover:bg-slate-50 dark:hover:bg-navy-700/60'
+                      }`}
+                    >
+                      <span className="block truncate font-medium">
+                        {conversation.title || 'New chat'}
+                      </span>
+                      {conversation.preview && (
+                        <span className="mt-0.5 block truncate text-[10px] text-navy-500">
+                          {conversation.preview}
+                        </span>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => deleteConversation(conversation.conversationId)}
+                      disabled={thinking}
+                      title="Delete conversation"
+                      aria-label={`Delete ${conversation.title || 'conversation'}`}
+                      className="rounded p-1.5 text-slate-500 transition hover:bg-rose-50 hover:text-rose-600 focus:opacity-100 dark:text-slate-300 dark:hover:bg-rose-950/30"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
 
+        <div className="hidden border-t border-slate-200 pt-3 dark:border-navy-700 lg:block">
+          <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-navy-500">
             Suggested prompts
-
           </p>
-
           <ul className="space-y-1.5">
-
             {SUGGESTED_PROMPTS.map((prompt) => (
-
               <li key={prompt}>
-
                 <button
-
                   onClick={() => send(prompt)}
-
                   disabled={thinking}
-
                   className="w-full rounded-lg border border-slate-200 px-3 py-2 text-left text-xs transition hover:border-accent hover:bg-indigo-50 disabled:opacity-50 dark:border-navy-700 dark:hover:bg-indigo-500/10"
-
                 >
-
                   {prompt}
-
                 </button>
-
               </li>
-
             ))}
-
           </ul>
-
         </div>
 
-        <div className="mt-auto flex items-start gap-2 rounded-lg bg-slate-50 p-3 text-xs text-navy-500 dark:bg-navy-900/40">
-
-          <Info
-
-            size={14}
-
-            className="mt-0.5 shrink-0"
-
-          />
-
+        <div className="hidden items-start gap-2 rounded-lg bg-slate-50 p-3 text-xs text-navy-500 dark:bg-navy-900/40 lg:flex">
+          <Info size={14} className="mt-0.5 shrink-0" />
           {isMockMode
-
             ? 'Demo mode: responses use local workspace data.'
-
             : 'AI mode: powered by your unified Product Assistant and specialized AI agents.'}
-
         </div>
-
       </aside>
 
       {/* CONVERSATION */}
 
-      <section className="card flex min-h-0 flex-col overflow-hidden">
+      <section className="card flex min-h-0 min-w-0 flex-col overflow-hidden">
 
         {/* HEADER */}
 
@@ -816,7 +1068,7 @@ const buildAIRequest = (message, conversationMessages) => {
 
             <p className="text-sm font-semibold">
 
-              Product Copilot
+              {activeConversationTitle === 'New chat' ? 'Product Copilot' : activeConversationTitle}
 
             </p>
 
@@ -850,21 +1102,7 @@ const buildAIRequest = (message, conversationMessages) => {
 
             </button>
 
-            <button
 
-              onClick={newConversation}
-
-              className="btn-ghost p-2"
-
-              aria-label="Clear conversation"
-
-              disabled={thinking}
-
-            >
-
-              <Trash2 size={16} />
-
-            </button>
 
           </div>
 
