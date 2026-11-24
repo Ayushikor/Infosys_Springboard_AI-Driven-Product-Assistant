@@ -3,14 +3,187 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: light;
+    --app-bg: #f7f2ed;
+    --surface: #fffdfa;
+    --surface-muted: #f2eae3;
+    --line: #e8ddd4;
+    --ink: #2d211c;
+    --muted: #89776d;
+    --accent: #8b523d;
+  }
+
   html { @apply antialiased; }
-  body { @apply bg-slate-50 text-navy-900 dark:bg-navy-900 dark:text-slate-100; }
+  body {
+    @apply min-h-screen text-navy-900;
+    background: var(--app-bg);
+    color: var(--ink);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  body, button, input, textarea, select { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+  ::selection { background: #e9cdbd; color: #38251f; }
+  * { scrollbar-width: thin; scrollbar-color: #cdb9ac transparent; }
+  *::-webkit-scrollbar { width: 8px; height: 8px; }
+  *::-webkit-scrollbar-thumb { background: #cdb9ac; border-radius: 999px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+
+  .dark {
+    color-scheme: dark;
+    --app-bg: #100d0c;
+    --surface: #191311;
+    --surface-muted: #241a16;
+    --line: #382923;
+    --ink: #f4ece6;
+    --muted: #b6a196;
+    --accent: #c18b70;
+  }
+  .dark body { background: var(--app-bg); color: var(--ink); }
 }
 
 @layer components {
-  .card { @apply rounded-xl bg-white shadow-card border border-slate-200/70 dark:bg-navy-800 dark:border-navy-700; }
-  .input { @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20 dark:bg-navy-900 dark:border-navy-700 dark:text-slate-100; }
-  .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition hover:bg-accent-600 disabled:opacity-60; }
-  .btn-outline { @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-medium text-navy-800 transition hover:bg-slate-50 dark:bg-navy-800 dark:border-navy-700 dark:text-slate-100 dark:hover:bg-navy-700; }
-  .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-navy-500 transition hover:bg-slate-100 dark:hover:bg-navy-700; }
+  .card {
+    @apply rounded-2xl border bg-white shadow-card dark:bg-navy-800;
+    border-color: var(--line);
+    background: var(--surface);
+  }
+  .input {
+    @apply w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition;
+    border-color: var(--line);
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139, 82, 61, .12); }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-60;
+    background: #80503d;
+    box-shadow: 0 2px 5px rgba(83, 49, 35, .14);
+  }
+  .btn-primary:hover { background: #6e4030; transform: translateY(-1px); }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border px-3.5 py-2.5 text-sm font-medium transition;
+    border-color: var(--line);
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .btn-outline:hover { background: var(--surface-muted); border-color: #d4b9a8; }
+  .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition; color: var(--muted); }
+  .btn-ghost:hover { background: var(--surface-muted); color: var(--ink); }
+}
+
+@layer utilities {
+  .text-navy-500 { color: var(--muted); }
+  .border-slate-200\/70 { border-color: var(--line); }
+}
+
+
+/* Stratov visual system: warm editorial frame + frosted navigation */
+:root {
+  --stratov-shell: #68483c;
+  --stratov-accent: #80503d;
+  --stratov-copper: #bd8b70;
+}
+.dark {
+  --stratov-shell: #68483c;
+}
+.stratov-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(220,185,161,.18), transparent 42%),
+    var(--stratov-shell);
+}
+.stratov-window {
+  display: flex;
+  width: min(100%, 1760px);
+  height: calc(100vh - 48px);
+  min-height: 620px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 20px;
+  background: rgba(255,253,250,.91);
+  box-shadow: 0 22px 70px rgba(30,16,10,.22), 0 2px 8px rgba(30,16,10,.10);
+  isolation: isolate;
+}
+.dark .stratov-window {
+  border-color: rgba(255,255,255,.12);
+  background: rgba(8,8,8,.96);
+  box-shadow: 0 22px 70px rgba(0,0,0,.42), 0 2px 8px rgba(0,0,0,.3);
+}
+.stratov-sidebar {
+  width: 100%;
+  border-right: 1px solid rgba(93,65,51,.13);
+  background: rgba(255,250,246,.62);
+  -webkit-backdrop-filter: blur(28px) saturate(145%);
+  backdrop-filter: blur(28px) saturate(145%);
+}
+.dark .stratov-sidebar {
+  border-right-color: rgba(255,255,255,.09);
+  background: rgba(0,0,0,.76);
+  -webkit-backdrop-filter: blur(30px) saturate(130%);
+  backdrop-filter: blur(30px) saturate(130%);
+}
+.stratov-mark {
+  background: linear-gradient(145deg,#9b654b,#563426);
+  box-shadow: 0 3px 12px rgba(83,49,35,.22), inset 0 1px 0 rgba(255,255,255,.3);
+}
+.dark .stratov-mark {
+  background: linear-gradient(145deg,#f4eee8,#c9b9ae);
+  color: #17110f;
+}
+.stratov-navlink { color: #332720; }
+.dark .stratov-navlink { color: #ded6d0; }
+.stratov-navlink:hover { background: rgba(139,82,61,.09); }
+.dark .stratov-navlink:hover { background: rgba(255,255,255,.07); }
+.stratov-navlink.is-active {
+  color: #2e2019;
+  background: linear-gradient(100deg,rgba(190,143,117,.68),rgba(190,143,117,.48));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 7px rgba(80,48,33,.06);
+}
+.dark .stratov-navlink.is-active {
+  color: #f8eee8;
+  background: linear-gradient(100deg,rgba(186,133,108,.92),rgba(133,89,69,.82));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+}
+.sidebar-icon-btn {
+  color: #8b776b;
+  border-radius: 8px;
+}
+.sidebar-icon-btn:hover { background: rgba(139,82,61,.10); }
+.dark .sidebar-icon-btn { color: #b9a69a; }
+.stratov-profile { background: rgba(224,204,190,.25); }
+.dark .stratov-profile { background: rgba(255,255,255,.075); }
+.stratov-main { background: transparent; }
+.dark .stratov-main { background: transparent; }
+.card {
+  border-color: rgba(115,82,64,.16);
+  box-shadow: 0 1px 5px rgba(55,35,25,.035);
+}
+.dark .card {
+  border-color: rgba(255,255,255,.13);
+  box-shadow: none;
+}
+@media (max-width: 1023px) {
+  .stratov-stage { padding: 0; }
+  .stratov-window { height: 100vh; min-height: 0; border-radius: 0; border: 0; }
+}
+@media (max-width: 640px) {
+  .stratov-main { padding-left: 14px; padding-right: 14px; }
+}
+@media print {
+  .stratov-stage { display:block; padding:0; background:white; }
+  .stratov-window { width:100%; height:auto; min-height:0; border:0; border-radius:0; box-shadow:none; }
+  .stratov-sidebar, header { display:none !important; }
+  .stratov-main { overflow:visible !important; padding:0 !important; }
+}
+
+
+/* Final surface override: prevent legacy navy utility classes from tinting cards blue. */
+.card {
+  background: var(--surface) !important;
+}
+.dark .card {
+  background: var(--surface) !important;
 }

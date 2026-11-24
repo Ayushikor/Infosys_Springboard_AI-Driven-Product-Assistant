@@ -49,7 +49,7 @@ export default function Login() {
       <div className="hidden flex-col justify-between bg-navy-900 p-12 text-white lg:flex">
         <div className="flex items-center gap-2">
           <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500"><Sparkles size={18} /></div>
-          <span className="font-semibold">AI Product Manager Copilot</span>
+          <span className="font-semibold">Stratov</span>
         </div>
         <div className="max-w-md">
           <h2 className="text-3xl font-semibold leading-tight">Turn customer feedback into the next release.</h2>
