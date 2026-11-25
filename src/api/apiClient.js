@@ -46,6 +46,10 @@ const realRequest = async (method, url, body, requestConfig = {}) => {
 // ---------------------------------------------------------
 
 const realApi = {
+  // -------------------------------------------------------
+  // AUTHENTICATION
+  // -------------------------------------------------------
+
   auth: {
     login: (email, password) =>
       realRequest("post", "/auth/login", { email, password }),
@@ -59,6 +63,10 @@ const realApi = {
     currentUser: () =>
       realRequest("get", "/auth/me"),
   },
+
+  // -------------------------------------------------------
+  // ADMIN
+  // -------------------------------------------------------
 
   admin: {
     getUsers: () =>
@@ -78,14 +86,28 @@ const realApi = {
         { isActive }
       ),
 
+    deleteUser: (userId) =>
+      realRequest(
+        "delete",
+        `/admin/users/${encodeURIComponent(userId)}`
+      ),
+
     getAuditLogs: () =>
       realRequest("get", "/admin/audit-logs"),
   },
+
+  // -------------------------------------------------------
+  // APPLICATION STATE
+  // -------------------------------------------------------
 
   loadState: () =>
     realRequest("get", "/state", undefined, {
       timeout: 30000,
     }),
+
+  // -------------------------------------------------------
+  // FEEDBACK
+  // -------------------------------------------------------
 
   feedback: {
     getAll: () =>
@@ -117,6 +139,10 @@ const realApi = {
       }),
   },
 
+  // -------------------------------------------------------
+  // WORKSPACES
+  // -------------------------------------------------------
+
   workspaces: {
     getAll: () =>
       realRequest("get", "/workspaces"),
@@ -138,6 +164,10 @@ const realApi = {
       ),
   },
 
+  // -------------------------------------------------------
+  // THEMES
+  // -------------------------------------------------------
+
   themes: {
     getAll: () =>
       realRequest("get", "/themes"),
@@ -149,6 +179,10 @@ const realApi = {
         { keywords }
       ),
   },
+
+  // -------------------------------------------------------
+  // FEATURE PRIORITIZATION
+  // -------------------------------------------------------
 
   prioritization: {
     getAll: () =>
@@ -171,6 +205,10 @@ const realApi = {
       ),
   },
 
+  // -------------------------------------------------------
+  // PRDs
+  // -------------------------------------------------------
+
   prds: {
     getAll: () =>
       realRequest("get", "/prds"),
@@ -191,6 +229,10 @@ const realApi = {
         `/prds/${encodeURIComponent(id)}`
       ),
   },
+
+  // -------------------------------------------------------
+  // ROADMAP
+  // -------------------------------------------------------
 
   roadmap: {
     getAll: () =>
@@ -213,6 +255,10 @@ const realApi = {
       ),
   },
 
+  // -------------------------------------------------------
+  // DASHBOARD
+  // -------------------------------------------------------
+
   dashboard: {
     getActivity: () =>
       realRequest("get", "/activity"),
@@ -220,7 +266,7 @@ const realApi = {
 
   // -------------------------------------------------------
   // ANALYSIS
-  // Supports both imported and historical datasets.
+  // Supports imported and historical datasets.
   // -------------------------------------------------------
 
   analysis: {
@@ -231,13 +277,16 @@ const realApi = {
           : {}),
       };
 
-      // Backward compatibility: older callers can pass an import ID string.
+      // Backward compatibility:
+      // Older callers can pass an import ID string.
       if (
         typeof datasetSelection === "string" &&
         datasetSelection.trim()
       ) {
         payload.importId = datasetSelection.trim();
-      } else if (datasetSelection?.dataset_type === "legacy") {
+      } else if (
+        datasetSelection?.dataset_type === "legacy"
+      ) {
         payload.datasetName = datasetSelection.dataset_name;
       } else if (
         datasetSelection?.dataset_type === "import" &&
@@ -271,6 +320,10 @@ const realApi = {
       ),
   },
 
+  // -------------------------------------------------------
+  // PREFERENCES
+  // -------------------------------------------------------
+
   preferences: {
     update: (data) =>
       realRequest("put", "/preferences", data),
@@ -279,7 +332,7 @@ const realApi = {
   // -------------------------------------------------------
   // CHAT
   // Conversations are individually addressed.
-  // Never call clear() to create a new conversation.
+  // New Chat must not call clear().
   // -------------------------------------------------------
 
   chat: {
@@ -311,19 +364,27 @@ const realApi = {
         `/chat/conversations/${encodeURIComponent(conversationId)}`
       ),
 
-    // Legacy endpoints retained for migration/compatibility only.
+    // Legacy endpoints retained for migration/compatibility.
     getHistory: () =>
       realRequest("get", "/chat"),
 
     saveHistory: (messages) =>
       realRequest("put", "/chat", { messages }),
 
-    // WARNING: deletes all chat history for the authenticated user.
-    // Not used by New Chat.
+    // WARNING:
+    // Deletes all chat history for the authenticated user.
+    // This is not used by New Chat.
     clear: () =>
       realRequest("delete", "/chat"),
   },
 };
 
-export const apiClient = apiConfig.isMock ? mockApi : realApi;
+// ---------------------------------------------------------
+// EXPORT
+// ---------------------------------------------------------
+
+export const apiClient = apiConfig.isMock
+  ? mockApi
+  : realApi;
+
 export const isMockMode = apiConfig.isMock;

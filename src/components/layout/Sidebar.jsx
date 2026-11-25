@@ -1,4 +1,7 @@
+
 import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 import {
   Home,
   BarChart3,
@@ -13,11 +16,11 @@ import {
   Package,
   PanelLeftClose,
   PanelLeftOpen,
-  Layers3,
   ShieldCheck,
 } from 'lucide-react';
 
 import { useAuth } from '../../context/AuthContext';
+import { apiClient } from '../../api/apiClient';
 
 // --------------------------------------------------
 // ROLE-BASED NAVIGATION
@@ -112,12 +115,62 @@ export const NAV_ITEMS = Object.values(ROLE_GROUPS)
 // SIDEBAR COMPONENT
 // --------------------------------------------------
 
-export default function Sidebar({
-  collapsed,
-  onToggle,
-  onNavigate,
-}) {
+export default function Sidebar({ collapsed, onToggle, onNavigate }) {
   const { user, logout } = useAuth();
+  const [chatCount, setChatCount] = useState(0);
+
+  // Fetch the actual conversation count for the current user.
+  const refreshChatCount = async () => {
+    try {
+      if (typeof apiClient?.chat?.getConversations !== 'function') {
+        setChatCount(0);
+        return;
+      }
+
+      const response = await apiClient.chat.getConversations();
+
+      if (response?.success === false) {
+        console.warn(
+          'Could not refresh AI Assistant conversation count:',
+          response?.message
+        );
+        return;
+      }
+
+      const data = response?.data?.data ?? response?.data ?? response ?? [];
+
+      const conversations = Array.isArray(data)
+        ? data
+        : data?.items ?? data?.conversations ?? data?.results ?? [];
+
+      setChatCount(conversations.length);
+    } catch (error) {
+      console.error('Failed to load AI Assistant conversation count:', error);
+    }
+  };
+
+  // Refresh count when the user changes, when the tab regains focus,
+  // or when the Chat component dispatches an update event.
+  useEffect(() => {
+    refreshChatCount();
+
+    const handleFocus = () => refreshChatCount();
+    const handleChatCountUpdated = () => refreshChatCount();
+
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener(
+      'stratov:chat-count-updated',
+      handleChatCountUpdated
+    );
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener(
+        'stratov:chat-count-updated',
+        handleChatCountUpdated
+      );
+    };
+  }, [user?.id, user?.email]);
 
   // Normalize role names received from MongoDB/API.
   const role = String(user?.role || 'Product Manager')
@@ -127,7 +180,6 @@ export default function Sidebar({
 
   // Select navigation based on authenticated role.
   const GROUPS = ROLE_GROUPS[role] || ROLE_GROUPS['product manager'];
-
   const isAdmin = role === 'admin';
 
   const initials = (user?.name || 'User')
@@ -144,7 +196,6 @@ export default function Sidebar({
       }`}
     >
       {/* BRAND */}
-
       <div
         className={`flex h-[76px] items-center ${
           collapsed ? 'justify-center px-2' : 'justify-between px-5'
@@ -152,17 +203,16 @@ export default function Sidebar({
       >
         <div className="flex min-w-0 items-center gap-3">
           <img
-  src="/images/Stratovlogo.png"
-  alt="Stratov Logo"
-  className="h-12 w-12 shrink-0 rounded-lg object-contain"
-/>
+            src="/images/Stratovlogo.png"
+            alt="Stratov Logo"
+            className="h-12 w-12 shrink-0 rounded-lg object-contain"
+          />
 
           {!collapsed && (
             <div className="min-w-0">
               <p className="truncate text-[15px] font-bold tracking-tight text-[#211815] dark:text-[#f7f0eb]">
                 Stratov
               </p>
-
               <p className="text-[9px] font-semibold uppercase tracking-[.18em] text-[#8e766a] dark:text-[#b9a49a]">
                 Product intelligence
               </p>
@@ -175,18 +225,13 @@ export default function Sidebar({
           className="sidebar-icon-btn hidden p-1.5 lg:inline-flex"
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          {collapsed ? (
-            <PanelLeftOpen size={16} />
-          ) : (
-            <PanelLeftClose size={16} />
-          )}
+          {collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
         </button>
       </div>
 
       <div className="mx-4 border-t border-black/10 dark:border-white/10" />
 
       {/* ROLE INDICATOR */}
-
       {!collapsed && (
         <div className="px-5 pt-3">
           <span
@@ -206,7 +251,6 @@ export default function Sidebar({
       )}
 
       {/* NAVIGATION */}
-
       <nav
         className="flex-1 space-y-5 overflow-y-auto px-3 py-4"
         aria-label="Main navigation"
@@ -224,7 +268,13 @@ export default function Sidebar({
                 <NavLink
                   key={to}
                   to={to}
-                  onClick={onNavigate}
+                  onClick={() => {
+                    if (label === 'AI Assistant') {
+                      refreshChatCount();
+                    }
+
+                    onNavigate?.();
+                  }}
                   title={collapsed ? label : undefined}
                   className={({ isActive }) =>
                     `stratov-navlink group flex items-center gap-3 rounded-lg px-2.5 py-[9px] text-[12px] font-medium transition-all ${
@@ -232,19 +282,13 @@ export default function Sidebar({
                     } ${isActive ? 'is-active' : ''}`
                   }
                 >
-                  <Icon
-                    size={15}
-                    strokeWidth={1.9}
-                    className="shrink-0"
-                  />
+                  <Icon size={15} strokeWidth={1.9} className="shrink-0" />
 
-                  {!collapsed && (
-                    <span className="truncate">{label}</span>
-                  )}
+                  {!collapsed && <span className="truncate">{label}</span>}
 
                   {!collapsed && label === 'AI Assistant' && (
                     <span className="ml-auto grid h-[17px] min-w-[17px] place-items-center rounded-full bg-[#70402f] px-1 text-[9px] text-white">
-                      5
+                      {chatCount}
                     </span>
                   )}
                 </NavLink>
@@ -254,7 +298,6 @@ export default function Sidebar({
         ))}
 
         {/* SETTINGS */}
-
         <section>
           {!collapsed && (
             <p className="mb-2 px-2 text-[9px] font-bold tracking-[.15em] text-[#8e766a] dark:text-[#9d8b83]">
@@ -279,7 +322,6 @@ export default function Sidebar({
       </nav>
 
       {/* USER PROFILE */}
-
       <div className="border-t border-black/10 p-3 dark:border-white/10">
         <div
           className={`flex items-center gap-2 rounded-xl px-2 py-2 ${
@@ -295,16 +337,13 @@ export default function Sidebar({
               <p className="truncate text-[10px] font-semibold text-[#30231e] dark:text-[#f3eae4]">
                 {user?.name || 'Workspace user'}
               </p>
-
               <p className="truncate text-[9px] text-[#8d786d] dark:text-[#b7a49a]">
                 {user?.email || 'Product team'}
               </p>
             </div>
           )}
 
-          {!collapsed && (
-            <span className="text-xs text-[#8d786d]">⌄</span>
-          )}
+          {!collapsed && <span className="text-xs text-[#8d786d]">⌄</span>}
         </div>
 
         <button
