@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     # Gemini configuration
     llm_provider: str = "gemini"
     gemini_api_key: Optional[str] = None
-    gemini_model: str = "gemini-3.6-flash"
+    gemini_model: str = "gemini-3.5-flash-lite"
 
     # MongoDB Atlas configuration
     mongodb_uri: Optional[str] = None
