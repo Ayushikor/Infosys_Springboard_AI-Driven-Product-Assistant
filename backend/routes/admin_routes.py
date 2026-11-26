@@ -1,4 +1,3 @@
-
 """Administrative user and role management endpoints."""
 
 from datetime import datetime, timezone
@@ -11,7 +10,10 @@ from helpers import ok, fail, now_iso
 from role_permissions import ROLES, normalize_role
 
 
-router = APIRouter(prefix="/api/admin", tags=["Administration"])
+router = APIRouter(
+    prefix="/api/admin",
+    tags=["Administration"],
+)
 
 
 def _error(message, status=400):
@@ -77,6 +79,51 @@ def _active_admin_count(users):
     )
 
 
+# ---------------------------------------------------------
+# NOTIFICATION HELPER
+# ---------------------------------------------------------
+
+
+def _create_admin_notification(
+    target_user_id,
+    title,
+    message,
+    event,
+    metadata=None,
+):
+    """Create a notification for the affected user."""
+
+    try:
+        notification = {
+            "id": f"notif-{datetime.now(timezone.utc).timestamp()}",
+            "userId": target_user_id,
+            "title": title,
+            "message": message,
+            "type": "info",
+            "read": False,
+            "isRead": False,
+            "createdAt": now_iso(),
+            "link": "/settings",
+            "metadata": {
+                "event": event,
+                **(metadata or {}),
+            },
+        }
+
+        get_db()["notifications"].insert_one(notification)
+
+    except Exception as exc:
+        print(
+            "[Notification] Failed to create admin notification:",
+            str(exc),
+        )
+
+
+# ---------------------------------------------------------
+# LIST USERS
+# ---------------------------------------------------------
+
+
 @router.get("/users")
 def list_users(request: Request):
     actor, error = _admin_user(request)
@@ -97,6 +144,11 @@ def list_users(request: Request):
         },
         "Users retrieved.",
     )
+
+
+# ---------------------------------------------------------
+# UPDATE USER ROLE
+# ---------------------------------------------------------
 
 
 @router.patch("/users/{user_id}/role")
@@ -151,12 +203,31 @@ def update_user_role(
         {"from": old_role, "to": role},
     )
 
+    # Notify the affected user only when the role actually changes.
+    if old_role != role:
+        _create_admin_notification(
+            target_user_id=user_id,
+            title="Your Role Has Been Updated",
+            message=f"Your role has been changed from {old_role} to {role}.",
+            event="user_role_updated",
+            metadata={
+                "oldRole": old_role,
+                "newRole": role,
+                "updatedBy": actor.get("name") or actor.get("email"),
+            },
+        )
+
     updated = users.find_one({"id": user_id})
 
     return ok(
         {"user": _public_user(updated)},
         "User role updated.",
     )
+
+
+# ---------------------------------------------------------
+# UPDATE USER STATUS
+# ---------------------------------------------------------
 
 
 @router.patch("/users/{user_id}/status")
@@ -187,10 +258,12 @@ def update_user_status(
     if not target:
         return _error("User not found.", 404)
 
+    old_status = target.get("isActive", True)
+
     if (
         not is_active
         and normalize_role(target.get("role")) == "Admin"
-        and target.get("isActive", True)
+        and old_status
     ):
         if _active_admin_count(users) <= 1:
             return _error(
@@ -210,10 +283,38 @@ def update_user_status(
         {"isActive": is_active},
     )
 
+    # Notify the affected user only when the status actually changes.
+    if old_status != is_active:
+        if is_active:
+            _create_admin_notification(
+                target_user_id=user_id,
+                title="Your Account Has Been Activated",
+                message="Your account has been activated by an administrator.",
+                event="user_activated",
+                metadata={
+                    "updatedBy": actor.get("name") or actor.get("email"),
+                },
+            )
+        else:
+            _create_admin_notification(
+                target_user_id=user_id,
+                title="Your Account Has Been Deactivated",
+                message="Your account has been deactivated by an administrator.",
+                event="user_deactivated",
+                metadata={
+                    "updatedBy": actor.get("name") or actor.get("email"),
+                },
+            )
+
     return ok(
         {"user": _public_user(users.find_one({"id": user_id}))},
         "User status updated.",
     )
+
+
+# ---------------------------------------------------------
+# DELETE USER
+# ---------------------------------------------------------
 
 
 @router.delete("/users/{user_id}")
@@ -269,6 +370,7 @@ def delete_user(request: Request, user_id: str):
         "chat_messages",
         "chat_conversations",
         "chat_artifacts",
+        "notifications",
     ]
 
     deletion_counts = {}
@@ -315,6 +417,11 @@ def delete_user(request: Request, user_id: str):
         },
         "User account and associated data deleted successfully.",
     )
+
+
+# ---------------------------------------------------------
+# AUDIT LOGS
+# ---------------------------------------------------------
 
 
 @router.get("/audit-logs")

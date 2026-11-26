@@ -12,9 +12,11 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from starlette.middleware.sessions import SessionMiddleware
+
 from routes.analysis_batch_routes import (
     router as analysis_batch_router,
 )
+
 
 # ---------------------------------------------------------
 # IMPORT PATH CONFIGURATION
@@ -52,9 +54,12 @@ from routes.dashboard_routes import router as dashboard_router
 from routes.preferences_routes import router as preferences_router
 from routes.chat_routes import router as chat_router
 from routes.product_routes import router as product_router
-
-# NEW: AI analysis routes
 from routes.analysis_routes import router as analysis_router
+
+# NEW: Notifications
+from routes.notification_routes import (
+    router as notification_router,
+)
 
 
 # ---------------------------------------------------------
@@ -151,11 +156,10 @@ def create_app(test_config=None):
 
     # -----------------------------------------------------
     # SESSION MIDDLEWARE
-    # SessionMiddleware must wrap RoleAccessMiddleware so the latter can
-    # inspect the authenticated session before dispatching API writes.
     # -----------------------------------------------------
 
     application.add_middleware(RoleAccessMiddleware)
+
     application.add_middleware(
         SessionMiddleware,
         secret_key=settings["SECRET_KEY"],
@@ -181,9 +185,10 @@ def create_app(test_config=None):
     application.include_router(chat_router)
     application.include_router(product_router)
     application.include_router(analysis_batch_router)
-
-    # NEW: Register AI analysis endpoints
     application.include_router(analysis_router)
+
+    # NEW: Notification endpoints
+    application.include_router(notification_router)
 
     # -----------------------------------------------------
     # ROOT ENDPOINT
@@ -239,7 +244,9 @@ def create_app(test_config=None):
                 content={
                     "status": "unhealthy",
                     "database": "disconnected",
-                    "message": "Could not connect to MongoDB.",
+                    "message": (
+                        "Could not connect to MongoDB."
+                    ),
                 },
             )
 

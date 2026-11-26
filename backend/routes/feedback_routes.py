@@ -4,17 +4,11 @@ import os
 
 import httpx
 
-
-
 from fastapi import APIRouter, Request, Body
 
 from fastapi.responses import JSONResponse
 
-
-
 from datetime import datetime
-
-
 
 from db import get_db
 
@@ -36,8 +30,6 @@ from helpers import (
 
 )
 
-
-
 router = APIRouter(
 
     prefix="/api/feedback",
@@ -46,27 +38,19 @@ router = APIRouter(
 
 )
 
-
-
 @router.post("/{feedback_id}/analyze")
 
 def analyze_feedback(feedback_id: str, request: Request):
 
     """Analyze saved feedback using the separate AI service."""
 
-
-
     # 1. Verify authentication.
 
     uid = request.session.get("user_id")
 
-
-
     if not uid:
 
         return _error_response("Not authenticated.", status=401)
-
-
 
     # 2. Find feedback belonging to the logged-in user.
 
@@ -78,19 +62,13 @@ def analyze_feedback(feedback_id: str, request: Request):
 
     })
 
-
-
     if not feedback:
 
         return _error_response("Feedback not found.", status=404)
 
-
-
     # 3. Get the actual feedback message.
 
     feedback_text = str(feedback.get("message", "")).strip()
-
-
 
     if not feedback_text:
 
@@ -102,8 +80,6 @@ def analyze_feedback(feedback_id: str, request: Request):
 
         )
 
-
-
     # 4. Read the AI service URL from the environment.
 
     ai_service_url = os.getenv(
@@ -113,8 +89,6 @@ def analyze_feedback(feedback_id: str, request: Request):
         "http://127.0.0.1:8001",
 
     ).rstrip("/")
-
-
 
     # 5. Call the AI service.
 
@@ -130,15 +104,9 @@ def analyze_feedback(feedback_id: str, request: Request):
 
         )
 
-
-
         response.raise_for_status()
 
-
-
         analysis = response.json()
-
-
 
     except httpx.TimeoutException:
 
@@ -150,8 +118,6 @@ def analyze_feedback(feedback_id: str, request: Request):
 
         )
 
-
-
     except httpx.HTTPStatusError:
 
         return _error_response(
@@ -161,8 +127,6 @@ def analyze_feedback(feedback_id: str, request: Request):
             status=502,
 
         )
-
-
 
     except httpx.RequestError:
 
@@ -174,8 +138,6 @@ def analyze_feedback(feedback_id: str, request: Request):
 
         )
 
-
-
     except ValueError:
 
         return _error_response(
@@ -185,8 +147,6 @@ def analyze_feedback(feedback_id: str, request: Request):
             status=502,
 
         )
-
-
 
     # 6. Return the analysis using your existing response format.
 
@@ -204,19 +164,11 @@ def analyze_feedback(feedback_id: str, request: Request):
 
     )
 
-
-
-
-
 def _user_id(request: Request):
 
     """Get the authenticated user's ID from the session."""
 
     return request.session.get("user_id")
-
-
-
-
 
 def _error_response(message: str, status: int = 400, data=None):
 
@@ -225,10 +177,6 @@ def _error_response(message: str, status: int = 400, data=None):
     body, status_code = fail(message, data=data, status=status)
 
     return JSONResponse(content=body, status_code=status_code)
-
-
-
-
 
 def _log_activity(user_id: str, text: str):
 
@@ -246,9 +194,47 @@ def _log_activity(user_id: str, text: str):
 
     })
 
+def _create_import_notification(
+    user_id: str,
+    file_name: str,
+    added: int,
+    skipped: int,
+    import_id: str,
+):
+    """Create a dataset-import notification without affecting the import."""
 
+    try:
+        notification = {
+            "id": generate_id("ntf-"),
+            "userId": user_id,
+            "title": "Dataset Imported Successfully",
+            "message": (
+                f"{file_name} was imported successfully. "
+                f"{added} record(s) added"
+                + (f", {skipped} skipped." if skipped else ".")
+            ),
+            "type": "success",
+            "read": False,
+            "isRead": False,
+            "createdAt": now_iso(),
+            "link": "/feedback",
+            "metadata": {
+                "event": "dataset_imported",
+                "importId": import_id,
+                "fileName": file_name,
+                "added": added,
+                "skipped": skipped,
+            },
+        }
 
+        get_db()["notifications"].insert_one(notification)
 
+    except Exception as exc:
+        # A notification failure must not undo a successful import.
+        print(
+            "[Notification] Failed to create dataset-import notification:",
+            str(exc),
+        )
 
 @router.get("")
 
@@ -256,17 +242,11 @@ def get_all(request: Request):
 
     """Get all feedback belonging to the authenticated user."""
 
-
-
     uid = _user_id(request)
-
-
 
     if not uid:
 
         return _error_response("Not authenticated.", status=401)
-
-
 
     items = mongo_docs_to_list(
 
@@ -278,13 +258,7 @@ def get_all(request: Request):
 
     )
 
-
-
     return ok(items)
-
-
-
-
 
 @router.post("")
 
@@ -298,39 +272,25 @@ def create(
 
     """Create a feedback record."""
 
-
-
     uid = _user_id(request)
-
-
 
     if not uid:
 
         return _error_response("Not authenticated.", status=401)
 
-
-
     record, error = normalize_feedback(body)
-
-
 
     if error:
 
         return _error_response(error)
 
-
-
     record["id"] = generate_id("fb-")
 
     record["userId"] = uid
 
-
-
     db = get_db()
 
     db["feedback"].insert_one(record)
-
-
 
     _log_activity(
 
@@ -340,8 +300,6 @@ def create(
 
     )
 
-
-
     return ok(
 
         mongo_doc_to_dict(record),
@@ -349,10 +307,6 @@ def create(
         "Feedback created",
 
     )
-
-
-
-
 
 @router.put("/{feedback_id}")
 
@@ -368,21 +322,13 @@ def update(
 
     """Update an existing feedback record."""
 
-
-
     uid = _user_id(request)
-
-
 
     if not uid:
 
         return _error_response("Not authenticated.", status=401)
 
-
-
     db = get_db()
-
-
 
     existing = db["feedback"].find_one({
 
@@ -391,8 +337,6 @@ def update(
         "userId": uid,
 
     })
-
-
 
     if not existing:
 
@@ -404,23 +348,15 @@ def update(
 
         )
 
-
-
     record, error = normalize_feedback(body, existing)
-
-
 
     if error:
 
         return _error_response(error)
 
-
-
     record["id"] = feedback_id
 
     record["userId"] = uid
-
-
 
     db["feedback"].update_one(
 
@@ -436,8 +372,6 @@ def update(
 
     )
 
-
-
     updated = db["feedback"].find_one({
 
         "id": feedback_id,
@@ -445,8 +379,6 @@ def update(
         "userId": uid,
 
     })
-
-
 
     _log_activity(
 
@@ -456,8 +388,6 @@ def update(
 
     )
 
-
-
     return ok(
 
         mongo_doc_to_dict(updated),
@@ -465,10 +395,6 @@ def update(
         "Feedback updated",
 
     )
-
-
-
-
 
 @router.delete("/{feedback_id}")
 
@@ -482,21 +408,13 @@ def remove(
 
     """Delete an existing feedback record."""
 
-
-
     uid = _user_id(request)
-
-
 
     if not uid:
 
         return _error_response("Not authenticated.", status=401)
 
-
-
     db = get_db()
-
-
 
     target = db["feedback"].find_one({
 
@@ -505,8 +423,6 @@ def remove(
         "userId": uid,
 
     })
-
-
 
     if not target:
 
@@ -518,8 +434,6 @@ def remove(
 
         )
 
-
-
     db["feedback"].delete_one({
 
         "id": feedback_id,
@@ -527,8 +441,6 @@ def remove(
         "userId": uid,
 
     })
-
-
 
     _log_activity(
 
@@ -538,8 +450,6 @@ def remove(
 
     )
 
-
-
     return ok(
 
         {"id": feedback_id},
@@ -548,100 +458,152 @@ def remove(
 
     )
 
-
-
-
-
 @router.post("/import")
+
 def import_many(
+
     request: Request,
+
     body: dict = Body(default={}),
+
 ):
+
     """Import multiple feedback records as a tracked dataset."""
 
     uid = _user_id(request)
 
     if not uid:
+
         return _error_response("Not authenticated.", status=401)
 
     records = body.get("records", [])
 
     if not isinstance(records, list):
+
         return _error_response("records must be an array.", status=400)
 
     if not records:
+
         return _error_response("No records were provided for import.", status=400)
 
     db = get_db()
+
     feedback_collection = db["feedback"]
 
     # One ID identifies this entire upload, so the datasets endpoint can group it.
+
     import_id = generate_id("imp-")
+
     file_name = str(body.get("fileName") or "Uploaded dataset").strip()
+
     imported_at = now_iso()
 
     existing_ids = {
+
         str(doc["id"])
+
         for doc in feedback_collection.find(
+
             {"userId": uid},
+
             {"id": 1},
+
         )
+
         if doc.get("id")
+
     }
 
     added = 0
+
     skipped = 0
 
     for raw in records:
+
         if not isinstance(raw, dict):
+
             skipped += 1
+
             continue
 
         record, error = normalize_feedback(raw)
 
         if error:
+
             skipped += 1
+
             continue
 
         record_id = str(raw.get("id") or generate_id("fb-"))
 
         if record_id in existing_ids:
+
             skipped += 1
+
             continue
 
         record["id"] = record_id
+
         record["userId"] = uid
 
         # Required metadata for GET /datasets to identify this upload.
+
         record["import_id"] = import_id
+
         record["import_filename"] = file_name
+
         record["importedAt"] = imported_at
 
         feedback_collection.insert_one(record)
+
         existing_ids.add(record_id)
+
         added += 1
 
     if added == 0:
+
         return _error_response(
+
             "No new valid feedback records were imported.",
+
             status=400,
+
             data={"added": 0, "skipped": skipped},
+
         )
 
     _log_activity(uid, f"Imported {added} record(s) from {file_name}")
 
-    return ok(
-        {
-            "added": added,
-            "skipped": skipped,
-            "import_id": import_id,
-            "fileName": file_name,
-            "recordCount": added,
-            "importedAt": imported_at,
-        },
-        f"Successfully imported {added} record(s).",
+    # Notify the user after a successful import.
+    _create_import_notification(
+        user_id=uid,
+        file_name=file_name,
+        added=added,
+        skipped=skipped,
+        import_id=import_id,
     )
 
+    return ok(
+
+        {
+
+            "added": added,
+
+            "skipped": skipped,
+
+            "import_id": import_id,
+
+            "fileName": file_name,
+
+            "recordCount": added,
+
+            "importedAt": imported_at,
+
+        },
+
+        f"Successfully imported {added} record(s).",
+
+    )
 
 @router.post("/pain-points/identify")
 
@@ -655,13 +617,9 @@ def identify_pain_points(
 
     """Identify customer pain points using Agent 2."""
 
-
-
     # 1. Verify authentication.
 
     uid = _user_id(request)
-
-
 
     if not uid:
 
@@ -673,13 +631,9 @@ def identify_pain_points(
 
         )
 
-
-
     # 2. Get optional feedback IDs.
 
     feedback_ids = body.get("feedback_ids")
-
-
 
     if feedback_ids is not None:
 
@@ -711,15 +665,11 @@ def identify_pain_points(
 
             )
 
-
-
         feedback_ids = [
 
             item.strip() for item in feedback_ids
 
         ]
-
-
 
         if len(feedback_ids) != len(set(feedback_ids)):
 
@@ -731,23 +681,15 @@ def identify_pain_points(
 
             )
 
-
-
     # 3. Fetch feedback belonging to the logged-in user.
 
     db = get_db()
 
-
-
     query = {"userId": uid}
-
-
 
     if feedback_ids is not None:
 
         query["id"] = {"$in": feedback_ids}
-
-
 
     feedback_documents = list(
 
@@ -761,8 +703,6 @@ def identify_pain_points(
 
     )
 
-
-
     if feedback_ids is not None:
 
         if len(feedback_documents) != len(feedback_ids):
@@ -775,8 +715,6 @@ def identify_pain_points(
 
             )
 
-
-
     if not feedback_documents:
 
         return _error_response(
@@ -787,8 +725,6 @@ def identify_pain_points(
 
         )
 
-
-
     if len(feedback_documents) > 500:
 
         return _error_response(
@@ -798,8 +734,6 @@ def identify_pain_points(
             status=400,
 
         )
-
-
 
     # 4. Prepare feedback for Agent 2.
 
@@ -819,8 +753,6 @@ def identify_pain_points(
 
     ]
 
-
-
     # 5. Read AI service URL.
 
     ai_service_url = os.getenv(
@@ -830,8 +762,6 @@ def identify_pain_points(
         "http://127.0.0.1:8001",
 
     ).rstrip("/")
-
-
 
     # 6. Send feedback to Agent 2.
 
@@ -851,15 +781,9 @@ def identify_pain_points(
 
         )
 
-
-
         response.raise_for_status()
 
-
-
         result = response.json()
-
-
 
     except httpx.TimeoutException:
 
@@ -871,8 +795,6 @@ def identify_pain_points(
 
         )
 
-
-
     except httpx.HTTPStatusError:
 
         return _error_response(
@@ -882,8 +804,6 @@ def identify_pain_points(
             status=502,
 
         )
-
-
 
     except httpx.RequestError:
 
@@ -895,8 +815,6 @@ def identify_pain_points(
 
         )
 
-
-
     except ValueError:
 
         return _error_response(
@@ -906,8 +824,6 @@ def identify_pain_points(
             status=502,
 
         )
-
-
 
     # 7. Return results to the frontend.
 
@@ -925,8 +841,6 @@ def identify_pain_points(
 
     )
 
-
-
 @router.post("/features/cluster")
 
 def cluster_features(
@@ -939,21 +853,13 @@ def cluster_features(
 
     """Cluster similar customer feature requests using Agent 3."""
 
-
-
     uid = _user_id(request)
-
-
 
     if not uid:
 
         return _error_response("Not authenticated.", status=401)
 
-
-
     feedback_ids = body.get("feedback_ids")
-
-
 
     if feedback_ids is not None:
 
@@ -979,11 +885,7 @@ def cluster_features(
 
             )
 
-
-
         feedback_ids = [item.strip() for item in feedback_ids]
-
-
 
         if len(feedback_ids) != len(set(feedback_ids)):
 
@@ -995,27 +897,19 @@ def cluster_features(
 
             )
 
-
-
     db = get_db()
 
     query = {"userId": uid}
 
-
-
     if feedback_ids is not None:
 
         query["id"] = {"$in": feedback_ids}
-
-
 
     documents = list(
 
         db["feedback"].find(query).sort("createdAt", -1).limit(501)
 
     )
-
-
 
     if feedback_ids is not None and len(documents) != len(feedback_ids):
 
@@ -1027,13 +921,9 @@ def cluster_features(
 
         )
 
-
-
     if not documents:
 
         return _error_response("No feedback records found.", status=404)
-
-
 
     if len(documents) > 500:
 
@@ -1044,8 +934,6 @@ def cluster_features(
             status=400,
 
         )
-
-
 
     feedback_records = [
 
@@ -1067,15 +955,11 @@ def cluster_features(
 
     ]
 
-
-
     feedback_records = [
 
         item for item in feedback_records if item["raw_text"]
 
     ]
-
-
 
     if not feedback_records:
 
@@ -1087,8 +971,6 @@ def cluster_features(
 
         )
 
-
-
     ai_service_url = os.getenv(
 
         "AI_SERVICE_URL",
@@ -1096,8 +978,6 @@ def cluster_features(
         "http://127.0.0.1:8001",
 
     ).rstrip("/")
-
-
 
     try:
 
@@ -1115,8 +995,6 @@ def cluster_features(
 
         result = response.json()
 
-
-
     except httpx.TimeoutException:
 
         return _error_response(
@@ -1126,8 +1004,6 @@ def cluster_features(
             status=504,
 
         )
-
-
 
     except httpx.HTTPStatusError:
 
@@ -1139,8 +1015,6 @@ def cluster_features(
 
         )
 
-
-
     except httpx.RequestError:
 
         return _error_response(
@@ -1150,8 +1024,6 @@ def cluster_features(
             status=503,
 
         )
-
-
 
     except ValueError:
 
@@ -1163,8 +1035,6 @@ def cluster_features(
 
         )
 
-
-
     return ok(
 
         result,
@@ -1172,8 +1042,6 @@ def cluster_features(
         "Feature requests clustered successfully.",
 
     )
-
-
 
 @router.post("/trends/analyze")
 
@@ -1187,21 +1055,13 @@ def analyze_trends(
 
     """Analyze feedback trends over time using Agent 4."""
 
-
-
     uid = _user_id(request)
-
-
 
     if not uid:
 
         return _error_response("Not authenticated.", status=401)
 
-
-
     feedback_ids = body.get("feedback_ids")
-
-
 
     if feedback_ids is not None:
 
@@ -1227,11 +1087,7 @@ def analyze_trends(
 
             )
 
-
-
         feedback_ids = [item.strip() for item in feedback_ids]
-
-
 
         if len(feedback_ids) != len(set(feedback_ids)):
 
@@ -1243,27 +1099,19 @@ def analyze_trends(
 
             )
 
-
-
     db = get_db()
 
     query = {"userId": uid}
 
-
-
     if feedback_ids is not None:
 
         query["id"] = {"$in": feedback_ids}
-
-
 
     documents = list(
 
         db["feedback"].find(query).sort("createdAt", -1).limit(501)
 
     )
-
-
 
     if feedback_ids is not None and len(documents) != len(feedback_ids):
 
@@ -1275,13 +1123,9 @@ def analyze_trends(
 
         )
 
-
-
     if not documents:
 
         return _error_response("No feedback records found.", status=404)
-
-
 
     if len(documents) > 500:
 
@@ -1293,8 +1137,6 @@ def analyze_trends(
 
         )
 
-
-
     if len(documents) < 2:
 
         return _error_response(
@@ -1305,17 +1147,11 @@ def analyze_trends(
 
         )
 
-
-
     feedback_records = []
-
-
 
     for item in documents:
 
         timestamp = item.get("createdAt")
-
-
 
         if not timestamp:
 
@@ -1329,8 +1165,6 @@ def analyze_trends(
 
             )
 
-
-
         if isinstance(timestamp, datetime):
 
             timestamp = timestamp.isoformat()
@@ -1338,8 +1172,6 @@ def analyze_trends(
         else:
 
             timestamp = str(timestamp).strip()
-
-
 
         try:
 
@@ -1355,21 +1187,15 @@ def analyze_trends(
 
             )
 
-
-
         raw_text = str(
 
             item.get("message") or item.get("title") or ""
 
         ).strip()
 
-
-
         if not raw_text:
 
             continue
-
-
 
         feedback_records.append({
 
@@ -1387,8 +1213,6 @@ def analyze_trends(
 
         })
 
-
-
     if len(feedback_records) < 2:
 
         return _error_response(
@@ -1399,8 +1223,6 @@ def analyze_trends(
 
         )
 
-
-
     ai_service_url = os.getenv(
 
         "AI_SERVICE_URL",
@@ -1408,8 +1230,6 @@ def analyze_trends(
         "http://127.0.0.1:8001",
 
     ).rstrip("/")
-
-
 
     try:
 
@@ -1427,8 +1247,6 @@ def analyze_trends(
 
         result = response.json()
 
-
-
     except httpx.TimeoutException:
 
         return _error_response(
@@ -1438,8 +1256,6 @@ def analyze_trends(
             status=504,
 
         )
-
-
 
     except httpx.HTTPStatusError:
 
@@ -1451,8 +1267,6 @@ def analyze_trends(
 
         )
 
-
-
     except httpx.RequestError:
 
         return _error_response(
@@ -1462,8 +1276,6 @@ def analyze_trends(
             status=503,
 
         )
-
-
 
     except ValueError:
 
@@ -1475,8 +1287,6 @@ def analyze_trends(
 
         )
 
-
-
     return ok(
 
         result,
@@ -1484,10 +1294,6 @@ def analyze_trends(
         "Feedback trends analyzed successfully.",
 
     )
-
-
-
-
 
 @router.get("/datasets")
 
@@ -1497,17 +1303,11 @@ def get_uploaded_datasets(request: Request):
 
     uid = _user_id(request)
 
-
-
     if not uid:
 
         return _error_response("Not authenticated.", status=401)
 
-
-
     collection = get_db()["feedback"]
-
-
 
     imported_pipeline = [
 
@@ -1560,8 +1360,6 @@ def get_uploaded_datasets(request: Request):
         },
 
     ]
-
-
 
     historical_pipeline = [
 
@@ -1623,8 +1421,6 @@ def get_uploaded_datasets(request: Request):
 
     ]
 
-
-
     datasets = list(collection.aggregate(imported_pipeline))
 
     datasets.extend(collection.aggregate(historical_pipeline))
@@ -1636,7 +1432,5 @@ def get_uploaded_datasets(request: Request):
         reverse=True,
 
     )
-
-
 
     return ok(datasets, "Uploaded and historical datasets retrieved successfully.")
