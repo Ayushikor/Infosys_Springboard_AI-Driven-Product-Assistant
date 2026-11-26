@@ -1,5 +1,5 @@
-
 import axios from "axios";
+
 import { apiConfig } from "./apiConfig";
 import { mockApi } from "./mockApi";
 
@@ -17,7 +17,12 @@ const http = axios.create({
 // REQUEST HANDLER
 // ---------------------------------------------------------
 
-const realRequest = async (method, url, body, requestConfig = {}) => {
+const realRequest = async (
+  method,
+  url,
+  body,
+  requestConfig = {}
+) => {
   try {
     const response = await http.request({
       method,
@@ -52,7 +57,10 @@ const realApi = {
 
   auth: {
     login: (email, password) =>
-      realRequest("post", "/auth/login", { email, password }),
+      realRequest("post", "/auth/login", {
+        email,
+        password,
+      }),
 
     register: (payload) =>
       realRequest("post", "/auth/register", payload),
@@ -84,12 +92,6 @@ const realApi = {
         "patch",
         `/admin/users/${encodeURIComponent(userId)}/status`,
         { isActive }
-      ),
-
-    deleteUser: (userId) =>
-      realRequest(
-        "delete",
-        `/admin/users/${encodeURIComponent(userId)}`
       ),
 
     getAuditLogs: () =>
@@ -132,7 +134,10 @@ const realApi = {
     getDatasets: () =>
       realRequest("get", "/feedback/datasets"),
 
-    importMany: (rows, fileName = "Uploaded dataset") =>
+    importMany: (
+      rows,
+      fileName = "Uploaded dataset"
+    ) =>
       realRequest("post", "/feedback/import", {
         records: rows,
         fileName,
@@ -206,7 +211,7 @@ const realApi = {
   },
 
   // -------------------------------------------------------
-  // PRDs
+  // PRDS
   // -------------------------------------------------------
 
   prds: {
@@ -265,20 +270,57 @@ const realApi = {
   },
 
   // -------------------------------------------------------
-  // ANALYSIS
-  // Supports imported and historical datasets.
+  // NOTIFICATIONS
+  // -------------------------------------------------------
+
+  notifications: {
+    getAll: (limit = 50) =>
+      realRequest("get", "/notifications", undefined, {
+        params: { limit },
+      }),
+
+    getUnreadCount: () =>
+      realRequest("get", "/notifications/unread-count"),
+
+    markAsRead: (notificationId) =>
+      realRequest(
+        "patch",
+        `/notifications/${encodeURIComponent(notificationId)}/read`
+      ),
+
+    markAllAsRead: () =>
+      realRequest("patch", "/notifications/read-all"),
+
+    remove: (notificationId) =>
+      realRequest(
+        "delete",
+        `/notifications/${encodeURIComponent(notificationId)}`
+      ),
+
+    clearAll: () =>
+      realRequest("delete", "/notifications"),
+
+    createTest: () =>
+      realRequest("post", "/notifications/test"),
+  },
+
+  // -------------------------------------------------------
+  // AI ANALYSIS
   // -------------------------------------------------------
 
   analysis: {
-    run: (workspaceId = null, datasetSelection = null) => {
+    run: (
+      workspaceId = null,
+      datasetSelection = null
+    ) => {
       const payload = {
-        ...(workspaceId !== null && workspaceId !== undefined
+        ...(workspaceId !== null &&
+        workspaceId !== undefined
           ? { workspaceId }
           : {}),
       };
 
-      // Backward compatibility:
-      // Older callers can pass an import ID string.
+      // Backward compatibility with import ID strings.
       if (
         typeof datasetSelection === "string" &&
         datasetSelection.trim()
@@ -287,31 +329,51 @@ const realApi = {
       } else if (
         datasetSelection?.dataset_type === "legacy"
       ) {
-        payload.datasetName = datasetSelection.dataset_name;
+        payload.datasetName =
+          datasetSelection.dataset_name;
       } else if (
         datasetSelection?.dataset_type === "import" &&
         datasetSelection.import_id
       ) {
-        payload.importId = datasetSelection.import_id;
+        payload.importId =
+          datasetSelection.import_id;
       }
 
-      return realRequest("post", "/analysis/run", payload, {
-        timeout: 330000,
-      });
+      return realRequest(
+        "post",
+        "/analysis/run",
+        payload,
+        { timeout: 330000 }
+      );
     },
 
-    getRuns: (workspaceId = null, limit = 20) =>
-      realRequest("get", "/analysis/runs", undefined, {
-        params: {
-          ...(workspaceId ? { workspaceId } : {}),
-          limit,
-        },
-      }),
+    getRuns: (
+      workspaceId = null,
+      limit = 20
+    ) =>
+      realRequest(
+        "get",
+        "/analysis/runs",
+        undefined,
+        {
+          params: {
+            ...(workspaceId ? { workspaceId } : {}),
+            limit,
+          },
+        }
+      ),
 
     getLatest: (workspaceId = null) =>
-      realRequest("get", "/analysis/runs/latest", undefined, {
-        params: workspaceId ? { workspaceId } : {},
-      }),
+      realRequest(
+        "get",
+        "/analysis/runs/latest",
+        undefined,
+        {
+          params: workspaceId
+            ? { workspaceId }
+            : {},
+        }
+      ),
 
     getById: (runId) =>
       realRequest(
@@ -337,9 +399,12 @@ const realApi = {
 
   chat: {
     sendMessage: (payload) =>
-      realRequest("post", "/chat", payload, {
-        timeout: 130000,
-      }),
+      realRequest(
+        "post",
+        "/chat",
+        payload,
+        { timeout: 130000 }
+      ),
 
     getConversations: () =>
       realRequest("get", "/chat/conversations"),
@@ -347,13 +412,20 @@ const realApi = {
     getConversation: (conversationId) =>
       realRequest(
         "get",
-        `/chat/conversations/${encodeURIComponent(conversationId)}`
+        `/chat/conversations/${encodeURIComponent(
+          conversationId
+        )}`
       ),
 
-    saveConversation: (conversationId, payload) =>
+    saveConversation: (
+      conversationId,
+      payload
+    ) =>
       realRequest(
         "put",
-        `/chat/conversations/${encodeURIComponent(conversationId)}`,
+        `/chat/conversations/${encodeURIComponent(
+          conversationId
+        )}`,
         payload,
         { timeout: 30000 }
       ),
@@ -361,19 +433,20 @@ const realApi = {
     deleteConversation: (conversationId) =>
       realRequest(
         "delete",
-        `/chat/conversations/${encodeURIComponent(conversationId)}`
+        `/chat/conversations/${encodeURIComponent(
+          conversationId
+        )}`
       ),
 
-    // Legacy endpoints retained for migration/compatibility.
+    // Legacy endpoints retained for compatibility.
     getHistory: () =>
       realRequest("get", "/chat"),
 
     saveHistory: (messages) =>
       realRequest("put", "/chat", { messages }),
 
-    // WARNING:
-    // Deletes all chat history for the authenticated user.
-    // This is not used by New Chat.
+    // Deletes all chat history for this user.
+    // Not used by New Chat.
     clear: () =>
       realRequest("delete", "/chat"),
   },

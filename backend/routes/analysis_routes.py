@@ -1,5 +1,8 @@
 """AI analysis execution and retrieval routes."""
 
+from datetime import datetime, timezone
+from uuid import uuid4
+
 from fastapi import APIRouter, Request, Body, Query
 from fastapi.responses import JSONResponse
 
@@ -25,6 +28,7 @@ router = APIRouter(
 # AUTHENTICATION AND ERROR HANDLING
 # ---------------------------------------------------------
 
+
 def _user_id(request: Request):
     """Return the authenticated user's ID from the session."""
     return request.session.get("user_id")
@@ -48,8 +52,79 @@ def _error_response(
 
 
 # ---------------------------------------------------------
+# NOTIFICATION HELPER
+# ---------------------------------------------------------
+
+
+def _create_analysis_notification(
+    user_id: str,
+    result: dict,
+    workspace_id: str | None = None,
+):
+    """
+    Create a notification after analysis completes.
+
+    Notification failures must never interrupt or invalidate
+    a successfully completed analysis.
+    """
+
+    try:
+        db = get_db()
+
+        status = result.get("status", "completed")
+
+        if status == "completed":
+            title = "Analysis Completed"
+            message = "Your AI feedback analysis has completed successfully."
+            notification_type = "success"
+
+        else:
+            title = "Analysis Completed with Partial Results"
+            message = (
+                "Your AI feedback analysis has completed, "
+                "but some agents or results may be incomplete."
+            )
+            notification_type = "warning"
+
+        run_id = (
+            result.get("run_id")
+            or result.get("runId")
+            or result.get("id")
+            or result.get("analysisId")
+        )
+
+        notification = {
+            "id": str(uuid4()),
+            "userId": user_id,
+            "title": title,
+            "message": message,
+            "type": notification_type,
+            "read": False,
+            "isRead": False,
+            "createdAt": datetime.now(timezone.utc).isoformat(),
+            "link": "/analysis",
+            "metadata": {
+                "event": "analysis_completed",
+                "status": status,
+                "runId": run_id,
+                "workspaceId": workspace_id,
+            },
+        }
+
+        db["notifications"].insert_one(notification)
+
+    except Exception as exc:
+        # Notification failure must not break the main analysis.
+        print(
+            "[Notification] Failed to create analysis notification:",
+            str(exc),
+        )
+
+
+# ---------------------------------------------------------
 # WORKSPACE VALIDATION
 # ---------------------------------------------------------
+
 
 def _resolve_workspace(
     user_id: str,
@@ -119,6 +194,7 @@ def _validate_workspace_filter(
 # RUN COMPLETE FOUR-AGENT ANALYSIS
 # ---------------------------------------------------------
 
+
 @router.post("/run")
 def run_analysis(
     request: Request,
@@ -128,8 +204,10 @@ def run_analysis(
     Execute AI analysis.
 
     A request may select one imported dataset by importId or one
-    historical dataset by datasetName. Omitting both preserves the
-    existing workspace-based analysis behaviour.
+    historical dataset by datasetName.
+
+    Omitting both preserves the existing workspace-based
+    analysis behaviour.
     """
 
     uid = _user_id(request)
@@ -145,6 +223,7 @@ def run_analysis(
     # -----------------------------------------------------
     # 1. VALIDATE SELECTED DATASET AND OWNERSHIP
     # -----------------------------------------------------
+
     import_id = body.get("importId")
     dataset_name = body.get("datasetName")
 
@@ -154,24 +233,42 @@ def run_analysis(
             400,
         )
 
+    # Validate uploaded dataset
     if import_id is not None:
+
         if not isinstance(import_id, str) or not import_id.strip():
-            return _error_response("Invalid import ID.", 400)
+            return _error_response(
+                "Invalid import ID.",
+                400,
+            )
+
         import_id = import_id.strip()
 
         owned_dataset = get_db()["feedback"].find_one(
-            {"userId": uid, "import_id": import_id},
-            {"_id": 1},
+            {
+                "userId": uid,
+                "import_id": import_id,
+            },
+            {
+                "_id": 1,
+            },
         )
+
         if not owned_dataset:
             return _error_response(
                 "Uploaded dataset not found or does not belong to you.",
                 404,
             )
 
+    # Validate historical dataset
     if dataset_name is not None:
+
         if not isinstance(dataset_name, str) or not dataset_name.strip():
-            return _error_response("Invalid historical dataset name.", 400)
+            return _error_response(
+                "Invalid historical dataset name.",
+                400,
+            )
+
         dataset_name = dataset_name.strip()
 
         owned_dataset = get_db()["feedback"].find_one(
@@ -179,13 +276,24 @@ def run_analysis(
                 "userId": uid,
                 "dataset": dataset_name,
                 "$or": [
-                    {"import_id": {"$exists": False}},
-                    {"import_id": None},
-                    {"import_id": ""},
+                    {
+                        "import_id": {
+                            "$exists": False,
+                        }
+                    },
+                    {
+                        "import_id": None,
+                    },
+                    {
+                        "import_id": "",
+                    },
                 ],
             },
-            {"_id": 1},
+            {
+                "_id": 1,
+            },
         )
+
         if not owned_dataset:
             return _error_response(
                 "Historical dataset not found or does not belong to you.",
@@ -212,11 +320,22 @@ def run_analysis(
     # -----------------------------------------------------
 
     try:
+
         result = run_and_save_analysis(
             user_id=uid,
             workspace_id=workspace_id,
             import_id=import_id,
             dataset_name=dataset_name,
+        )
+
+        # -------------------------------------------------
+        # 4. CREATE NOTIFICATION
+        # -------------------------------------------------
+
+        _create_analysis_notification(
+            user_id=uid,
+            result=result,
+            workspace_id=workspace_id,
         )
 
         message = (
@@ -231,6 +350,7 @@ def run_analysis(
         )
 
     except AnalysisServiceError as exc:
+
         return _error_response(
             str(exc),
             exc.status_code,
@@ -240,6 +360,7 @@ def run_analysis(
 # ---------------------------------------------------------
 # LIST ANALYSIS HISTORY
 # ---------------------------------------------------------
+
 
 @router.get("/runs")
 def get_analysis_history(
@@ -284,6 +405,7 @@ def get_analysis_history(
 # RETRIEVE LATEST ANALYSIS
 # ---------------------------------------------------------
 
+
 @router.get("/runs/latest")
 def get_latest_analysis(
     request: Request,
@@ -327,6 +449,7 @@ def get_latest_analysis(
 # ---------------------------------------------------------
 # RETRIEVE SPECIFIC ANALYSIS RUN
 # ---------------------------------------------------------
+
 
 @router.get("/runs/{run_id}")
 def get_analysis_details(
